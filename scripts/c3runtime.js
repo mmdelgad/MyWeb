@@ -3190,6 +3190,19 @@ e=>this._OnJobWorkerMessage(e)}catch(err){this._hadErrorCreatingWorker=true;this
 
 {
 self["C3_Shaders"] = {};
+self["C3_Shaders"]["warpripple"] = {
+	glsl: "#ifdef GL_FRAGMENT_PRECISION_HIGH\n#define highmedp highp\n#else\n#define highmedp mediump\n#endif\nvarying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform mediump vec2 srcOriginStart;\nuniform mediump vec2 srcOriginEnd;\nuniform highmedp float seconds;\nuniform mediump vec2 pixelSize;\nuniform mediump float freq;\nuniform mediump float amp;\nuniform mediump float speed;\nconst mediump float PI = 3.1415926;\nvoid main(void)\n{\nmediump vec2 srcOriginSize = srcOriginEnd - srcOriginStart;\nmediump vec2 tex = (vTex - srcOriginStart) / srcOriginSize;\ntex = tex * 2.0 - 1.0;\nmediump float d = length(tex);\nmediump float a = atan(tex.y, tex.x);\nd += sin((d * 2.0 * PI) * freq / (pixelSize.x * 750.0) + (seconds * speed)) * amp * (pixelSize.x * 750.0);\ntex.x = cos(a) * d;\ntex.y = sin(a) * d;\ntex = (tex + 1.0) / 2.0;\ntex = clamp(tex, 0.0, 1.0);\ntex = tex * srcOriginSize + srcOriginStart;\ngl_FragColor = texture2D(samplerFront, tex);\n}",
+	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\n[[block]] struct ShaderParams {\nfreq : f32;\namp : f32;\nspeed : f32;\n};\n%%SHADERPARAMS_BINDING%% var<uniform> shaderParams : ShaderParams;\n%%C3PARAMS_STRUCT%%\n%%C3_UTILITY_FUNCTIONS%%\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\nlet pi : f32 = 3.1415926;\n[[stage(fragment)]]\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar pixelSize : vec2<f32> = c3_getPixelSize(textureFront);\nvar tex = c3_srcOriginToNorm(input.fragUV);\ntex = tex * 2.0 - 1.0;\nvar d : f32 = length(tex);\nvar a = atan2(tex.y, tex.x);\nd = d + sin((d * 2.0 * pi) * shaderParams.freq / (pixelSize.x * 750.0) + (c3Params.seconds * shaderParams.speed)) * shaderParams.amp * (pixelSize.x * 750.0);\ntex.x = cos(a) * d;\ntex.y = sin(a) * d;\ntex = (tex + 1.0) / 2.0;\ntex = c3_clamp2(tex, 0.0, 1.0);\ntex = c3_normToSrcOrigin(tex);\nvar output : FragmentOutput;\noutput.color = textureSample(textureFront, samplerFront, tex);\nreturn output;\n}",
+	blendsBackground: false,
+	usesDepth: false,
+	extendBoxHorizontal: 50,
+	extendBoxVertical: 50,
+	crossSampling: false,
+	mustPreDraw: false,
+	preservesOpaqueness: false,
+	animated: true,
+	parameters: [["freq",0,"float"],["amp",0,"percent"],["speed",0,"float"]]
+};
 
 }
 
@@ -4482,6 +4495,53 @@ SetEffect(effect){this.GetWorldInfo().SetBlendMode(effect);this._runtime.UpdateR
 }
 
 {
+'use strict';const C3=self.C3;C3.Behaviors.Pin=class PinBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Pin.Type=class PinType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
+
+}
+
+{
+'use strict';const C3=self.C3;
+C3.Behaviors.Pin.Instance=class PinInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._pinInst=null;this._pinUid=-1;this._mode="";this._propSet=new Set;this._pinDist=0;this._pinAngle=0;this._pinImagePoint=0;this._dx=0;this._dy=0;this._dWidth=0;this._dHeight=0;this._dAngle=0;this._dz=0;this._lastKnownAngle=0;this._destroy=false;if(properties)this._destroy=properties[0];const rt=this._runtime.Dispatcher();this._disposables=new C3.CompositeDisposable(C3.Disposable.From(rt,"instancedestroy",
+e=>this._OnInstanceDestroyed(e.instance)),C3.Disposable.From(rt,"afterload",e=>this._OnAfterLoad()))}Release(){this._pinInst=null;super.Release()}_SetPinInst(inst){if(inst){this._pinInst=inst;this._StartTicking2()}else{this._pinInst=null;this._StopTicking2()}}_Pin(objectClass,mode,propList){if(!objectClass)return;const otherInst=objectClass.GetFirstPicked(this._inst);if(!otherInst)return;this._mode=mode;this._SetPinInst(otherInst);const myWi=this._inst.GetWorldInfo();const otherWi=otherInst.GetWorldInfo();
+if(this._mode==="properties"){const propSet=this._propSet;propSet.clear();for(const p of propList)propSet.add(p);this._dx=myWi.GetX()-otherWi.GetX();this._dy=myWi.GetY()-otherWi.GetY();this._dAngle=myWi.GetAngle()-otherWi.GetAngle();this._lastKnownAngle=myWi.GetAngle();this._dz=myWi.GetZElevation()-otherWi.GetZElevation();if(propSet.has("x")&&propSet.has("y")){this._pinAngle=C3.angleTo(otherWi.GetX(),otherWi.GetY(),myWi.GetX(),myWi.GetY())-otherWi.GetAngle();this._pinDist=C3.distanceTo(otherWi.GetX(),
+otherWi.GetY(),myWi.GetX(),myWi.GetY())}if(propSet.has("width-abs"))this._dWidth=myWi.GetWidth()-otherWi.GetWidth();else if(propSet.has("width-scale"))this._dWidth=myWi.GetWidth()/otherWi.GetWidth();if(propSet.has("height-abs"))this._dHeight=myWi.GetHeight()-otherWi.GetHeight();else if(propSet.has("height-scale"))this._dHeight=myWi.GetHeight()/otherWi.GetHeight()}else this._pinDist=C3.distanceTo(otherWi.GetX(),otherWi.GetY(),myWi.GetX(),myWi.GetY())}SaveToJson(){const propSet=this._propSet;const mode=
+this._mode;const ret={"uid":this._pinInst?this._pinInst.GetUID():-1,"m":mode,"d":this._destroy};if(mode==="rope"||mode==="bar")ret["pd"]=this._pinDist;else if(mode==="properties"){ret["ps"]=[...this._propSet];if(propSet.has("imagepoint"))ret["ip"]=this._pinImagePoint;else if(propSet.has("x")&&propSet.has("y")){ret["pa"]=this._pinAngle;ret["pd"]=this._pinDist}else{if(propSet.has("x"))ret["dx"]=this._dx;if(propSet.has("y"))ret["dy"]=this._dy}if(propSet.has("angle")){ret["da"]=this._dAngle;ret["lka"]=
+this._lastKnownAngle}if(propSet.has("width-abs")||propSet.has("width-scale"))ret["dw"]=this._dWidth;if(propSet.has("height-abs")||propSet.has("height-scale"))ret["dh"]=this._dHeight;if(propSet.has("z"))ret["dz"]=this._dz}return ret}LoadFromJson(o){const mode=o["m"];const propSet=this._propSet;propSet.clear();this._pinUid=o["uid"];if(typeof mode==="number"){this._LoadFromJson_Legacy(o);return}this._mode=mode;if(o.hasOwnProperty("d"))this._destroy=!!o["d"];if(mode==="rope"||mode==="bar")this._pinDist=
+o["pd"];else if(mode==="properties"){for(const p of o["ps"])propSet.add(p);if(propSet.has("imagepoint"))this._pinImagePoint=o["ip"];else if(propSet.has("x")&&propSet.has("y")){this._pinAngle=o["pa"];this._pinDist=o["pd"]}else{if(propSet.has("x"))this._dx=o["dx"];if(propSet.has("y"))this._dy=o["dy"]}if(propSet.has("angle")){this._dAngle=o["da"];this._lastKnownAngle=o["lka"]||0}if(propSet.has("width-abs")||propSet.has("width-scale"))this._dWidth=o["dw"];if(propSet.has("height-abs")||propSet.has("height-scale"))this._dHeight=
+o["dh"];if(propSet.has("z"))this._dz=o["dz"]}}_LoadFromJson_Legacy(o){const propSet=this._propSet;const myStartAngle=o["msa"];const theirStartAngle=o["tsa"];const pinAngle=o["pa"];const pinDist=o["pd"];const mode=o["m"];switch(mode){case 0:this._mode="properties";propSet.add("x").add("y").add("angle");this._pinAngle=pinAngle;this._pinDist=pinDist;this._dAngle=myStartAngle-theirStartAngle;this._lastKnownAngle=o["lka"];break;case 1:this._mode="properties";propSet.add("x").add("y");this._pinAngle=pinAngle;
+this._pinDist=pinDist;break;case 2:this._mode="properties";propSet.add("angle");this._dAngle=myStartAngle-theirStartAngle;this._lastKnownAngle=o["lka"];break;case 3:this._mode="rope";this._pinDist=o["pd"];break;case 4:this._mode="bar";this._pinDist=o["pd"];break}}_OnAfterLoad(){if(this._pinUid===-1)this._SetPinInst(null);else{this._SetPinInst(this._runtime.GetInstanceByUID(this._pinUid));this._pinUid=-1}}_OnInstanceDestroyed(inst){if(this._pinInst===inst){this._SetPinInst(null);if(this._destroy)this._runtime.DestroyInstance(this._inst)}}Tick2(){const pinInst=
+this._pinInst;if(!pinInst)return;const pinWi=pinInst.GetWorldInfo();const myInst=this._inst;const myWi=myInst.GetWorldInfo();const mode=this._mode;let bboxChanged=false;if(mode==="rope"||mode==="bar"){const dist=C3.distanceTo(myWi.GetX(),myWi.GetY(),pinWi.GetX(),pinWi.GetY());if(dist>this._pinDist||mode==="bar"&&dist<this._pinDist){const a=C3.angleTo(pinWi.GetX(),pinWi.GetY(),myWi.GetX(),myWi.GetY());myWi.SetXY(pinWi.GetX()+Math.cos(a)*this._pinDist,pinWi.GetY()+Math.sin(a)*this._pinDist);bboxChanged=
+true}}else{const propSet=this._propSet;let v=0;if(propSet.has("imagepoint")){const [newX,newY]=pinInst.GetImagePoint(this._pinImagePoint);if(!myWi.EqualsXY(newX,newY)){myWi.SetXY(newX,newY);bboxChanged=true}}else if(propSet.has("x")&&propSet.has("y")){const newX=pinWi.GetX()+Math.cos(pinWi.GetAngle()+this._pinAngle)*this._pinDist;const newY=pinWi.GetY()+Math.sin(pinWi.GetAngle()+this._pinAngle)*this._pinDist;if(!myWi.EqualsXY(newX,newY)){myWi.SetXY(newX,newY);bboxChanged=true}}else{v=pinWi.GetX()+
+this._dx;if(propSet.has("x")&&v!==myWi.GetX()){myWi.SetX(v);bboxChanged=true}v=pinWi.GetY()+this._dy;if(propSet.has("y")&&v!==myWi.GetY()){myWi.SetY(v);bboxChanged=true}}if(propSet.has("angle")){if(this._lastKnownAngle!==myWi.GetAngle())this._dAngle=C3.clampAngle(this._dAngle+(myWi.GetAngle()-this._lastKnownAngle));v=C3.clampAngle(pinWi.GetAngle()+this._dAngle);if(v!==myWi.GetAngle()){myWi.SetAngle(v);bboxChanged=true}this._lastKnownAngle=myWi.GetAngle()}if(propSet.has("width-abs")){v=pinWi.GetWidth()+
+this._dWidth;if(v!==myWi.GetWidth()){myWi.SetWidth(v);bboxChanged=true}}if(propSet.has("width-scale")){v=pinWi.GetWidth()*this._dWidth;if(v!==myWi.GetWidth()){myWi.SetWidth(v);bboxChanged=true}}if(propSet.has("height-abs")){v=pinWi.GetHeight()+this._dHeight;if(v!==myWi.GetHeight()){myWi.SetHeight(v);bboxChanged=true}}if(propSet.has("height-scale")){v=pinWi.GetHeight()*this._dHeight;if(v!==myWi.GetHeight()){myWi.SetHeight(v);bboxChanged=true}}if(propSet.has("z")){v=pinWi.GetZElevation()+this._dz;if(v!==
+myWi.GetZElevation()){myWi.SetZElevation(v);this._runtime.UpdateRender()}}}if(bboxChanged)myWi.SetBboxChanged()}GetDebuggerProperties(){const prefix="behaviors.pin.debugger";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".is-pinned",value:!!this._pinInst},{name:prefix+".pinned-uid",value:this._pinInst?this._pinInst.GetUID():0}]}]}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Pin.Cnds={IsPinned(){return!!this._pinInst},WillDestroy(){return this._destroy}};
+
+}
+
+{
+'use strict';const C3=self.C3;
+C3.Behaviors.Pin.Acts={PinByDistance(objectClass,mode){this._Pin(objectClass,mode===0?"rope":"bar")},PinByProperties(objectClass,ex,ey,ea,ew,eh,ez){const propList=[];if(ex)propList.push("x");if(ey)propList.push("y");if(ea)propList.push("angle");if(ez)propList.push("z");if(ew===1)propList.push("width-abs");else if(ew===2)propList.push("width-scale");if(eh===1)propList.push("height-abs");else if(eh===2)propList.push("height-scale");if(propList.length===0)return;this._Pin(objectClass,"properties",propList)},
+PinByImagePoint(objectClass,imgPt,ea,ew,eh,ez){const propList=["imagepoint"];if(ea)propList.push("angle");if(ez)propList.push("z");if(ew===1)propList.push("width-abs");else if(ew===2)propList.push("width-scale");if(eh===1)propList.push("height-abs");else if(eh===2)propList.push("height-scale");this._pinImagePoint=imgPt;this._Pin(objectClass,"properties",propList)},SetPinDistance(d){if(this._mode==="rope"||this._mode==="bar")this._pinDist=Math.max(d,0)},SetDestroy(d){this._destroy=d},Unpin(){this._SetPinInst(null);
+this._mode="";this._propSet.clear();this._pinImagePoint=""},Pin(objectClass,mode){switch(mode){case 0:this._Pin(objectClass,"properties",["x","y","angle"]);break;case 1:this._Pin(objectClass,"properties",["x","y"]);break;case 2:this._Pin(objectClass,"properties",["angle"]);break;case 3:this._Pin(objectClass,"rope");break;case 4:this._Pin(objectClass,"bar");break}}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Pin.Exps={PinnedUID(){return this._pinInst?this._pinInst.GetUID():-1}};
+
+}
+
+{
 'use strict';const C3=self.C3;const C3X=self.C3X;let tempVec2a=null;let tempVec2b=null;let vec2RecycleCache=[];let Box2D=null;let physicsBehavior=null;const PHYSICS_COLLISIONS_KEY="Physics_DisabledCollisions";
 function SetObjectTypeCollisionsEnabled(typeA,typeB,state){const savedA=typeA.GetSavedDataMap();const savedB=typeB.GetSavedDataMap();if(state){const setA=savedA.get(PHYSICS_COLLISIONS_KEY);if(setA)setA.delete(typeB.GetSID());const setB=savedB.get(PHYSICS_COLLISIONS_KEY);if(setB)setB.delete(typeA.GetSID())}else{let setA=savedA.get(PHYSICS_COLLISIONS_KEY);if(!setA){setA=new Set;savedA.set(PHYSICS_COLLISIONS_KEY,setA)}let setB=savedB.get(PHYSICS_COLLISIONS_KEY);if(!setB){setB=new Set;savedB.set(PHYSICS_COLLISIONS_KEY,
 setB)}setA.add(typeB.GetSID());setB.add(typeA.GetSID())}}
@@ -4652,6 +4712,39 @@ value:this._isDragging},{name:prefix+".properties.enabled.name",value:this._isEn
 }
 
 {
+'use strict';const C3=self.C3;C3.Behaviors.shadowcaster=class ShadowCasterBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Type=class ShadowCasterType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
+
+}
+
+{
+'use strict';const C3=self.C3;const HEIGHT=0;const TAG=1;const ENABLE=2;
+C3.Behaviors.shadowcaster.Instance=class ShadowCasterInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);if(properties){this.SetHeight(properties[HEIGHT]);this.SetTag(properties[TAG]);this.SetEnabled(!!properties[ENABLE])}else{this.SetHeight(100);this.SetTag("");this.SetEnabled(true)}}Release(){super.Release()}SetHeight(h){this._inst.GetSavedDataMap().set("shadowcasterHeight",h)}GetHeight(){return this._inst.GetSavedDataMap().get("shadowcasterHeight")}SetTag(t){this._inst.GetSavedDataMap().set("shadowcasterTag",t)}GetTag(){return this._inst.GetSavedDataMap().get("shadowcasterTag")}SetEnabled(e){this._inst.GetSavedDataMap().set("shadowcasterEnabled",
+!!e)}IsEnabled(){return this._inst.GetSavedDataMap().get("shadowcasterEnabled")}SaveToJson(){return{"h":this.GetHeight(),"t":this.GetTag(),"e":this.IsEnabled()}}LoadFromJson(o){this.SetHeight(o["h"]);this.SetTag(o["t"]);this.SetEnabled(o["e"])}GetPropertyValueByIndex(index){switch(index){case HEIGHT:return this.GetHeight();case TAG:return this.GetTag();case ENABLE:return this.IsEnabled()}}SetPropertyValueByIndex(index,value){switch(index){case HEIGHT:this.SetHeight(value);break;case TAG:this.SetTag(value);
+break;case ENABLE:this.SetEnabled(value);break}}GetDebuggerProperties(){const prefix="behaviors.shadowcaster";const savedMap=this._inst.GetSavedDataMap();return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.enabled.name",value:this.IsEnabled(),onedit:v=>this.SetEnabled(v)},{name:prefix+".properties.height.name",value:this.GetHeight(),onedit:v=>this.SetHeight(v)},{name:prefix+".properties.tag.name",value:this.GetTag(),onedit:v=>this.SetTag(v)}]}]}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Cnds={IsEnabled(){return this.IsEnabled()},CompareHeight(cmp,x){return C3.compare(this.GetHeight(),cmp,x)}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Acts={SetEnabled(e){this.SetEnabled(e)},SetHeight(h){if(this.GetHeight()!==h){this.SetHeight(h);this._runtime.UpdateRender()}},SetTag(tag){if(this.GetTag()!==tag){this.SetTag(tag);this._runtime.UpdateRender()}}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Exps={Height(){return this.GetHeight()},Tag(){return this.GetTag()}};
+
+}
+
+{
 'use strict';const C3=self.C3;C3.Behaviors.Sin=class SinBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
 
 }
@@ -4818,35 +4911,37 @@ value){switch(index){case MODE:this._mode=value;break}}};
 }
 
 {
-'use strict';const C3=self.C3;C3.Behaviors.shadowcaster=class ShadowCasterBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
+'use strict';const C3=self.C3;C3.Behaviors.Timer=class TimerBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
 
 }
 
 {
-'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Type=class ShadowCasterType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
+'use strict';const C3=self.C3;C3.Behaviors.Timer.Type=class TimerType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
 
 }
 
 {
-'use strict';const C3=self.C3;const HEIGHT=0;const TAG=1;const ENABLE=2;
-C3.Behaviors.shadowcaster.Instance=class ShadowCasterInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);if(properties){this.SetHeight(properties[HEIGHT]);this.SetTag(properties[TAG]);this.SetEnabled(!!properties[ENABLE])}else{this.SetHeight(100);this.SetTag("");this.SetEnabled(true)}}Release(){super.Release()}SetHeight(h){this._inst.GetSavedDataMap().set("shadowcasterHeight",h)}GetHeight(){return this._inst.GetSavedDataMap().get("shadowcasterHeight")}SetTag(t){this._inst.GetSavedDataMap().set("shadowcasterTag",t)}GetTag(){return this._inst.GetSavedDataMap().get("shadowcasterTag")}SetEnabled(e){this._inst.GetSavedDataMap().set("shadowcasterEnabled",
-!!e)}IsEnabled(){return this._inst.GetSavedDataMap().get("shadowcasterEnabled")}SaveToJson(){return{"h":this.GetHeight(),"t":this.GetTag(),"e":this.IsEnabled()}}LoadFromJson(o){this.SetHeight(o["h"]);this.SetTag(o["t"]);this.SetEnabled(o["e"])}GetPropertyValueByIndex(index){switch(index){case HEIGHT:return this.GetHeight();case TAG:return this.GetTag();case ENABLE:return this.IsEnabled()}}SetPropertyValueByIndex(index,value){switch(index){case HEIGHT:this.SetHeight(value);break;case TAG:this.SetTag(value);
-break;case ENABLE:this.SetEnabled(value);break}}GetDebuggerProperties(){const prefix="behaviors.shadowcaster";const savedMap=this._inst.GetSavedDataMap();return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.enabled.name",value:this.IsEnabled(),onedit:v=>this.SetEnabled(v)},{name:prefix+".properties.height.name",value:this.GetHeight(),onedit:v=>this.SetHeight(v)},{name:prefix+".properties.tag.name",value:this.GetTag(),onedit:v=>this.SetTag(v)}]}]}};
+'use strict';const C3=self.C3;
+C3.Behaviors.Timer.SingleTimer=class SingleTimer{constructor(current,total,duration,isRegular){this._current=C3.New(C3.KahanSum);this._current.Set(current||0);this._total=C3.New(C3.KahanSum);this._total.Set(total||0);this._duration=duration||0;this._isRegular=!!isRegular;this._isPaused=false}GetCurrentTime(){return this._current.Get()}GetTotalTime(){return this._total.Get()}GetDuration(){return this._duration}SetPaused(p){this._isPaused=!!p}IsPaused(){return this._isPaused}Add(t){this._current.Add(t);this._total.Add(t)}HasFinished(){return this._current.Get()>=
+this._duration}Update(){if(this.HasFinished())if(this._isRegular)this._current.Subtract(this._duration);else return true;return false}SaveToJson(){return{"c":this._current.Get(),"t":this._total.Get(),"d":this._duration,"r":this._isRegular,"p":this._isPaused}}LoadFromJson(o){this._current.Set(o["c"]);this._total.Set(o["t"]);this._duration=o["d"];this._isRegular=!!o["r"];this._isPaused=!!o["p"]}};
+C3.Behaviors.Timer.Instance=class TimerInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._timers=new Map}Release(){this._timers.clear();super.Release()}_UpdateTickState(){if(this._timers.size>0){this._StartTicking();this._StartTicking2()}else{this._StopTicking();this._StopTicking2()}}SaveToJson(){const ret={};for(const [name,timer]of this._timers.entries())ret[name]=timer.SaveToJson();return ret}LoadFromJson(o){this._timers.clear();for(const [name,data]of Object.entries(o)){const timer=
+new C3.Behaviors.Timer.SingleTimer;timer.LoadFromJson(data);this._timers.set(name,timer)}this._UpdateTickState()}Tick(){const dt=this._runtime.GetDt(this._inst);for(const timer of this._timers.values())if(!timer.IsPaused())timer.Add(dt)}Tick2(){for(const [name,timer]of this._timers.entries()){const shouldDelete=timer.Update();if(shouldDelete)this._timers.delete(name)}}GetDebuggerProperties(){return[{title:"behaviors.timer.debugger.timers",properties:[...this._timers.entries()].map(entry=>({name:"$"+
+entry[0],value:`${Math.round(entry[1].GetCurrentTime()*10)/10} / ${Math.round(entry[1].GetDuration()*10)/10}`}))}]}};
 
 }
 
 {
-'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Cnds={IsEnabled(){return this.IsEnabled()},CompareHeight(cmp,x){return C3.compare(this.GetHeight(),cmp,x)}};
+'use strict';const C3=self.C3;C3.Behaviors.Timer.Cnds={OnTimer(name){const timer=this._timers.get(name.toLowerCase());if(!timer)return false;return timer.HasFinished()},IsTimerRunning(name){return this._timers.has(name.toLowerCase())},IsTimerPaused(name){const timer=this._timers.get(name.toLowerCase());return timer&&timer.IsPaused()}};
 
 }
 
 {
-'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Acts={SetEnabled(e){this.SetEnabled(e)},SetHeight(h){if(this.GetHeight()!==h){this.SetHeight(h);this._runtime.UpdateRender()}},SetTag(tag){if(this.GetTag()!==tag){this.SetTag(tag);this._runtime.UpdateRender()}}};
+'use strict';const C3=self.C3;C3.Behaviors.Timer.Acts={StartTimer(duration,type,name){const timer=new C3.Behaviors.Timer.SingleTimer(0,0,duration,type===1);this._timers.set(name.toLowerCase(),timer);this._UpdateTickState()},StopTimer(name){this._timers.delete(name.toLowerCase());this._UpdateTickState()},PauseResumeTimer(name,state){const timer=this._timers.get(name.toLowerCase());if(timer)timer.SetPaused(state===0)}};
 
 }
 
 {
-'use strict';const C3=self.C3;C3.Behaviors.shadowcaster.Exps={Height(){return this.GetHeight()},Tag(){return this.GetTag()}};
+'use strict';const C3=self.C3;C3.Behaviors.Timer.Exps={CurrentTime(name){const timer=this._timers.get(name.toLowerCase());if(!timer)return 0;return timer.GetCurrentTime()},TotalTime(name){const timer=this._timers.get(name.toLowerCase());if(!timer)return 0;return timer.GetTotalTime()},Duration(name){const timer=this._timers.get(name.toLowerCase());if(!timer)return 0;return timer.GetDuration()}};
 
 }
 
@@ -4858,16 +4953,18 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.ppstudio_lolapi,
 		C3.Plugins.Audio,
 		C3.Plugins.shadowlight,
+		C3.Behaviors.Pin,
 		C3.Plugins.Sprite,
 		C3.Behaviors.Physics,
 		C3.Behaviors.DragnDrop,
-		C3.Plugins.TiledBg,
+		C3.Behaviors.shadowcaster,
 		C3.Behaviors.Sin,
+		C3.Plugins.TiledBg,
 		C3.Behaviors.Fade,
 		C3.Behaviors.Bullet,
 		C3.Behaviors.bound,
 		C3.Plugins.Text,
-		C3.Behaviors.shadowcaster,
+		C3.Behaviors.Timer,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Cnds.Repeat,
@@ -4901,66 +4998,98 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Audio.Acts.Play,
-		C3.Plugins.TiledBg.Acts.SetInstanceVar,
-		C3.Plugins.TiledBg.Exps.Angle,
-		C3.Plugins.System.Exps.layoutname,
-		C3.Behaviors.DragnDrop.Acts.SetEnabled,
-		C3.Plugins.Touch.Cnds.OnTapGestureObject,
-		C3.Plugins.TiledBg.Acts.AddInstanceVar,
-		C3.Plugins.TiledBg.Acts.SetAngle,
-		C3.Plugins.System.Exps.anglelerp,
-		C3.Plugins.TiledBg.Cnds.CompareX,
-		C3.Plugins.TiledBg.Acts.SetX,
-		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Behaviors.Timer.Acts.StartTimer,
 		C3.Plugins.TiledBg.Exps.UID,
 		C3.Plugins.Sprite.Cnds.IsOverlappingOffset,
 		C3.Behaviors.Physics.Exps.VelocityX,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
 		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.Audio.Acts.SetVolume,
-		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
+		C3.Plugins.TiledBg.Acts.SetInstanceVar,
+		C3.Plugins.TiledBg.Exps.Angle,
+		C3.Plugins.System.Exps.layoutname,
+		C3.Behaviors.DragnDrop.Acts.SetEnabled,
+		C3.Plugins.Touch.Cnds.OnTapGestureObject,
+		C3.Plugins.Sprite.Acts.AddInstanceVar,
+		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
+		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Plugins.Sprite.Exps.Angle,
+		C3.Plugins.Sprite.Acts.SetAngle,
+		C3.Plugins.System.Exps.dt,
+		C3.Plugins.TiledBg.Acts.AddInstanceVar,
+		C3.Plugins.TiledBg.Cnds.CompareInstanceVar,
+		C3.Plugins.TiledBg.Acts.SetAngle,
+		C3.Plugins.TiledBg.Cnds.CompareY,
+		C3.Plugins.TiledBg.Acts.SetY,
 		C3.Plugins.Sprite.Cnds.CompareY,
 		C3.Behaviors.DragnDrop.Cnds.IsDragging,
-		C3.Plugins.System.Exps.dt,
+		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
+		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Behaviors.Fade.Cnds.OnFadeOutEnd,
+		C3.Behaviors.Fade.Acts.StartFade,
+		C3.Plugins.Audio.Cnds.OnEnded,
+		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Behaviors.Physics.Acts.ApplyForceAtAngle,
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
-		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
-		C3.Plugins.Sprite.Exps.Angle,
 		C3.Plugins.System.Cnds.Every,
-		C3.Plugins.Sprite.Acts.SetAngle,
+		C3.Plugins.System.Exps.anglelerp,
+		C3.Behaviors.Pin.Acts.PinByProperties,
+		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Behaviors.Physics.Acts.ApplyImpulseAtAngle,
+		C3.Plugins.Sprite.Exps.LayerName,
+		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Behaviors.Physics.Acts.SetFriction,
+		C3.Behaviors.Timer.Cnds.IsTimerRunning,
+		C3.Behaviors.Physics.Acts.SetDensity,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Behaviors.Physics.Exps.Friction,
-		C3.Plugins.Sprite.Acts.AddInstanceVar,
-		C3.Plugins.Sprite.Exps.LayerName,
+		C3.Plugins.TiledBg.Cnds.PickByUID,
+		C3.Plugins.TiledBg.Cnds.CompareWidth,
+		C3.Plugins.TiledBg.Exps.Width,
+		C3.Plugins.TiledBg.Acts.SetWidth,
+		C3.Behaviors.Bullet.Acts.SetSpeed,
+		C3.Behaviors.Bullet.Exps.Speed,
+		C3.Behaviors.Bullet.Cnds.CompareSpeed,
 		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Exps.ImagePointX,
+		C3.Behaviors.Fade.Acts.SetWaitTime,
+		C3.Behaviors.Fade.Acts.SetFadeOutTime,
 		C3.Plugins.TiledBg.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.TiledBg.Exps.LayerName,
 		C3.Plugins.TiledBg.Exps.X,
 		C3.Plugins.TiledBg.Exps.Y,
 		C3.Plugins.TiledBg.Acts.SetBoolInstanceVar,
-		C3.Behaviors.Fade.Acts.SetWaitTime,
-		C3.Behaviors.Fade.Acts.SetFadeOutTime,
-		C3.Behaviors.Fade.Acts.StartFade,
 		C3.Behaviors.Fade.Cnds.OnWaitEnd,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Behaviors.DragnDrop.Cnds.OnDrop,
+		C3.Plugins.System.Acts.SetLayoutScale,
+		C3.Plugins.System.Exps.layoutwidth,
+		C3.Plugins.System.Exps.layoutheight,
+		C3.Plugins.System.Exps.layoutscale,
+		C3.Plugins.System.Acts.SetTimescale,
+		C3.Plugins.System.Exps.timescale,
+		C3.Plugins.Audio.Acts.SetPlaybackRate,
+		C3.Plugins.Audio.Exps.PlaybackRate,
+		C3.Plugins.Audio.Exps.Volume,
+		C3.Plugins.System.Cnds.EveryTick,
+		C3.Plugins.System.Acts.ScrollToObject,
+		C3.Plugins.shadowlight.Acts.SetPosToObject,
 		C3.Plugins.System.Acts.GoToLayoutByName,
-		C3.Plugins.System.Acts.RestartLayout
+		C3.Plugins.System.Acts.RestartLayout,
+		C3.Behaviors.Timer.Cnds.OnTimer,
+		C3.Plugins.System.Cnds.CompareVar
 	];
 };
 self.C3_JsPropNameTable = [
 	{Touch: 0},
 	{LoLAPI: 0},
 	{Audio: 0},
+	{Pin: 0},
 	{ShadowLight: 0},
 	{rope_id: 0},
 	{Rope1: 0},
@@ -4981,9 +5110,12 @@ self.C3_JsPropNameTable = [
 	{Basquet: 0},
 	{BasquetPoint_1: 0},
 	{BasquetPoint_2: 0},
+	{Ring: 0},
+	{BasketBoard: 0},
 	{lastAngle: 0},
 	{Crank: 0},
 	{WoodenBoard: 0},
+	{ShadowCaster: 0},
 	{world: 0},
 	{Funnel: 0},
 	{Funnel2: 0},
@@ -4992,27 +5124,44 @@ self.C3_JsPropNameTable = [
 	{IsShowingDragingSign: 0},
 	{DragingSign_UID: 0},
 	{JokeBox: 0},
+	{JokeBoxFront: 0},
+	{Sine: 0},
+	{JokeBoxClown: 0},
+	{GolfFlag: 0},
 	{Wood_WNail: 0},
 	{Goal: 0},
+	{Goal2: 0},
+	{LoosingSensor: 0},
 	{Hamster: 0},
 	{Pine: 0},
+	{Gear1: 0},
+	{Gear2: 0},
 	{Room_Floor: 0},
-	{Sine: 0},
 	{Wood_MovingPlatform: 0},
 	{Wood_Platform: 0},
 	{currentAngle: 0},
 	{newAngle: 0},
+	{TopUp: 0},
+	{TopDown: 0},
 	{Wood_RotationPlatform: 0},
+	{WoodSupport: 0},
+	{CurrentAngle: 0},
+	{NewAngle: 0},
+	{HairDryer: 0},
+	{Fade: 0},
+	{HotAir: 0},
+	{HairDryer_LED: 0},
 	{isSliding: 0},
+	{SlidingPlatform_UID: 0},
+	{Bullet: 0},
 	{ToyBoat: 0},
 	{newScale: 0},
 	{IceCube: 0},
 	{HokeyStick: 0},
 	{StickPivot: 0},
 	{WallNail: 0},
-	{CurrentAngle: 0},
-	{NewAngle: 0},
-	{HairDryer: 0},
+	{Platform_UID: 0},
+	{Water: 0},
 	{BasquetFrame: 0},
 	{Sticker_UID: 0},
 	{StickerPlaceholder: 0},
@@ -5022,12 +5171,16 @@ self.C3_JsPropNameTable = [
 	{Sticker: 0},
 	{Table: 0},
 	{Frame: 0},
-	{Fade: 0},
+	{CongratsScreen: 0},
+	{HangingLight: 0},
+	{WoodEnd_Platform: 0},
+	{Groove: 0},
+	{GrooveTop: 0},
 	{MovementSign: 0},
 	{DragingSign: 0},
+	{FirstPlatform_UID: 0},
 	{Football: 0},
 	{SugarPack: 0},
-	{Bullet: 0},
 	{ParatrooperSoldier: 0},
 	{FirstPlatformUID: 0},
 	{hit: 0},
@@ -5041,17 +5194,25 @@ self.C3_JsPropNameTable = [
 	{NextLevel: 0},
 	{Restart: 0},
 	{TestText: 0},
+	{NewZoomLevel: 0},
+	{IsFocusing: 0},
+	{InitialZoom: 0},
+	{Timer: 0},
+	{Camera: 0},
 	{Physics2: 0},
 	{RopeParts: 0},
 	{Elements: 0},
 	{SpinningObjects: 0},
 	{WoodPlatforms: 0},
 	{SignObjects: 0},
-	{ShadowCaster: 0},
 	{ShadowCasterObjects: 0},
 	{BasketPoints: 0},
+	{BouncingBalls: 0},
+	{Gears: 0},
 	{numberOfLinks: 0},
-	{previousLink: 0}
+	{previousLink: 0},
+	{PassesCounter_TEST: 0},
+	{State: 0}
 ];
 }
 
@@ -5190,26 +5351,13 @@ self.C3_ExpressionFuncs = [
 		() => "Loosing Game  - Basquet",
 		() => "Winning Game Basquet",
 		() => "swish",
-		() => "Rotate objects start",
-		() => "Bowling2",
-		() => "Golf",
-		() => "Soccer",
-		() => "Basquet",
-		() => "Rotate platforms",
-		() => 22.5,
+		() => 5,
+		() => "EndingStage",
+		() => "Basket ball bounce sound",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const n1 = p._GetNode(1);
-			const n2 = p._GetNode(2);
-			return () => f0(n1.ExpObject(), n2.ExpInstVar(), 0.08);
-		},
-		() => "Drag and Drop rotating platform",
-		() => "BowlingBall START",
-		() => "Bowling Ball sound effect",
 		() => "bowlingBall_hit",
 		() => 10,
 		p => {
@@ -5223,7 +5371,29 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => ((-30) + (n0.ExpBehavior() / 5.33));
 		},
-		() => "strike",
+		() => "Rotate objects start",
+		() => "Bowling2",
+		() => "Golf",
+		() => "Soccer",
+		() => "Basquet",
+		() => "Rotate HairDryer",
+		() => "Rotation",
+		() => 45,
+		() => 360,
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => Math.abs((n0.ExpObject() + (30 * f1())));
+		},
+		() => 357,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => Math.abs(n0.ExpObject());
+		},
+		() => "Rotate platforms",
+		() => 22.5,
+		() => "Drag and Drop rotating platform",
+		() => "BowlingBall START",
 		() => "Release Bowling Ball",
 		() => "SwitchRope Start",
 		() => "Activate Switch",
@@ -5238,11 +5408,44 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => (n0.ExpObject() - (100 * f1()));
 		},
+		() => "RopeGearBack",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpInstVar() + n1.ExpInstVar());
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() + 20);
+		},
+		() => "RopeMechanismDown",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() + 50);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() + 80);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() + 110);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() + 140);
+		},
+		() => "ActivateSwitch",
+		() => "HairDryer Start",
+		() => "HD_Start",
+		() => "HD_Loop",
+		() => "HD_Off",
+		() => "off",
+		() => "Hair Dryer Hot air fading effect",
+		() => "HairDryer sound management",
+		() => -20,
+		() => "on",
+		() => 4,
 		() => "Hamster Behavior",
 		() => 8.5,
 		() => 180,
@@ -5259,37 +5462,44 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => f0(n1.ExpObject(), n2.ExpInstVar(), 0.05);
 		},
+		() => "Crank sound",
+		() => "Crank",
 		() => "Release Elements",
 		() => "Start Golf Game",
 		() => "Activate Ball3",
 		() => "Joke Box movement",
 		() => "Golf Ball Jokebox jumping",
-		() => 7,
-		() => 100,
+		() => "Close",
+		() => 16,
+		() => 88,
+		() => "Toing",
+		() => "Open",
+		() => 622,
+		() => "Soccer Start",
 		() => "Activate Ball2",
 		() => 0.5,
-		() => "Loosing Game  - Soccer",
+		() => "Winning Soccer",
+		() => "Loosing Soccer",
+		() => "Boat Game Start",
+		() => 1.5,
 		() => "Release Elements2",
-		() => "Stop Boat",
-		() => 0.25,
 		() => "Friction Managing",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (0.25 * f0());
+			return () => (0.18 * f0());
 		},
 		() => 0.05,
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => (n0.ExpBehavior() - (2 * f1()));
+			return () => (n0.ExpObject() + (60 * f1()));
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => n0.ExpBehavior();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => (n0.ExpBehavior() + (60 * f1()));
 		},
-		() => "Hair Dryer Rotation",
-		() => 45,
-		() => 360,
+		() => 200,
 		() => "Rolling Objects",
 		() => 15,
 		p => {
@@ -5338,6 +5548,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 20);
 		},
+		() => "Sliding Objects",
 		() => "Sticker Start",
 		() => "Sticker Logic",
 		p => {
@@ -5345,11 +5556,97 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			return () => C3.lerp(n0.ExpObject(), n1.ExpInstVar(), 0.05);
 		},
+		() => "Camera Start",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0() / 2);
+		},
+		() => "Basket camera",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const n2 = p._GetNode(2);
+			const n3 = p._GetNode(3);
+			return () => C3.distanceTo(n0.ExpObject(), n1.ExpObject(), n2.ExpObject(), n3.ExpObject());
+		},
+		() => "ZoomIn",
+		() => 1.4,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => C3.lerp(f0(), n1.ExpInstVar(), 0.05);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0(), 0.7, 0.05);
+		},
+		() => "GameMusic",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0("GameMusic"), 0.7, 0.05);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0("GameMusic"), (-25), 0.05);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0(), 1, 0.05);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => C3.lerp(n0.ExpObject(), (f1() / 2), 0.05);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0("GameMusic"), 1, 0.08);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => C3.lerp(f0("GameMusic"), (-15), 0.08);
+		},
+		() => "Soccer camera",
+		() => "Toy Boat Camera",
+		() => "ToyBoat",
+		() => "Camera update",
+		() => "Bowling Balls sound effects",
+		() => "SoccerBounce",
+		() => "GolfBounce",
+		() => "BasketBall_hit",
+		() => "Golfrolling",
+		() => 30,
+		() => "strike",
+		() => "Music start",
+		() => -15,
+		() => "Show Congrats Screen",
+		() => "Congrats Screen function",
+		() => "CongratsScreen",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => (f0() + (n1.ExpObject() / 2));
+		},
+		() => "Light position Start",
 		() => "Change Layout",
 		() => "Bowling",
 		() => "Sun",
-		() => "ToyBoat",
-		() => "IntermediateStage"
+		() => "IntermediateStage",
+		() => "Start Stage",
+		() => "StartingStage",
+		() => "Stage ended",
+		() => "FadingOutMusic",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => (f0("GameMusic") - (50 * f1()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("GameMusic");
+		},
+		() => -70,
+		() => "LevelComplete"
 ];
 
 
