@@ -5302,6 +5302,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Fade.Cnds.OnWaitEnd,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Exps.Count,
+		C3.Plugins.Audio.Acts.FadeVolume,
+		C3.Plugins.Sprite.Acts.MoveToBottom,
+		C3.Plugins.Dictionary.Cnds.IsEmpty,
+		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Sprite.Exps.AnimationFrameCount,
 		C3.Plugins.Spritefont2.Acts.SetPosToObject,
@@ -5310,7 +5314,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Spritefont2.Acts.SetScale,
 		C3.Plugins.Spritefont2.Acts.SetHAlign,
 		C3.Plugins.Spritefont2.Acts.SetVAlign,
-		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.System.Cnds.LayerVisible,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Dictionary.Cnds.CompareValue,
@@ -5329,7 +5332,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Acts.SetSilent,
 		C3.Plugins.System.Exps.viewportright,
 		C3.Plugins.shadowlight.Acts.SetPosToObject,
-		C3.Plugins.System.Exps.viewportheight,
 		C3.Plugins.Spritefont2.Acts.SetInstanceVar,
 		C3.Plugins.Spritefont2.Acts.Destroy,
 		C3.Behaviors.Sin.Acts.SetMagnitude,
@@ -5345,10 +5347,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Cnds.ForEachKey,
 		C3.Plugins.Dictionary.Cnds.CompareCurrentValue,
 		C3.Plugins.Text.Acts.SetText,
-		C3.Plugins.Dictionary.Cnds.IsEmpty,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Dictionary.Exps.CurrentKey,
-		C3.Plugins.Spritefont2.Acts.SetLineHeight,
+		C3.Plugins.Spritefont2.Exps.Text,
 		C3.Plugins.System.Cnds.OnLoadFinished,
 		C3.Plugins.Sprite.Acts.MoveToLayer
 	];
@@ -5404,7 +5405,7 @@ self.C3_JsPropNameTable = [
 	{JokeBoxClown: 0},
 	{IsStageEnded: 0},
 	{GolfFlag: 0},
-	{Wood_WNail: 0},
+	{Bucket: 0},
 	{Goal: 0},
 	{Goal2: 0},
 	{LoosingSensor: 0},
@@ -5508,6 +5509,9 @@ self.C3_JsPropNameTable = [
 	{Logo: 0},
 	{BtnPlay: 0},
 	{BtnContinue: 0},
+	{MenuBase: 0},
+	{GameLogo: 0},
+	{MenuBall: 0},
 	{OutPosition_Y: 0},
 	{InPosition_Y: 0},
 	{IsAppearing: 0},
@@ -5520,13 +5524,16 @@ self.C3_JsPropNameTable = [
 	{IsFocusing: 0},
 	{InitialZoom: 0},
 	{Camera: 0},
-	{AchievementsSheet: 0},
+	{Tablet: 0},
+	{DragBar: 0},
+	{DragPoint: 0},
+	{TableList: 0},
 	{movement: 0},
-	{RotationVel: 0},
-	{RotationVel_Limit: 0},
+	{TabletCheckBox: 0},
 	{State: 0},
-	{SlowingDownVel: 0},
-	{AchievementsSticker: 0},
+	{NewScale: 0},
+	{CheckIcon: 0},
+	{HighlightedText: 0},
 	{DIC_Movements: 0},
 	{SF_General: 0},
 	{SF_Stars: 0},
@@ -5535,6 +5542,7 @@ self.C3_JsPropNameTable = [
 	{Toby: 0},
 	{DialogBaloon: 0},
 	{NextTextButton: 0},
+	{TarguetSticker: 0},
 	{TutorialHand: 0},
 	{TobyHead: 0},
 	{TobyMouth: 0},
@@ -5545,6 +5553,7 @@ self.C3_JsPropNameTable = [
 	{TobyRightArm: 0},
 	{TobyLeftArm: 0},
 	{TobyHair: 0},
+	{EndLayoutBackground: 0},
 	{Physics2: 0},
 	{RopeParts: 0},
 	{Elements: 0},
@@ -5566,6 +5575,8 @@ self.C3_JsPropNameTable = [
 	{FlagColor: 0},
 	{RandomRace: 0},
 	{StickersCount: 0},
+	{TobyText: 0},
+	{SF_StickersScale: 0},
 	{XPos_Average: 0},
 	{RandomMouth: 0},
 	{Flag_AnimationDetection: 0},
@@ -5841,7 +5852,7 @@ self.C3_ExpressionFuncs = [
 		() => 0.1,
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 5);
+			return () => (n0.ExpObject() - 10);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5886,6 +5897,9 @@ self.C3_ExpressionFuncs = [
 		() => 622,
 		() => "Winning St6",
 		() => "GolfFlag effect",
+		() => "Golf ball sound hiting Funnel",
+		() => -10,
+		() => "FunnelHit",
 		() => "Soccer Start",
 		() => "Activate Ball2",
 		() => 0.5,
@@ -6013,6 +6027,26 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Cars Race Sign",
 		() => "Starting Game",
+		() => "GameMenu",
+		() => -100,
+		() => "Creating new balls",
+		() => 558,
+		() => 46,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => and("Animation ", Math.floor(f0(0, 3)));
+		},
+		() => "Menu Start",
+		() => "newgame",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("NewGameButton");
+		},
+		() => "continue",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("ContinueButton");
+		},
 		() => "Going to Main Menu",
 		() => "Sticker Start",
 		() => "PlaceHolders_St1",
@@ -6175,6 +6209,11 @@ self.C3_ExpressionFuncs = [
 		() => "Sound ON/OFF",
 		() => "St4",
 		() => "Show Congrats Screen",
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => C3.lerp(n0.ExpObject(), (f1("CongratsScreen") / 2), 0.05);
+		},
 		() => "Congrats Screen function",
 		() => "CongratsScreen",
 		p => {
@@ -6187,16 +6226,33 @@ self.C3_ExpressionFuncs = [
 			return () => (f0("CongratsScreen") / 2);
 		},
 		() => 0.8,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 150);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 100);
+		},
+		() => 0.9,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("StageComplete");
+		},
+		() => "LevelComplete",
 		() => "Light position Start",
 		() => "Toby Start",
+		() => "IntermediateStage",
+		() => "TobyExplanation",
 		() => "First Stage Toby Presentation",
 		() => "Toby functions",
 		() => "DialogueBaloon",
 		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (f0("DialogueBaloon") / 3);
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const n2 = p._GetNode(2);
+			return () => ((n0.ExpObject() + (n1.ExpObject() / 2)) + (n2.ExpObject() / 2));
 		},
-		() => 0.9,
 		() => 0.85,
 		() => 0.82,
 		p => {
@@ -6248,6 +6304,12 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const v2 = p._GetNode(2).GetVar();
+			return () => n0.ExpObject(and((f1() + "Toby"), v2.GetValue()));
+		},
+		p => {
+			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(2);
 		},
 		p => {
@@ -6283,6 +6345,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => C3.lerp(n0.ExpObject(), 400, 0.08);
 		},
+		() => "Dialogue Baloon - Intermediate Stage",
 		() => "Hand Behavior",
 		() => "Hand Destroy",
 		() => "HAND - Stage 4",
@@ -6320,7 +6383,15 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "HAND - Stage 5",
 		() => "MovingBall",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => C3.lerp(n0.ExpObject(), n1.ExpObject(), 0.04);
+		},
 		() => "HAND - Stage 3",
+		() => "HAND - Intermediate Stage",
+		() => "DragingSticker",
+		() => "Fading",
 		() => "HAND - Stage 1",
 		() => "DragingRope",
 		p => {
@@ -6329,9 +6400,7 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + (200 * f1()));
 		},
 		() => 370,
-		() => "Fading",
 		() => "Change Layout",
-		() => "IntermediateStage",
 		() => "Round",
 		() => "AchievementsScreen",
 		() => "GoToAcievementScreen",
@@ -6352,7 +6421,6 @@ self.C3_ExpressionFuncs = [
 			return () => f0("GameMusic");
 		},
 		() => -70,
-		() => "LevelComplete",
 		() => "Gout behavior",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6363,7 +6431,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 100);
 		},
-		() => -100,
+		() => 100,
 		() => "CreateTexts TEST",
 		() => "St1Toby0",
 		() => "Hello, I am Toby!",
@@ -6423,26 +6491,37 @@ self.C3_ExpressionFuncs = [
 		() => "GREEN CAR won! Did you see the cars running in STRAIGHT LINE?\n\nWe can do it again if you want",
 		() => "CarsRaceBlueWon",
 		() => "BLUE CAR won! Did you see the cars running in STRAIGHT LINE?\n\nWe can do it again if you want",
+		() => "NewGameButton",
+		() => "New Game",
+		() => "ContinueButton",
+		() => "Continue",
+		() => "StageComplete",
+		() => "Stage Complete!",
+		() => "IntermediateStageToby0",
+		() => "Look! I took a picture of the experiment. Do you dare to stick the stickers in the right place?",
+		() => "GameOverText",
+		() => "GAME OVER",
+		() => "MovementsChecklistTitle",
+		() => "MOVEMENTS CHECKLIST",
 		() => "Achievements Screen Start",
 		() => "ShowingNewAchievements",
-		() => "AchievementSticker",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("MovementsChecklistTitle");
+		},
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => n0.ExpObject((n1.ExpInstVar() + "Name"));
+			return () => n0.ExpObject((n1.ExpObject() + "Name"));
 		},
 		() => "y",
-		() => "StartRotating",
-		() => "Activate Sticker",
-		() => "Stoped",
-		() => "Animate Sticker",
+		() => "StartAnimation",
+		() => "Animate Checkbox",
 		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => (n0.ExpObject() + (n1.ExpInstVar() * f2()));
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (2 * f0());
 		},
-		() => "SlowingDown",
+		() => "GoingSmaller",
 		() => "ReadyToGo",
 		() => "DIC Movements Functions",
 		() => "RollName",
@@ -6462,11 +6541,15 @@ self.C3_ExpressionFuncs = [
 		() => "HUD Start",
 		() => -210,
 		() => 515,
-		() => 53,
 		() => 170,
 		() => 650,
 		() => "HUD Appearing",
-		() => "Show HUD on Rope Activation"
+		() => "Show HUD on Rope Activation",
+		() => "End Layout - START",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("GameOverText");
+		}
 ];
 
 
