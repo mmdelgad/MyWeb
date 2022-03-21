@@ -5292,23 +5292,23 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Sprite.Exps.Height,
+		C3.Plugins.Spritefont2.Acts.SetText,
+		C3.Plugins.Spritefont2.Acts.SetPosToObject,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Exps.ImagePointX,
+		C3.Behaviors.Physics.Cnds.CompareVelocity,
 		C3.Behaviors.Fade.Acts.SetWaitTime,
 		C3.Behaviors.Fade.Acts.SetFadeOutTime,
 		C3.Plugins.TiledBg.Exps.LayerName,
 		C3.Plugins.TiledBg.Exps.X,
 		C3.Plugins.TiledBg.Exps.Y,
 		C3.Behaviors.Fade.Cnds.OnWaitEnd,
-		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Exps.Count,
 		C3.Plugins.Audio.Acts.FadeVolume,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.Dictionary.Cnds.IsEmpty,
-		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Sprite.Exps.AnimationFrameCount,
-		C3.Plugins.Spritefont2.Acts.SetPosToObject,
 		C3.Plugins.Spritefont2.Acts.SetSize,
 		C3.Plugins.Spritefont2.Acts.SetAngle,
 		C3.Plugins.Spritefont2.Acts.SetScale,
@@ -5343,6 +5343,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Timer.Cnds.OnTimer,
 		C3.Plugins.Sprite.Acts.RotateCounterclockwise,
 		C3.Behaviors.Sin.Acts.SetMovement,
+		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.System.Acts.GoToLayoutByName,
 		C3.Plugins.Dictionary.Cnds.ForEachKey,
 		C3.Plugins.Dictionary.Cnds.CompareCurrentValue,
@@ -5537,6 +5538,8 @@ self.C3_JsPropNameTable = [
 	{DIC_Movements: 0},
 	{SF_General: 0},
 	{SF_Stars: 0},
+	{SF_General_White: 0},
+	{SF_Signs: 0},
 	{CurrentText: 0},
 	{TestSpeed: 0},
 	{Toby: 0},
@@ -5972,7 +5975,6 @@ self.C3_ExpressionFuncs = [
 		() => "StrightLine",
 		() => "a",
 		() => "Rolling Objects",
-		() => 15,
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -5983,14 +5985,23 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() - (n1.ExpObject() / 2));
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("RollName");
+		},
+		() => 15,
 		() => "Rope sign",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpInstVar() + 10);
+			return () => (n0.ExpObject() - 50);
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 50);
+			return () => n0.ExpObject("UpDownName");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject(1) - 50);
 		},
 		() => "Round & Round Objects",
 		p => {
@@ -6006,19 +6017,33 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject(1) - 20);
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("RoundName");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 100);
+		},
 		() => "Intro Tutorial objects",
-		() => "IntroTutorial",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("BackForthName");
+		},
 		() => "Rotate Objects",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 50);
 		},
-		() => "Displacing Objects",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 20);
+			return () => n0.ExpObject("SpinName");
 		},
 		() => "Sliding Objects",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("SlideName");
+		},
 		() => "Back and Forth Objects",
 		() => "Soccer",
 		p => {
@@ -6031,7 +6056,7 @@ self.C3_ExpressionFuncs = [
 		() => -100,
 		() => "Creating new balls",
 		() => 558,
-		() => 46,
+		() => 67,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and("Animation ", Math.floor(f0(0, 3)));
@@ -6063,37 +6088,17 @@ self.C3_ExpressionFuncs = [
 			return () => Math.floor(f0(0, n1.ExpObject()));
 		},
 		() => "UpDown",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("UpDownName");
-		},
 		() => 1130,
 		() => 420,
 		() => "BackForth",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("BackForthName");
-		},
 		() => "St3",
 		() => "Roll",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("RollName");
-		},
 		() => "Spin",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("SpinName");
-		},
 		() => 1200,
 		() => 320,
 		() => 1150,
 		() => 500,
 		() => "Slide",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("SlideName");
-		},
 		() => "ZigZag",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6230,15 +6235,12 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 150);
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 100);
-		},
 		() => 0.9,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("StageComplete");
 		},
+		() => -5,
 		() => "LevelComplete",
 		() => "Light position Start",
 		() => "Toby Start",
@@ -6527,6 +6529,7 @@ self.C3_ExpressionFuncs = [
 		() => "RollName",
 		() => "SpinName",
 		() => "RoundName",
+		() => "Round and Round",
 		() => "UpDownName",
 		() => "Up and Down",
 		() => "SlideName",
