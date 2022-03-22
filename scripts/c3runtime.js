@@ -5209,9 +5209,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Behaviors.Physics.Acts.EnableCollisions,
-		C3.Plugins.Sprite.Cnds.IsOutsideLayout,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Cnds.CompareY,
+		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Behaviors.Timer.Cnds.IsTimerRunning,
 		C3.Plugins.Audio.Acts.Play,
@@ -5285,14 +5284,16 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Spritefont2.Cnds.IsRunningTypewriterText,
 		C3.Plugins.Spritefont2.Cnds.CompareInstanceVar,
 		C3.Plugins.Spritefont2.Acts.TypewriterText,
-		C3.Plugins.Dictionary.Exps.Get,
+		C3.Plugins.ppstudio_lolapi.Exps.GetText,
 		C3.Plugins.Sprite.Exps.AnimationName,
+		C3.Plugins.ppstudio_lolapi.Acts.SpeakText,
 		C3.Plugins.Dictionary.Acts.SetKey,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Spritefont2.Acts.SetText,
+		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Spritefont2.Acts.SetPosToObject,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Exps.ImagePointX,
@@ -5305,8 +5306,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Fade.Cnds.OnWaitEnd,
 		C3.Plugins.Sprite.Exps.Count,
 		C3.Plugins.Audio.Acts.FadeVolume,
+		C3.Plugins.System.Acts.GoToLayoutByName,
+		C3.Plugins.ppstudio_lolapi.Exps.GetStateData,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
+		C3.Plugins.ppstudio_lolapi.Acts.LoadState,
 		C3.Plugins.Dictionary.Cnds.IsEmpty,
+		C3.Plugins.ppstudio_lolapi.Cnds.OnLoadState,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Sprite.Exps.AnimationFrameCount,
 		C3.Plugins.Spritefont2.Acts.SetSize,
@@ -5344,7 +5349,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.RotateCounterclockwise,
 		C3.Behaviors.Sin.Acts.SetMovement,
 		C3.Plugins.Sprite.Cnds.CompareX,
-		C3.Plugins.System.Acts.GoToLayoutByName,
+		C3.Plugins.ppstudio_lolapi.Acts.SetMaxProgress,
+		C3.Plugins.ppstudio_lolapi.Acts.SubmitGameProgress,
+		C3.Plugins.ppstudio_lolapi.Acts.SaveState,
+		C3.Plugins.ppstudio_lolapi.Cnds.Pause,
+		C3.Plugins.ppstudio_lolapi.Acts.Suspend,
 		C3.Plugins.Dictionary.Cnds.ForEachKey,
 		C3.Plugins.Dictionary.Cnds.CompareCurrentValue,
 		C3.Plugins.Text.Acts.SetText,
@@ -5352,7 +5361,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Exps.CurrentKey,
 		C3.Plugins.Spritefont2.Exps.Text,
 		C3.Plugins.System.Cnds.OnLoadFinished,
-		C3.Plugins.Sprite.Acts.MoveToLayer
+		C3.Plugins.ppstudio_lolapi.Acts.GameIsReady,
+		C3.Plugins.ppstudio_lolapi.Cnds.IsGameReady,
+		C3.Plugins.Sprite.Acts.MoveToLayer,
+		C3.Plugins.ppstudio_lolapi.Acts.CompleteGame
 	];
 };
 self.C3_JsPropNameTable = [
@@ -5965,10 +5977,15 @@ self.C3_ExpressionFuncs = [
 		() => "PickingCar",
 		() => "toby",
 		p => {
-			const n0 = p._GetNode(0);
+			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const n2 = p._GetNode(2);
-			return () => n0.ExpObject((f1() + n2.ExpObject()));
+			return () => f0((f1() + n2.ExpObject()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => (f0() + n1.ExpObject());
 		},
 		() => "Finishing race",
 		() => "",
@@ -6044,13 +6061,11 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("SlideName");
 		},
-		() => "Back and Forth Objects",
-		() => "Soccer",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) + 40);
-		},
 		() => "Cars Race Sign",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("StrightLineName");
+		},
 		() => "Starting Game",
 		() => "GameMenu",
 		() => -100,
@@ -6062,15 +6077,16 @@ self.C3_ExpressionFuncs = [
 			return () => and("Animation ", Math.floor(f0(0, 3)));
 		},
 		() => "Menu Start",
+		() => "GameName",
 		() => "newgame",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("NewGameButton");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("NewGameButton");
 		},
 		() => "continue",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("ContinueButton");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("ContinueButton");
 		},
 		() => "Going to Main Menu",
 		() => "Sticker Start",
@@ -6237,8 +6253,8 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 0.9,
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("StageComplete");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("StageComplete");
 		},
 		() => -5,
 		() => "LevelComplete",
@@ -6246,6 +6262,7 @@ self.C3_ExpressionFuncs = [
 		() => "Toby Start",
 		() => "IntermediateStage",
 		() => "TobyExplanation",
+		() => "EndLayout",
 		() => "First Stage Toby Presentation",
 		() => "Toby functions",
 		() => "DialogueBaloon",
@@ -6277,6 +6294,7 @@ self.C3_ExpressionFuncs = [
 		() => "Hair",
 		() => 790,
 		() => 1400,
+		() => 1360,
 		() => 875,
 		() => 1594,
 		() => 1660,
@@ -6293,22 +6311,37 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Open",
 		p => {
-			const n0 = p._GetNode(0);
+			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const n2 = p._GetNode(2);
-			return () => n0.ExpObject(and((f1() + "Toby"), n2.ExpInstVar()));
+			return () => f0(and((f1() + "Toby"), n2.ExpInstVar()));
 		},
 		p => {
-			const n0 = p._GetNode(0);
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => and((f0() + "Toby"), n1.ExpInstVar());
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const n2 = p._GetNode(2);
-			return () => n0.ExpObject(((f1() + n2.ExpInstVar()) + "Won"));
+			return () => f0(((f1() + n2.ExpInstVar()) + "Won"));
 		},
 		p => {
-			const n0 = p._GetNode(0);
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => ((f0() + n1.ExpInstVar()) + "Won");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const v2 = p._GetNode(2).GetVar();
-			return () => n0.ExpObject(and((f1() + "Toby"), v2.GetValue()));
+			return () => f0(and((f1() + "Toby"), v2.GetValue()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => and((f0() + "Toby"), v1.GetValue());
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6322,6 +6355,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(4);
 		},
+		() => 0.7,
 		() => "Dialogue Baloon change possition",
 		() => "Toby appearing",
 		p => {
@@ -6402,6 +6436,11 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + (200 * f1()));
 		},
 		() => 370,
+		() => "Set game progress",
+		() => 9,
+		() => 7,
+		() => 8,
+		() => "Pause Game",
 		() => "Change Layout",
 		() => "Round",
 		() => "AchievementsScreen",
@@ -6508,8 +6547,8 @@ self.C3_ExpressionFuncs = [
 		() => "Achievements Screen Start",
 		() => "ShowingNewAchievements",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("MovementsChecklistTitle");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("MovementsChecklistTitle");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6546,13 +6585,16 @@ self.C3_ExpressionFuncs = [
 		() => 515,
 		() => 170,
 		() => 650,
+		() => "AchievementScreen",
+		() => 965,
 		() => "HUD Appearing",
 		() => "Show HUD on Rope Activation",
 		() => "End Layout - START",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("GameOverText");
-		}
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("GameOverText");
+		},
+		() => "Game end"
 ];
 
 
