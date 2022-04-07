@@ -5158,6 +5158,39 @@ entry[0],value:`${Math.round(entry[1].GetCurrentTime()*10)/10} / ${Math.round(en
 }
 
 {
+'use strict';const C3=self.C3;C3.Behaviors.Flash=class FlashBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Flash.Type=class FlashType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
+
+}
+
+{
+'use strict';const C3=self.C3;
+C3.Behaviors.Flash.Instance=class FlashInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._onTime=0;this._offTime=0;this._stage=0;this._stageTimeLeft=0;this._timeLeft=0;this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"on":this._onTime,"off":this._offTime,"s":this._stage,"stl":this._stageTimeLeft,"tl":this._timeLeft}}LoadFromJson(o){this._onTime=o["on"];this._offTime=o["off"];this._stage=o["s"];this._stageTimeLeft=o["stl"];this._timeLeft=
+o["tl"]===null?Infinity:o["tl"]}Tick(){if(this._timeLeft<=0)return;const dt=this._runtime.GetDt(this._inst);this._timeLeft-=dt;if(this._timeLeft<=0){this._timeLeft=0;this._inst.GetWorldInfo().SetVisible(true);this._runtime.UpdateRender();return this.DebugTrigger(C3.Behaviors.Flash.Cnds.OnFlashEnded)}this._stageTimeLeft-=dt;if(this._stageTimeLeft<=0){if(this._stage===0){this._inst.GetWorldInfo().SetVisible(false);this._stage=1;this._stageTimeLeft+=this._offTime}else{this._inst.GetWorldInfo().SetVisible(true);
+this._stage=0;this._stageTimeLeft+=this._onTime}this._runtime.UpdateRender()}}GetDebuggerProperties(){const prefix="behaviors.flash.debugger";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".on-time",value:this._onTime,onedit:v=>this._onTime=v},{name:prefix+".off-time",value:this._offTime,onedit:v=>this._offTime=v},{name:prefix+".is-flashing",value:this._timeLeft>0},{name:prefix+".time-left",value:this._timeLeft}]}]}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Flash.Cnds={IsFlashing(){return this._timeLeft>0},OnFlashEnded(){return true}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Flash.Acts={Flash(on,off,dur){this._onTime=on;this._offTime=off;this._stage=1;this._stageTimeLeft=off;this._timeLeft=dur;this._inst.GetWorldInfo().SetVisible(false);this._runtime.UpdateRender()},StopFlashing(){this._timeLeft=0;this._inst.GetWorldInfo().SetVisible(true);this._runtime.UpdateRender()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.Flash.Exps={};
+
+}
+
+{
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
@@ -5179,6 +5212,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.wrap,
 		C3.Plugins.Text,
 		C3.Behaviors.Timer,
+		C3.Behaviors.Flash,
 		C3.Plugins.Spritefont2,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
@@ -5260,9 +5294,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.Wait,
 		C3.Behaviors.Sin.Cnds.IsEnabled,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
-		C3.Behaviors.Physics.Acts.ApplyImpulseAtAngle,
+		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Sprite.Exps.LayerName,
+		C3.Plugins.Sprite.Exps.Height,
+		C3.Behaviors.Physics.Acts.ApplyImpulseAtAngle,
+		C3.Plugins.System.Exps.random,
+		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Spritefont2.Exps.Count,
 		C3.Behaviors.Physics.Acts.SetFriction,
@@ -5280,7 +5317,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.RotateClockwise,
 		C3.Plugins.Audio.Acts.SetPlaybackRate,
 		C3.Plugins.System.Acts.SetLayerVisible,
-		C3.Plugins.System.Exps.random,
 		C3.Plugins.Spritefont2.Cnds.IsRunningTypewriterText,
 		C3.Plugins.Spritefont2.Cnds.CompareInstanceVar,
 		C3.Plugins.Spritefont2.Acts.TypewriterText,
@@ -5291,12 +5327,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Exps.Width,
-		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Spritefont2.Acts.SetText,
-		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Spritefont2.Acts.SetPosToObject,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Exps.ImagePointX,
+		C3.Plugins.Sprite.Exps.Count,
 		C3.Behaviors.Physics.Cnds.CompareVelocity,
 		C3.Behaviors.Fade.Acts.SetWaitTime,
 		C3.Behaviors.Fade.Acts.SetFadeOutTime,
@@ -5304,7 +5339,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.TiledBg.Exps.X,
 		C3.Plugins.TiledBg.Exps.Y,
 		C3.Behaviors.Fade.Cnds.OnWaitEnd,
-		C3.Plugins.Sprite.Exps.Count,
 		C3.Plugins.Audio.Acts.FadeVolume,
 		C3.Plugins.System.Acts.GoToLayoutByName,
 		C3.Plugins.ppstudio_lolapi.Exps.GetStateData,
@@ -5336,6 +5370,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Cnds.IsSilent,
 		C3.Plugins.Audio.Acts.SetSilent,
 		C3.Plugins.System.Exps.viewportright,
+		C3.Plugins.System.Acts.SetLayerOpacity,
 		C3.Plugins.shadowlight.Acts.SetPosToObject,
 		C3.Plugins.Spritefont2.Acts.SetInstanceVar,
 		C3.Plugins.Spritefont2.Acts.Destroy,
@@ -5348,7 +5383,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Timer.Cnds.OnTimer,
 		C3.Plugins.Sprite.Acts.RotateCounterclockwise,
 		C3.Behaviors.Sin.Acts.SetMovement,
-		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.ppstudio_lolapi.Acts.SetMaxProgress,
 		C3.Plugins.ppstudio_lolapi.Acts.SubmitGameProgress,
 		C3.Plugins.ppstudio_lolapi.Acts.SaveState,
@@ -5357,9 +5391,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Cnds.ForEachKey,
 		C3.Plugins.Dictionary.Cnds.CompareCurrentValue,
 		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Dictionary.Exps.CurrentKey,
 		C3.Plugins.Spritefont2.Exps.Text,
+		C3.Plugins.Spritefont2.Exps.X,
+		C3.Plugins.Spritefont2.Exps.Y,
+		C3.Plugins.Spritefont2.Exps.Height,
+		C3.Behaviors.Flash.Acts.Flash,
 		C3.Plugins.System.Cnds.OnLoadFinished,
 		C3.Plugins.ppstudio_lolapi.Acts.GameIsReady,
 		C3.Plugins.ppstudio_lolapi.Cnds.IsGameReady,
@@ -5476,6 +5515,7 @@ self.C3_JsPropNameTable = [
 	{Pen: 0},
 	{Arrow: 0},
 	{CongratsScreen: 0},
+	{CongratsEffect: 0},
 	{HangingLight: 0},
 	{Groove: 0},
 	{GrooveTop: 0},
@@ -5501,6 +5541,7 @@ self.C3_JsPropNameTable = [
 	{Sky: 0},
 	{Wrap: 0},
 	{Cloud: 0},
+	{GrassParticle: 0},
 	{MovementSign: 0},
 	{DragingSign: 0},
 	{ParatrooperSoldier: 0},
@@ -5546,8 +5587,13 @@ self.C3_JsPropNameTable = [
 	{State: 0},
 	{NewScale: 0},
 	{CheckIcon: 0},
+	{Movement: 0},
+	{Flash: 0},
 	{HighlightedText: 0},
 	{DIC_Movements: 0},
+	{PopUp_Movements: 0},
+	{MovementImage: 0},
+	{CloseButton: 0},
 	{SF_General: 0},
 	{SF_Stars: 0},
 	{SF_General_White: 0},
@@ -5568,6 +5614,9 @@ self.C3_JsPropNameTable = [
 	{TobyRightArm: 0},
 	{TobyLeftArm: 0},
 	{TobyHair: 0},
+	{TextKey: 0},
+	{SpeechButton: 0},
+	{SmallTutorialHand: 0},
 	{EndLayoutBackground: 0},
 	{Physics2: 0},
 	{RopeParts: 0},
@@ -5593,6 +5642,7 @@ self.C3_JsPropNameTable = [
 	{TobyText: 0},
 	{SF_StickersScale: 0},
 	{XPos_Average: 0},
+	{DialogueState_St6: 0},
 	{RandomMouth: 0},
 	{Flag_AnimationDetection: 0},
 	{LastStage: 0},
@@ -5758,7 +5808,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Rotate objects start",
 		() => "St8",
-		() => "Golf",
 		() => "St7",
 		() => "Basquet",
 		() => "Rotate HairDryer",
@@ -5888,6 +5937,22 @@ self.C3_ExpressionFuncs = [
 		() => 3,
 		() => "Sine 2 Switch Rope",
 		() => "St1",
+		() => "Grass effects",
+		() => "ForSugarParticles",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => (n0.ExpObject() + (n1.ExpObject() / 2));
+		},
+		() => 0.02,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(220, 340);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => and("Animation ", Math.floor(f0(1, 3)));
+		},
 		() => "St3 START",
 		() => "St2 Start",
 		() => "Pines destroy",
@@ -5995,16 +6060,11 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject() + (n1.ExpObject() / 2));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() - (n1.ExpObject() / 2));
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("RollName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("RollName");
 		},
 		() => 15,
 		() => "Rope sign",
@@ -6013,14 +6073,15 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() - 50);
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("UpDownName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("UpDownName");
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject(1) - 50);
 		},
 		() => "Round & Round Objects",
+		() => "St4",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -6035,31 +6096,31 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject(1) - 20);
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("RoundName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("RoundName");
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 100);
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("SpinName");
+		},
 		() => "Intro Tutorial objects",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("BackForthName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("BackForthName");
 		},
 		() => "Rotate Objects",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 50);
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("SpinName");
-		},
 		() => "Sliding Objects",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("SlideName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("SlideName");
 		},
 		() => "Cars Race Sign",
 		p => {
@@ -6117,10 +6178,11 @@ self.C3_ExpressionFuncs = [
 		() => "Slide",
 		() => "ZigZag",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("ZigZagName");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("ZigZagName");
 		},
 		() => "Sticker Logic",
+		() => "Great",
 		() => "n",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6228,7 +6290,6 @@ self.C3_ExpressionFuncs = [
 		() => "Music start",
 		() => -15,
 		() => "Sound ON/OFF",
-		() => "St4",
 		() => "Show Congrats Screen",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6246,7 +6307,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0("CongratsScreen") / 2);
 		},
-		() => 0.8,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 150);
@@ -6258,12 +6318,16 @@ self.C3_ExpressionFuncs = [
 		},
 		() => -5,
 		() => "LevelComplete",
+		() => "DarkScreen",
+		() => 50,
 		() => "Light position Start",
 		() => "Toby Start",
 		() => "IntermediateStage",
 		() => "TobyExplanation",
 		() => "EndLayout",
+		() => "Speech text behavior",
 		() => "First Stage Toby Presentation",
+		() => "done",
 		() => "Toby functions",
 		() => "DialogueBaloon",
 		p => {
@@ -6272,6 +6336,7 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => ((n0.ExpObject() + (n1.ExpObject() / 2)) + (n2.ExpObject() / 2));
 		},
+		() => 0.7,
 		() => 0.85,
 		() => 0.82,
 		p => {
@@ -6347,15 +6412,11 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(2);
 		},
+		() => 0.65,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(3);
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(4);
-		},
-		() => 0.7,
 		() => "Dialogue Baloon change possition",
 		() => "Toby appearing",
 		p => {
@@ -6551,19 +6612,36 @@ self.C3_ExpressionFuncs = [
 			return () => f0("MovementsChecklistTitle");
 		},
 		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => f0((n1.ExpObject() + "Name"));
+		},
+		() => "Highliting",
+		() => "y",
+		() => "CheckIcon",
+		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => n0.ExpObject((n1.ExpObject() + "Name"));
+			return () => ((n0.ExpObject() + n1.ExpObject()) - 10);
 		},
-		() => "y",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => ((n0.ExpObject() + n1.ExpObject()) - 30);
+		},
 		() => "StartAnimation",
+		() => "ReadyToGo",
+		() => "PopUp",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0("CheckIcon") / 2);
+		},
 		() => "Animate Checkbox",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (2 * f0());
 		},
 		() => "GoingSmaller",
-		() => "ReadyToGo",
 		() => "DIC Movements Functions",
 		() => "RollName",
 		() => "SpinName",
@@ -6583,6 +6661,7 @@ self.C3_ExpressionFuncs = [
 		() => "HUD Start",
 		() => -210,
 		() => 515,
+		() => 0.8,
 		() => 170,
 		() => 650,
 		() => "AchievementScreen",
