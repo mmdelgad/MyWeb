@@ -21,7 +21,7 @@
         "Sparky15_2": "Where are they?",
         "Sparky15_3": "I've seen them captured in the Forest of Harmony",
         "Sparky15_4": "I'm going there!",
-        "Comic15_Dynamite_1": "YEAAAAAAAHH!",
+        "Comic15_TNT_2": "YEAAAAAAAHH!",
         "Comic15_TNT_1": "So, this is the big ROCK? It's going to be so easy... Dynamite, let's break it down!!",
         "Sparky25_1": "You again!",
         "Sparky25_2": "You can't cross this trunks alone, You will need Kami's power to turn them in to ashes!",
@@ -70,7 +70,9 @@
         "ComicBoubbleBomb45_1": "Bubble, you are the only one that can breath under the water",
         "ComicBoubbleBomb45_2": "Could you help me?",
 		"ComicBossFinal_1": "Systems fully damaged",
-		"ComicBossFinal_2": "Starting emergency sequence"
+		"ComicBossFinal_2": "Starting emergency sequence",
+		"MusicSwitch_NO": "Music: NO",
+		"MusicSwitch_SI": "Music: YES"
         
     },
     "es": {
@@ -95,7 +97,7 @@
         "Sparky15_2": "¿Dónde están?",
         "Sparky15_3": "Los vi capturados en el Bosque de la Armonía",
         "Sparky15_4": "¡Voy para allá!",
-        "Comic15_Dynamite_1": "¡VAMOOOOS!",
+        "Comic15_TNT_2": "¡VAMOOOOS!",
         "Comic15_TNT_1": "Entonces, ¿esta es la gran roca? Esto va a ser fácil... Dinamita, ¡vamos a destruirla!",
         "Sparky25_1": "¡Tú de nuevo!",
         "Sparky25_2": "No podrás cruzar por estos troncos solo, ¡vas a necesitar el poder de Kami para convertirlos en cenizas!",
@@ -144,6 +146,8 @@
         "ComicBoubbleBomb45_1": "Bubble, eres la única que puede respirar debajo del agua",
         "ComicBoubbleBomb45_2": "¿Puedes ayudarme?",
 		"ComicBossFinal_1": "Sistemas dañados",
-		"ComicBossFinal_2": "Empezando secuencia de emergencia"
+		"ComicBossFinal_2": "Empezando secuencia de emergencia",
+		"MusicSwitch_NO": "Música: NO",
+		"MusicSwitch_SI": "Música: SI"
     }
 }
