@@ -4620,8 +4620,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
-		C3.Behaviors.Fade.Cnds.OnFadeOutEnd,
 		C3.Plugins.System.Acts.GoToLayout,
+		C3.Behaviors.Fade.Cnds.OnFadeOutEnd,
 		C3.Plugins.Function.Cnds.OnFunction,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
@@ -4650,19 +4650,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Cnds.CompareValue,
 		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.Sprite.Acts.Destroy,
-		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
-		C3.Plugins.System.Acts.GoToLayoutByName,
 		C3.Plugins.System.Exps.int,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Acts.SetDefaultColor,
+		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.System.Cnds.Repeat,
 		C3.Plugins.System.Exps.layoutname,
 		C3.Plugins.Sprite.Acts.SetMirrored,
-		C3.Plugins.Touch.Cnds.OnTouchEnd,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Audio.Acts.PlayByName,
 		C3.Plugins.System.Exps.random,
@@ -4674,7 +4672,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Exps.Y,
-		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.Sprite.Cnds.OnAnimFinished,
 		C3.Behaviors.Sin.Acts.SetPhase,
 		C3.Behaviors.Physics.Cnds.IsEnabled,
@@ -4692,41 +4689,28 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.Flash.Acts.Flash,
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
-		C3.Plugins.Dictionary.Acts.SetKey,
-		C3.Plugins.TiledBg.Acts.Destroy,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Sprite.Exps.LayerName,
-		C3.Plugins.Arr.Cnds.Contains,
-		C3.Plugins.Arr.Acts.Push,
-		C3.Plugins.Arr.Cnds.ArrForEach,
-		C3.Plugins.Arr.Acts.SetX,
-		C3.Plugins.Arr.Exps.CurX,
+		C3.Plugins.TiledBg.Acts.Destroy,
 		C3.Behaviors.Flash.Cnds.OnFlashEnded,
 		C3.Behaviors.Physics.Acts.SetEnabled,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
 		C3.Plugins.System.Exps.viewportright,
 		C3.Plugins.Touch.Exps.Y,
 		C3.Plugins.Sprite.Acts.AddInstanceVar,
-		C3.Plugins.Text.Exps.Text,
 		C3.Plugins.Timeline.Acts.PlayTimeline,
-		C3.Plugins.Timeline.Cnds.OnTimelineFinishedByTags,
-		C3.Plugins.Sprite.Acts.SetAngle,
-		C3.Plugins.System.Exps.viewportbottom,
-		C3.Plugins.System.Exps.viewportleft,
-		C3.Plugins.Text.Acts.SetInstanceVar,
-		C3.Plugins.Text.Acts.TypewriterText,
-		C3.Plugins.Text.Acts.SetPosToObject,
-		C3.Plugins.Text.Acts.SetFontSize,
-		C3.Plugins.Text.Acts.SetFontColor,
-		C3.Plugins.Text.Acts.MoveToTop,
+		C3.Plugins.Text.Exps.Text,
 		C3.Plugins.Audio.Acts.Stop,
 		C3.Behaviors.Bullet.Acts.SetAngleOfMotion,
 		C3.Behaviors.Bullet.Acts.SetSpeed,
 		C3.Behaviors.Physics.Acts.ApplyImpulseAtAngle,
-		C3.Plugins.TiledBg.Acts.SetSize,
-		C3.Plugins.Sprite.Acts.StopAnim,
+		C3.Behaviors.Rotate.Acts.SetEnabled,
+		C3.Plugins.Sprite.Acts.SetAngle,
 		C3.Behaviors.Bullet.Cnds.IsEnabled,
+		C3.Behaviors.MoveTo.Cnds.IsEnabled,
+		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Behaviors.Physics.Acts.EnableCollisions,
+		C3.Behaviors.Pin.Acts.Unpin,
 		C3.Plugins.Sprite.Acts.SetEffectParam,
 		C3.Plugins.Touch.Exps.X,
 		C3.Plugins.Touch.Cnds.IsInTouch,
@@ -4735,47 +4719,70 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Timeline.Cnds.IsPlayingByTags,
 		C3.Plugins.Timeline.Acts.PlayTimelineByName,
+		C3.Plugins.Timeline.Cnds.OnTimelineFinishedByTags,
+		C3.Plugins.Sprite.Acts.StopAnim,
 		C3.Plugins.Sprite.Exps.AnimationFrame,
 		C3.Plugins.Sprite.Acts.SetX,
-		C3.Plugins.Sprite.Exps.Width,
-		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Sprite.Acts.RotateClockwise,
 		C3.Behaviors.Pin.Acts.Pin,
+		C3.Plugins.Dictionary.Acts.SetKey,
 		C3.Plugins.Sprite.Cnds.IsOutsideLayout,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Behaviors.scrollto.Acts.Shake,
+		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Sprite.Acts.SetHeight,
-		C3.Behaviors.Pin.Acts.Unpin,
 		C3.Behaviors.Sin.Acts.SetMovement,
 		C3.Behaviors.Sin.Acts.SetPeriod,
 		C3.Behaviors.Sin.Acts.SetMagnitude,
 		C3.Plugins.Sprite.Acts.MoveToLayer,
+		C3.Behaviors.Pin.Acts.PinByProperties,
 		C3.Plugins.Sprite.Cnds.PickByUID,
 		C3.Behaviors.Flash.Cnds.IsFlashing,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
 		C3.Plugins.Sprite.Cnds.IsVisible,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.RestartLayout,
+		C3.Plugins.Text.Acts.SetPosToObject,
+		C3.Plugins.Text.Acts.SetInstanceVar,
+		C3.Plugins.Text.Acts.SetFontColor,
+		C3.Plugins.Text.Acts.SetFontSize,
+		C3.Plugins.Arr.Cnds.ArrForEach,
+		C3.Plugins.Arr.Acts.SetX,
+		C3.Plugins.Arr.Exps.CurX,
+		C3.Plugins.Touch.Cnds.OnTouchEnd,
 		C3.Plugins.Arr.Cnds.CompareX,
+		C3.Plugins.Sprite.Cnds.OnFrameChanged,
 		C3.Plugins.Text.Exps.Height,
 		C3.Plugins.Sprite.Cnds.IsMirrored,
 		C3.Plugins.Text.Exps.TextWidth,
+		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Text.Exps.TextHeight,
 		C3.Plugins.Text.Cnds.IsRunningTypewriterText,
+		C3.Plugins.Text.Acts.TypewriterText,
+		C3.Plugins.System.Exps.len,
 		C3.Behaviors.MoveTo.Acts.SetEnabled,
+		C3.Plugins.System.Exps.viewportleft,
+		C3.Plugins.System.Exps.viewportbottom,
 		C3.Plugins.Function.Cnds.CompareParam,
 		C3.Plugins.Particles.Acts.SetPosToObject,
 		C3.Plugins.Particles.Acts.SetAngle,
 		C3.Plugins.Sprite.Exps.Angle,
+		C3.Plugins.Particles.Exps.Count,
 		C3.Behaviors.Timer.Acts.StartTimer,
 		C3.Behaviors.Timer.Cnds.OnTimer,
 		C3.Behaviors.Timer.Cnds.IsTimerRunning,
 		C3.Plugins.System.Exps.dt,
+		C3.Plugins.Arr.Cnds.Contains,
+		C3.Plugins.Arr.Acts.Push,
 		C3.Behaviors.MoveTo.Cnds.IsMoving,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
 		C3.Plugins.System.Exps.anglelerp,
 		C3.Plugins.System.Acts.SetLayerOpacity,
-		C3.Plugins.System.Exps.layeropacity
+		C3.Plugins.System.Exps.layeropacity,
+		C3.Behaviors.MoveTo.Acts.MoveToObject,
+		C3.Plugins.System.Cnds.LayerCmpOpacity,
+		C3.Plugins.System.Acts.GoToLayoutByName,
+		C3.Plugins.Function.Exps.Param
 	];
 };
 self.C3_JsPropNameTable = [
@@ -4806,8 +4813,6 @@ self.C3_JsPropNameTable = [
 	{TBGAgua: 0},
 	{Fade: 0},
 	{Intro: 0},
-	{BotonPlay: 0},
-	{BotonOpciones: 0},
 	{BotonBack: 0},
 	{idAvatarMundo: 0},
 	{idAvatar: 0},
@@ -4850,6 +4855,11 @@ self.C3_JsPropNameTable = [
 	{IdMosaico1: 0},
 	{isOn: 0},
 	{Y_originalPos: 0},
+	{X_originalPos: 0},
+	{IsMoving: 0},
+	{InitialPos_X: 0},
+	{InitialPos_Y: 0},
+	{TargetImagePiont: 0},
 	{Mosaico11: 0},
 	{Mosaico12: 0},
 	{Mosaico13: 0},
@@ -4908,7 +4918,6 @@ self.C3_JsPropNameTable = [
 	{Arbol15_3: 0},
 	{Bullet: 0},
 	{SparkyM1: 0},
-	{DialogoTNT: 0},
 	{velocidad: 0},
 	{friccion: 0},
 	{Physics: 0},
@@ -4916,7 +4925,6 @@ self.C3_JsPropNameTable = [
 	{Explosion15: 0},
 	{RocasSecundarias: 0},
 	{Fond015: 0},
-	{SombraRocas: 0},
 	{Piso15: 0},
 	{Pastito: 0},
 	{"15_SueloInvisible": 0},
@@ -4928,13 +4936,11 @@ self.C3_JsPropNameTable = [
 	{Arbol110_4: 0},
 	{Flash: 0},
 	{JailBit: 0},
-	{ComicBoss1: 0},
 	{Anchor: 0},
 	{BarraEnergiaHeroe: 0},
 	{BarraEnergiaBoss: 0},
 	{Piedrazo: 0},
 	{Sayayin: 0},
-	{ComicBitarget: 0},
 	{Fondo110: 0},
 	{Luna: 0},
 	{Estrellas: 0},
@@ -4960,6 +4966,7 @@ self.C3_JsPropNameTable = [
 	{Volando: 0},
 	{OriginalPosX: 0},
 	{OriginalPosY: 0},
+	{TargetPoint: 0},
 	{Murcielago1: 0},
 	{IdTroncos: 0},
 	{isMoving: 0},
@@ -4984,23 +4991,16 @@ self.C3_JsPropNameTable = [
 	{X_Start: 0},
 	{Y_Start: 0},
 	{Kami: 0},
-	{ComicKami: 0},
 	{kamiExplotion: 0},
 	{Sparky25: 0},
 	{Fuego: 0},
 	{X_initial: 0},
 	{Y_Initial: 0},
 	{FlyingKami: 0},
-	{Cuadro1: 0},
-	{Cuadro2: 0},
-	{GlobitosLighty: 0},
-	{LightySolo: 0},
 	{estado: 0},
 	{BossTronco: 0},
-	{ComicBoss2: 0},
 	{JaillBombita: 0},
 	{Montania210: 0},
-	{ComicTNTRescue: 0},
 	{JaulaRota: 0},
 	{TBGFondoRescue: 0},
 	{NubesDeFonde: 0},
@@ -5051,7 +5051,6 @@ self.C3_JsPropNameTable = [
 	{Silueta35A: 0},
 	{Bitarget: 0},
 	{Sparky35: 0},
-	{ComicBit35: 0},
 	{Misil: 0},
 	{ExplosionM3: 0},
 	{Fondo35: 0},
@@ -5060,13 +5059,12 @@ self.C3_JsPropNameTable = [
 	{CapaUecos_1: 0},
 	{CapaUecos_2: 0},
 	{CapaUecos_3: 0},
-	{RK_Cuadro1y2: 0},
-	{GloboLighty: 0},
-	{LightySolo2: 0},
 	{BossLava: 0},
 	{Fondo40: 0},
-	{ComicBossM3: 0},
 	{JaillKami: 0},
+	{Boss310_Dientes: 0},
+	{IsAppearing: 0},
+	{OjoBossLava: 0},
 	{Piedritas1: 0},
 	{Piedritas2: 0},
 	{Lavita: 0},
@@ -5100,6 +5098,7 @@ self.C3_JsPropNameTable = [
 	{TBGParedDebajo: 0},
 	{Candelabro: 0},
 	{Circulito: 0},
+	{FireCandelabro: 0},
 	{Engranaje13: 0},
 	{Engranaje14: 0},
 	{Engranaje15: 0},
@@ -5109,10 +5108,7 @@ self.C3_JsPropNameTable = [
 	{RanuraVertical: 0},
 	{Puerta44: 0},
 	{Pared: 0},
-	{Cuadro1Lighty: 0},
-	{GlobosLighty: 0},
-	{CuadroBuble: 0},
-	{GloboBuble: 0},
+	{PortonHierro: 0},
 	{TBG45: 0},
 	{Puerta145: 0},
 	{Puerta245: 0},
@@ -5156,7 +5152,6 @@ self.C3_JsPropNameTable = [
 	{pata1: 0},
 	{pata2: 0},
 	{pata3: 0},
-	{DialogoM4: 0},
 	{PuntoBoss: 0},
 	{ExplosionBossM4: 0},
 	{Piso410_1: 0},
@@ -5204,7 +5199,6 @@ self.C3_JsPropNameTable = [
 	{Pupila: 0},
 	{PuntoRojo: 0},
 	{estadoOjo: 0},
-	{IsAppearing: 0},
 	{FondoOjoBoss: 0},
 	{detenido: 0},
 	{saltando: 0},
@@ -5238,10 +5232,13 @@ self.C3_JsPropNameTable = [
 	{Botones: 0},
 	{Wrap: 0},
 	{Nubes: 0},
+	{MoveTo2: 0},
+	{Pin2: 0},
 	{Mosaicos: 0},
 	{Troncos: 0},
 	{AvataresNiveles: 0},
 	{Plataformas: 0},
+	{MoveTo: 0},
 	{Murcielagos: 0},
 	{Engranajes: 0},
 	{NodosM4: 0},
@@ -5251,12 +5248,10 @@ self.C3_JsPropNameTable = [
 	{ExplosionesFinal: 0},
 	{ImagenesGrandes: 0},
 	{SiluetasDerecha: 0},
-	{MoveTo: 0},
 	{Rocas: 0},
 	{RocasBoss1: 0},
 	{RocasConFisica: 0},
 	{brillo: 0},
-	{fade: 0},
 	{estadoJuego: 0},
 	{escalaBotones: 0},
 	{tiempoBotones: 0},
@@ -5271,6 +5266,7 @@ self.C3_JsPropNameTable = [
 	{indiceAuxiliar: 0},
 	{i: 0},
 	{r: 0},
+	{TextVel: 0},
 	{estadoNivelIntermedio: 0},
 	{BossEnergy: 0},
 	{HeroEnergy: 0},
@@ -5288,7 +5284,10 @@ self.C3_JsPropNameTable = [
 	{volEfectos: 0},
 	{volMusica: 0},
 	{volBotones: 0},
-	{lang: 0}
+	{lang: 0},
+	{FadeState: 0},
+	{NextScreen: 0},
+	{FadeVel: 0}
 ];
 }
 
@@ -5461,7 +5460,10 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "boton",
 		() => "PlayButton",
+		() => "ChangeScreen",
+		() => "MapaPrincipal",
 		() => "OptionsButton",
+		() => "Opciones",
 		() => "OptionsTitle",
 		p => {
 			const n0 = p._GetNode(0);
@@ -5481,19 +5483,22 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "MusicSwitch_NO"));
 		},
+		() => "Menu",
 		() => "stone",
 		() => 1,
+		() => "MapaMundo1",
 		() => "forest",
 		() => 2,
+		() => "MapaMundo2",
 		() => "cave",
+		() => "MapaMundo3",
 		() => "wall",
+		() => "MapaMundo4",
 		() => "final",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
-		() => 960,
-		() => 580,
 		() => "mapa",
 		() => "setAvatares",
 		() => "superado",
@@ -5551,7 +5556,6 @@ self.C3_ExpressionFuncs = [
 		() => -281492157629439,
 		() => "inicializarVariables",
 		() => "setPositions",
-		() => "SetColorPunto",
 		() => "generarSecuencia",
 		() => "destruirObjetos",
 		() => "MusicaMundo1",
@@ -5616,11 +5620,6 @@ self.C3_ExpressionFuncs = [
 		() => "StartDialog",
 		() => "15_NO",
 		() => "15_Rescue",
-		() => "playNewTNTAnimation",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => and("anim", Math.floor(f0(3)));
-		},
 		() => "lanzarDinamita",
 		() => "Piso",
 		() => "Brightness",
@@ -5646,31 +5645,12 @@ self.C3_ExpressionFuncs = [
 			return () => (v0.GetValue() - 0.1);
 		},
 		() => "apagado",
-		() => "out",
-		() => 720,
-		() => 350,
-		() => "comic",
 		() => "lanzandoPiedra",
 		() => "Boss",
 		() => 578.041,
 		() => 316.155,
 		() => "ConvertToSayayin",
-		() => "hit",
-		() => "piedrazo",
-		() => "Beep",
-		() => "checkSecuencia",
 		() => "juego",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const n1 = p._GetNode(1);
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => f0(n1.ExpObject(f2()));
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => Math.floor(f0(v1.GetValue()));
-		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("Silueta");
@@ -5697,69 +5677,21 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("25");
 		},
-		() => "Heroes",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 50);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 100);
-		},
-		() => "kamyGritando",
-		() => "mostrarSecuencia25",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => ((n0.ExpObject() + " ") + "ComicKami");
-		},
-		() => "revolear",
-		() => "renacer",
-		() => "KamiTimeline",
-		() => "Silueta",
-		() => 29,
-		() => "fuego",
-		() => -10,
-		() => "Tronco",
-		() => "Rama",
+		() => "CreateKami",
 		() => "Sparky",
-		() => "Dialogos",
-		() => "Animation 3",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0("Dialogos");
-		},
-		() => "dialogs",
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			const n2 = p._GetNode(2);
-			return () => n0.ExpObject(and((v1.GetValue() + "Sparky25_"), n2.ExpInstVar()));
-		},
-		() => 12,
-		() => -1023,
-		() => "dialog",
-		() => "mostrandoDialogo",
-		() => 400,
-		() => 140,
-		() => 70,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicKami25"));
-		},
+		() => "25_Sparky",
+		() => "25_KamiScream",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => ((n0.ExpObject() + " ") + "NivelIntermedio");
-		},
-		() => "mostrandoSecuencia",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => ((n0.ExpObject() + " ") + "CheckSecuencia");
 		},
 		() => "Troncos",
 		() => 547,
 		() => 225,
 		() => "burn",
+		() => "fuego",
+		() => "renacer",
+		() => "bats",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(185, 210);
@@ -5771,54 +5703,10 @@ self.C3_ExpressionFuncs = [
 			return () => ((n0.ExpObject() + " ") + "KamiAnimacion");
 		},
 		() => "destruirObjetos210",
-		() => 785,
-		() => 345,
 		() => 600,
 		() => 340,
-		() => 164,
-		() => 155,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_1"));
-		},
-		() => 552,
-		() => 139,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_2"));
-		},
-		() => 150,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_3"));
-		},
-		() => 279,
-		() => 370,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_4"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_5"));
-		},
-		() => 612,
-		() => 359,
-		() => "rescatandoBuble",
+		() => "210_BossDead",
 		() => "mostrarSecuencia210",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 50);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 30);
-		},
 		() => "tirarMurciélago",
 		() => "esconderAlas",
 		() => "pintarNodo210",
@@ -5838,42 +5726,21 @@ self.C3_ExpressionFuncs = [
 			const n3 = p._GetNode(3);
 			return () => C3.toDegrees(C3.angleTo(n0.ExpObject(), n1.ExpObject(), n2.ExpInstVar_Family(), n3.ExpInstVar_Family()));
 		},
+		() => "piedrazo",
 		() => 1.5,
-		() => "DestruirDroide",
-		() => 590,
-		() => 30,
-		() => "SetPosicionOjoBoss",
+		() => "Beep",
 		() => 0.8,
+		() => "checkSecuencia210",
+		() => "out",
 		() => "rescatando",
 		() => 657,
 		() => 406,
 		() => 800,
+		() => 580,
+		() => 960,
 		() => "boss3",
-		() => -20,
-		() => 381,
-		() => 147,
-		() => 9,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueKami_1"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueKami_2"));
-		},
-		() => 119,
-		() => 368,
-		() => 426,
-		() => 372,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueKami_3"));
-		},
-		() => "rescatandoKami",
-		() => "boss",
+		() => "KamiRescue",
+		() => "Heroes",
 		() => "Gamma",
 		() => 0.3,
 		() => 0.5,
@@ -5907,22 +5774,9 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 192,
 		() => 325,
-		() => "bitHablando",
 		() => "tapaHoyo",
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			const n2 = p._GetNode(2);
-			return () => n0.ExpObject(and((v1.GetValue() + "Sparky35_"), n2.ExpInstVar()));
-		},
-		() => 66,
-		() => 403,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBit35"));
-		},
-		() => 130,
+		() => "35_Sparky",
+		() => "25_BitStart",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(f0(2));
@@ -5959,6 +5813,7 @@ self.C3_ExpressionFuncs = [
 		() => "puente",
 		() => "Puente",
 		() => 401,
+		() => 279,
 		() => 402,
 		() => 274,
 		p => {
@@ -5969,6 +5824,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => and(n0.ExpInstVar_Family(), "_RIGHT");
 		},
+		() => "checkSecuencia",
 		() => "angle",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5997,8 +5853,8 @@ self.C3_ExpressionFuncs = [
 		() => 529,
 		() => 230,
 		() => "alAgua",
-		() => "dialogandoBuble",
 		() => "anim0",
+		() => 350,
 		() => "boomBuble",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6014,35 +5870,8 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			return () => C3.lerp(n0.ExpObject(), n1.ExpInstVar(), 0.08);
 		},
-		() => "Animation 4",
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			const n2 = p._GetNode(2);
-			return () => n0.ExpObject(and((v1.GetValue() + "Sparky45_"), n2.ExpInstVar()));
-		},
-		() => 670,
-		() => 364,
-		() => 17,
-		() => 383,
-		() => 77,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoubbleBomb45_1"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoubbleBomb45_2"));
-		},
-		() => 506,
-		() => 283,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoubbleBomb45_3"));
-		},
+		() => "45_Sparky",
+		() => "45_BubbleRescued",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -6051,32 +5880,23 @@ self.C3_ExpressionFuncs = [
 		() => "bossGolpeando",
 		() => "bossGolpea",
 		() => 3.5,
-		() => 290,
-		() => 120,
-		() => 90,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoss410"));
-		},
+		() => "410_Starting",
 		() => "standByAgua",
 		() => "boss4",
 		() => "bubleAtacando",
 		() => "revivirAgua",
 		() => 380,
+		() => 400,
 		() => 439,
 		() => "ascenso",
 		() => 240,
 		() => "FuncionesM4",
 		() => 20,
 		() => "choque",
+		() => "mostrandoSecuencia",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 30);
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => ("M" + (v0.GetValue()).toString());
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6097,17 +5917,8 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject("ParpadoInf") + n1.ExpObject());
 		},
 		() => "110_Start",
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoss210"));
-		},
-		() => 220,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicBoss310"));
-		},
+		() => "Start_210",
+		() => "Start_310",
 		() => 0.02,
 		p => {
 			const n0 = p._GetNode(0);
@@ -6115,6 +5926,8 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() - v1.GetValue());
 		},
 		() => "DAbrirOjo",
+		() => 90,
+		() => "DestruirDroide",
 		() => "MatarDroide",
 		() => "Droide",
 		p => {
@@ -6129,21 +5942,53 @@ self.C3_ExpressionFuncs = [
 			return () => f0(f1());
 		},
 		() => "Funciones del Droide",
+		() => "SetPosicionOjoBoss",
 		() => "Ojo",
 		() => 0.7,
+		() => "M1",
+		() => "M2",
+		() => "M3",
+		() => "M4",
+		() => "playNewTNTAnimation",
 		() => "anim1",
 		() => "anim2",
 		() => "lanzar2",
 		() => -45,
 		() => "Impulso",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => and("anim", Math.floor(f0(3)));
+		},
+		() => "hit",
+		() => "Mortar",
 		() => "Puntas",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("origen");
 		},
+		() => 77,
 		() => 229,
 		() => "golpeandoBit",
+		() => 155,
 		() => -104,
+		() => "Creating Kami",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 50);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 100);
+		},
+		() => "Kami movements",
+		() => "revolear",
+		() => "KamiTimeline",
+		() => "Silueta",
+		() => 29,
+		() => "Molotov",
+		() => -10,
+		() => "Tronco",
+		() => "Rama",
 		() => "Pantalla Pausa",
 		() => "on",
 		() => "enPausa",
@@ -6155,7 +6000,6 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("MapaMundo", v0.GetValue());
 		},
-		() => "Menu",
 		() => "pause",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6175,6 +6019,7 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((v1.GetValue() + "PAUSE_MenuButtonText"));
 		},
 		() => 450,
+		() => 130,
 		() => "off",
 		() => 759,
 		p => {
@@ -6204,6 +6049,9 @@ self.C3_ExpressionFuncs = [
 		() => "cerrarPantallaGenerales",
 		() => "hablandoConBoss",
 		() => "BarrasEnergia",
+		() => 590,
+		() => 30,
+		() => "comic",
 		() => "dialogoInicialCerrado",
 		() => "OjoBoss",
 		() => "Generales",
@@ -6219,6 +6067,7 @@ self.C3_ExpressionFuncs = [
 		() => -50,
 		() => "golpear",
 		() => "Kami_Boss",
+		() => 164,
 		() => 324,
 		p => {
 			const n0 = p._GetNode(0);
@@ -6227,6 +6076,9 @@ self.C3_ExpressionFuncs = [
 		() => 478,
 		() => 235,
 		() => "Explosion",
+		() => 290,
+		() => -1023,
+		() => 120,
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -6246,6 +6098,7 @@ self.C3_ExpressionFuncs = [
 		() => 336,
 		() => 285,
 		() => 267,
+		() => 150,
 		() => "playNewLigthyAnimation",
 		() => "salto",
 		() => 170,
@@ -6257,6 +6110,7 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 572,
 		() => 338,
+		() => 12,
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -6271,45 +6125,24 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "11_FirstDialogue",
 		() => "RescueTNT",
-		() => 8,
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_1"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_2"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_3"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_4"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_5"));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_6"));
-		},
+		() => "RescuingTNT",
+		() => "Intermedio",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => ((f0(f1()) + 1)).toString();
 		},
-		() => "Convert tu SAYAYIN",
+		() => "Convert to SAYAYIN",
+		() => "BossDead",
+		() => 8,
+		() => "SayaPunch",
+		() => "goingFinal",
 		() => "Tint",
 		() => -281474976711679,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(330, 350);
+		},
 		() => 45,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6328,7 +6161,6 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((v1.GetValue() + "PlayButtonText"));
 		},
 		() => "World Map",
-		() => "MapaPrincipal",
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -6362,6 +6194,7 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((v1.GetValue() + "StageText"));
 		},
 		() => "Adjusting TextBaloon size",
+		() => "dialog",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 40);
@@ -6382,11 +6215,20 @@ self.C3_ExpressionFuncs = [
 			return () => ((n0.ExpObject() / (Math.abs(n1.ExpObject()) - 50)) * (n2.ExpObject() + 100));
 		},
 		() => "Managing Dialogs",
+		() => "mostrandoDialogo",
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			const n2 = p._GetNode(2);
 			return () => n0.ExpObject(and((v1.GetValue() + "Dialogue11_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Dialogue11_"), n3.ExpInstVar()))) * v4.GetValue());
 		},
 		() => "D",
 		() => "Sign",
@@ -6398,7 +6240,57 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => n0.ExpObject(and((v1.GetValue() + "Sparky15_"), n2.ExpInstVar()));
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Sparky15_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
 		() => "S",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "Sparky25_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Sparky25_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "Sparky35_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Sparky35_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "Sparky45_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Sparky45_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
 		() => "Piedras",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6406,6 +6298,45 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => n0.ExpObject(and((v1.GetValue() + "ComicBoss110Final_"), n2.ExpInstVar()));
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "ComicBoss110Final_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		() => 4.5,
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "ComicRescueKami_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "ComicRescueKami_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "ComicRescueTNT_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "ComicRescueTNT_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		() => "Dinamite",
+		() => "TNT",
 		() => "tntHablando",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6413,7 +6344,39 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => n0.ExpObject(and((v1.GetValue() + "Comic15_TNT_"), n2.ExpInstVar()));
 		},
-		() => "Dinamite",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "Comic15_TNT_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
+		() => "bitHablando",
+		() => "kamyGritando",
+		() => "rescatandoBuble",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "ComicFinal210_"), n2.ExpInstVar()));
+		},
+		() => "Bubble",
+		() => "dialogandoBuble",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(and((v1.GetValue() + "ComicBoubbleBomb45_"), n2.ExpInstVar()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => (f0(n1.ExpObject(and((v2.GetValue() + "ComicBoubbleBomb45_"), n3.ExpInstVar()))) * v4.GetValue());
+		},
 		() => "Starting dialog function",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6425,22 +6388,191 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "Comic15_TNT_1"));
 		},
-		() => "TNT",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "Comic15_TNT_1"))) * v3.GetValue());
+		},
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "ComicBoss110Final_Start"));
 		},
 		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoss110Final_Start"))) * v3.GetValue());
+		},
+		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "ComicBoss110Final_1"));
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoss110Final_1"))) * v3.GetValue());
+		},
 		() => "B",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicRescueTNT_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicRescueTNT_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicBoss310"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoss310"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicBoss210"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoss210"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicRescueKami_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicRescueKami_1"))) * v3.GetValue());
+		},
+		() => "K",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicBit35"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBit35"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Sparky35_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "Sparky35_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Sparky25_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "Sparky25_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicKami25"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicKami25"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicFinal210_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicFinal210_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Sparky45_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "Sparky45_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicBoubbleBomb45_1"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoubbleBomb45_1"))) * v3.GetValue());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "ComicBoss410"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => (f0(n1.ExpObject((v2.GetValue() + "ComicBoss410"))) * v3.GetValue());
+		},
 		() => "Setting smoke on position",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 180);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 90);
 		},
 		() => "Hand Behavior",
 		() => "Mosaicos",
@@ -6504,10 +6636,22 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + (f1() * 100));
 		},
 		() => "Generate New sequence",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => Math.floor(f0(v1.GetValue()));
+		},
 		() => "Clean Sequence Array",
 		() => "Check Sequence",
 		() => "Show Sequence",
 		() => "Initialize Variables",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(n1.ExpObject(f2()));
+		},
+		() => "Reset Touch and Sequence Variables",
 		() => "Boss 1 Arming",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6533,7 +6677,40 @@ self.C3_ExpressionFuncs = [
 			return () => f0("Droide");
 		},
 		() => "rocks",
-		() => "rocksSound"
+		() => "rocksSound",
+		() => "Boss 2 Arming",
+		() => "Boss 3 Arming",
+		() => "Boss 4 Arming",
+		() => "Bosses - Start",
+		() => "Starting level",
+		() => "OUT",
+		() => "Fading IN",
+		() => "IN",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("Fade");
+		},
+		() => "Fade",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => (f0("Fade") + (v1.GetValue() * f2()));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(0);
+		},
+		() => "Fading OUT",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => (f0("Fade") - (v1.GetValue() * f2()));
+		},
+		() => "Opening Gate",
+		() => -90,
+		() => "gate"
 ];
 
 
