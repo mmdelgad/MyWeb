@@ -4729,6 +4729,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsOutsideLayout,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Behaviors.scrollto.Acts.Shake,
+		C3.Plugins.System.Acts.SetLayerOpacity,
 		C3.Plugins.Sprite.Exps.Height,
 		C3.Plugins.Sprite.Acts.SetHeight,
 		C3.Behaviors.Sin.Acts.SetMovement,
@@ -4783,7 +4784,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Cnds.Contains,
 		C3.Plugins.Arr.Acts.Push,
 		C3.Plugins.System.Exps.anglelerp,
-		C3.Plugins.System.Acts.SetLayerOpacity,
 		C3.Plugins.System.Exps.layeropacity,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
 		C3.Plugins.System.Cnds.LayerCmpOpacity,
@@ -5454,7 +5454,6 @@ self.C3_ExpressionFuncs = [
 		() => "SI",
 		() => "mostrarMascaraMapaMundo",
 		() => "mostrarTodosLosNiveles",
-		() => "NO",
 		() => "mostrarTutorialM1",
 		() => "mostrarTutorialM2",
 		() => "mostrarTutorialM3",
@@ -5620,6 +5619,7 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((v1.GetValue() + "MusicSwitch_NO"));
 		},
 		() => "Menu",
+		() => "NO",
 		() => "stone",
 		() => 1,
 		() => "MapaMundo1",
@@ -6033,6 +6033,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 30);
 		},
+		() => "Droide",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("CentroOjo");
@@ -6064,7 +6065,6 @@ self.C3_ExpressionFuncs = [
 		() => 90,
 		() => "DestruirDroide",
 		() => "MatarDroide",
-		() => "Droide",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ((v0.GetValue() - 1)).toString();
