@@ -42,7 +42,13 @@
 	"oso_agresiva_derrotar": "El oso cae muerto luego de una gran batalla",
 	"pozo_pasiva_perder": "El pozo no devolvió nada",
 	"arbusto_pasiva_frutos": "No hay más frutos en el arbusto",
+	"arbusto_pasiva_saludo": "Un frondoso arbusto frutal",
 	"barriles_pasiva_armas": "No hay más armas en el barril",
+	"comerciante_pasiva_saludo": "¡Hola! ¿Tienes mi TUNICA?",
+	"comerciante_pasiva_rechazar": "No me interesa otra cosa más que mi TUNICA",
+	"comerciante_pasiva_ganar": "¡Al fin! Has salvado la isla",
+	"comerciante_pasiva_comprar": "Veo que te interesa alguno de mis productos, ahora puedes tomar uno",
+	"no_puedes_soltar": "No puedes soltar ese objeto",
     "puntos_de_vida": "Puntos de vida: "
   }
 }

@@ -4476,6 +4476,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.UID,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
 		C3.Plugins.System.Acts.SetVar,
+		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.System.Acts.Wait,
 		C3.Behaviors.Sin.Acts.SetEnabled,
@@ -4529,7 +4530,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.ObjectTypeName,
 		C3.Plugins.Text.Acts.TypewriterText,
 		C3.Plugins.Json.Exps.Get,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Text.Acts.SetVisible,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Behaviors.Pin.Acts.Unpin,
@@ -4617,6 +4617,8 @@ self.C3_JsPropNameTable = [
 	{Header_CajoncitoItems: 0},
 	{BotonCajon: 0},
 	{ExpendedorDeMonedas: 0},
+	{Lleno: 0},
+	{CajoncitoDrop: 0},
 	{Castillo: 0},
 	{Puente: 0},
 	{Muelle: 0},
@@ -4912,12 +4914,12 @@ self.C3_ExpressionFuncs = [
 		() => "imprimiendo",
 		() => 300,
 		() => "Impresora_volviendo",
+		() => -10,
 		() => "Impresora_imprimiendo",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 20);
 		},
-		() => 2000,
 		() => "standBy",
 		() => "Crear carta para imprimir",
 		() => "Cartas",
@@ -4964,6 +4966,8 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			return () => ((n0.ExpInstVar() + n1.ExpObject()) - 23);
 		},
+		() => "items",
+		() => "drop",
 		() => "Juego vibra",
 		p => {
 			const n0 = p._GetNode(0);
@@ -4990,23 +4994,31 @@ self.C3_ExpressionFuncs = [
 		() => 1.1,
 		() => "yendoACajon",
 		() => "yendoAInventario",
+		() => "yendoACajonDrop",
 		() => "Cajoncito",
+		() => "enCajoncitoDrop",
 		() => "entrando",
 		() => "interactuarConMaquina",
-		() => "Crear items iniciales",
 		() => "Punio",
+		() => "Hueso",
+		() => "BotellaAgua",
+		() => "Tunica",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "no_puedes_soltar"));
+		},
+		() => "Crear items iniciales",
 		() => "Gestionar interaccion ITEMS-Entidades",
 		() => "interactuando",
 		() => "Manzana",
 		() => "arbol",
-		() => "BotellaAgua",
 		() => "questEnProgreso",
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "arbol_pasiva_quest1"));
 		},
-		() => "Hueso",
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -5032,7 +5044,6 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((v1.GetValue() + "arbol_pasiva_questComplete"));
 		},
 		() => "questFinalizada",
-		() => "Tunica",
 		() => "terminado",
 		p => {
 			const n0 = p._GetNode(0);
@@ -5123,6 +5134,22 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "oso_agresiva_nada"));
 		},
+		() => "comerciante",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "comerciante_pasiva_ganar"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "comerciante_pasiva_comprar"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "comerciante_pasiva_rechazar"));
+		},
 		() => "Escupir Item",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5154,7 +5181,6 @@ self.C3_ExpressionFuncs = [
 		() => "2",
 		() => "3",
 		() => "4",
-		() => "comerciante",
 		() => "5",
 		() => "6",
 		() => "7",
@@ -5221,6 +5247,11 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			const n2 = p._GetNode(2);
 			return () => and(n0.ExpObject((v1.GetValue() + "puntos_de_vida")), n2.ExpInstVar_Family());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => and(n0.ExpObject((v1.GetValue() + "puntos_de_vida")), "0");
 		},
 		() => "Entidad Ataca",
 		p => {
