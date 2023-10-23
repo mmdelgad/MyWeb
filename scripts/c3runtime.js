@@ -4644,6 +4644,7 @@ self.C3_JsPropNameTable = [
 	{Peon: 0},
 	{MarcadorDePrueba: 0},
 	{LoreMapPlaceholder: 0},
+	{Portoncito: 0},
 	{Keyboard: 0},
 	{Audio: 0},
 	{Touch: 0},
@@ -4932,7 +4933,7 @@ self.C3_ExpressionFuncs = [
 		() => "standBy",
 		() => "Crear carta para imprimir",
 		() => "Cartas",
-		() => 431,
+		() => 432,
 		() => 164,
 		() => "impresa",
 		() => "Eliminar cartas viejas",
@@ -5298,7 +5299,8 @@ self.C3_ExpressionFuncs = [
 			const n3 = p._GetNode(3);
 			return () => n0.ExpObject(((((v1.GetValue() + n2.ExpObject()) + "_") + n3.ExpInstVar_Family()) + "_saludo"));
 		},
-		() => "Entidad - Rechaza objeto"
+		() => "Entidad - Rechaza objeto",
+		() => "Abrir portoncito"
 ];
 
 
