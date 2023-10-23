@@ -4494,6 +4494,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.dt,
 		C3.Behaviors.Sin.Acts.UpdateInitialState,
 		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Cnds.IsOutsideLayout,
@@ -4520,7 +4521,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.DragnDrop.Acts.SetEnabled,
 		C3.Behaviors.DragnDrop.Cnds.IsEnabled,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
-		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Behaviors.DragnDrop.Cnds.OnDragStart,
 		C3.Behaviors.Physics.Acts.SetEnabled,
 		C3.Plugins.Sprite.Acts.MoveToLayer,
@@ -4911,6 +4911,7 @@ self.C3_ExpressionFuncs = [
 		() => 125,
 		() => "activo",
 		() => 350,
+		() => "comerciante",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(2);
@@ -5144,7 +5145,6 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "oso_agresiva_nada"));
 		},
-		() => "comerciante",
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
