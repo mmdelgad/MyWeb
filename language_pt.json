@@ -44,11 +44,14 @@
 	"arbusto_pasiva_frutos": "No hay más frutos en el arbusto",
 	"arbusto_pasiva_saludo": "Un frondoso arbusto frutal",
 	"barriles_pasiva_armas": "No hay más armas en el barril",
-	"comerciante_pasiva_saludo": "¡Hola! ¿Tienes mi TUNICA?",
+	"comerciante_pasiva_saludo": "¡Hola! ¿Tienes mi TUNICA o tienes interés por alguno de mis productos?",
 	"comerciante_pasiva_rechazar": "No me interesa otra cosa más que mi TUNICA",
 	"comerciante_pasiva_ganar": "¡Al fin! Has salvado la isla",
-	"comerciante_pasiva_comprar": "Veo que te interesa alguno de mis productos, ahora puedes tomar uno",
+	"comerciante_pasiva_comprar": "Veo que te interesa alguno de mis productos. elige uno",
 	"no_puedes_soltar": "No puedes soltar ese objeto",
+	"pozo_pasiva_saludo": "Arroja una moneda al pozo de los deseos y obtendrás objetos asombrosos",
+	"barriles_pasiva_saludo": "Un barril... ¿Qué contendrá en su interior?",
+	"comerciante_pasiva_vendiendo": "Todo tuyo. No olvides mi TUNICA",
     "puntos_de_vida": "Puntos de vida: "
   }
 }
