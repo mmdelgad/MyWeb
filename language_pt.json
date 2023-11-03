@@ -46,6 +46,11 @@
 	"pozo_pasiva_saludo": "Throw a COIN into the WELL and get awesome objects",
 	"barriles_pasiva_saludo": "A barrel... What will it contain inside?",
 	"comerciante_pasiva_vendiendo": "There you go... Don't forget my TUNIC",
+	"Tutorial_Text1": "Open the top drawer to interact with the game",
+	"Tutorial_Text2": "Drag the HAND into the OPEN DRAWER",
+	"Tutorial_Text3": "Close the drawer by pushing it to its original position",
+	"Tutorial_Text4": "Now you have a new WEAPON. Pick a square from the board next or down to your position to start the journey",
+	
     "puntos_de_vida": "Life points: "
   },
   "es": {

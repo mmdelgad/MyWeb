@@ -4434,6 +4434,17 @@ return map.get(this)._IsTimerPaused(name)}getCurrentTime(name){C3X.RequireString
 }
 
 {
+'use strict';{const C3=self.C3;C3.Behaviors.Flash=class FlashBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Flash.Type=class FlashType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const C3X=self.C3X;const IBehaviorInstance=self.IBehaviorInstance;C3.Behaviors.Flash.Instance=class FlashInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._onTime=0;this._offTime=0;this._stage=0;this._stageTimeLeft=0;this._timeLeft=0;this._StartTicking()}Release(){super.Release()}_Flash(on,off,dur){this._onTime=on;this._offTime=off;this._stage=1;this._stageTimeLeft=off;this._timeLeft=dur;this._inst.GetWorldInfo().SetVisible(false);this._runtime.UpdateRender()}_StopFlashing(){this._timeLeft=
+0;this._inst.GetWorldInfo().SetVisible(true);this._runtime.UpdateRender()}_IsFlashing(){return this._timeLeft>0}SaveToJson(){return{"on":this._onTime,"off":this._offTime,"s":this._stage,"stl":this._stageTimeLeft,"tl":this._timeLeft}}LoadFromJson(o){this._onTime=o["on"];this._offTime=o["off"];this._stage=o["s"];this._stageTimeLeft=o["stl"];this._timeLeft=o["tl"]===null?Infinity:o["tl"]}Tick(){if(this._timeLeft<=0)return;const dt=this._runtime.GetDt(this._inst);this._timeLeft-=dt;if(this._timeLeft<=
+0){this._timeLeft=0;this._inst.GetWorldInfo().SetVisible(true);this._runtime.UpdateRender();this.DispatchScriptEvent("flashend");return this.DebugTrigger(C3.Behaviors.Flash.Cnds.OnFlashEnded)}this._stageTimeLeft-=dt;if(this._stageTimeLeft<=0){if(this._stage===0){this._inst.GetWorldInfo().SetVisible(false);this._stage=1;this._stageTimeLeft+=this._offTime}else{this._inst.GetWorldInfo().SetVisible(true);this._stage=0;this._stageTimeLeft+=this._onTime}this._runtime.UpdateRender()}}GetDebuggerProperties(){const prefix=
+"behaviors.flash.debugger";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".on-time",value:this._onTime,onedit:v=>this._onTime=v},{name:prefix+".off-time",value:this._offTime,onedit:v=>this._offTime=v},{name:prefix+".is-flashing",value:this._timeLeft>0},{name:prefix+".time-left",value:this._timeLeft}]}]}GetScriptInterfaceClass(){return self.IFlashBehaviorInstance}};const map=new WeakMap;self.IFlashBehaviorInstance=class IFlashBehaviorInstance extends IBehaviorInstance{constructor(){super();
+map.set(this,IBehaviorInstance._GetInitInst().GetSdkInstance())}flash(on,off,dur){C3X.RequireFiniteNumber(on);C3X.RequireFiniteNumber(off);C3X.RequireFiniteNumber(dur);map.get(this)._Flash(on,off,dur)}stop(){map.get(this)._StopFlashing()}get isFlashing(){return map.get(this)._IsFlashing()}}}{const C3=self.C3;C3.Behaviors.Flash.Cnds={IsFlashing(){return this._IsFlashing()},OnFlashEnded(){return true}}}{const C3=self.C3;C3.Behaviors.Flash.Acts={Flash(on,off,dur){this._Flash(on,off,dur)},StopFlashing(){this._StopFlashing()}}}
+{const C3=self.C3;C3.Behaviors.Flash.Exps={}};
+
+}
+
+{
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
@@ -4453,6 +4464,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Json,
 		C3.Behaviors.scrollto,
 		C3.Behaviors.Timer,
+		C3.Behaviors.Flash,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Cnds.ForEach,
@@ -4472,6 +4484,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.Sprite.Exps.Count,
 		C3.Plugins.Sprite.Exps.UID,
@@ -4496,7 +4509,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Cnds.CompareX,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Cnds.IsOutsideLayout,
 		C3.Plugins.Sprite.Cnds.PickTopBottom,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
@@ -4518,6 +4530,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Physics.Exps.VelocityY,
 		C3.Behaviors.Physics.Acts.SetAngularVelocity,
 		C3.Behaviors.Physics.Exps.AngularVelocity,
+		C3.Plugins.Text.Acts.TypewriterText,
+		C3.Plugins.Json.Exps.Get,
 		C3.Behaviors.DragnDrop.Acts.SetEnabled,
 		C3.Behaviors.DragnDrop.Cnds.IsEnabled,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
@@ -4528,9 +4542,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.DragnDrop.Cnds.OnDrop,
 		C3.Behaviors.Physics.Acts.EnableCollisions,
 		C3.Plugins.Sprite.Exps.ObjectTypeName,
-		C3.Plugins.Text.Acts.TypewriterText,
-		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.Text.Acts.SetVisible,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Behaviors.Flash.Acts.Flash,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Behaviors.Pin.Acts.Unpin,
 		C3.Plugins.Sprite.Cnds.OnCreated,
@@ -4654,6 +4668,8 @@ self.C3_JsPropNameTable = [
 	{ScrollTo: 0},
 	{Timer: 0},
 	{Camara: 0},
+	{Flash: 0},
+	{FlechaTutorial: 0},
 	{Sine2: 0},
 	{Personajes: 0},
 	{Fondos_Escenario: 0},
@@ -4860,7 +4876,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.floor(f0(3));
+			return () => Math.floor(f0(2));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4920,6 +4936,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 230);
 		},
+		() => "tutorial",
 		() => "Inicio Cartas",
 		() => "Comportamiento Impresora",
 		() => "imprimiendo",
@@ -4986,10 +5003,16 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Logica Cajoncito",
 		() => "cerrado",
-		() => "atacando",
 		() => "open",
 		() => "abriendo",
 		() => "cajoncito",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Tutorial_Text2"));
+		},
+		() => 118,
+		() => "atacando",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -5007,6 +5030,11 @@ self.C3_ExpressionFuncs = [
 		() => "yendoAInventario",
 		() => "yendoACajonDrop",
 		() => "Cajoncito",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Tutorial_Text3"));
+		},
 		() => "enCajoncitoDrop",
 		() => "entrando",
 		() => "interactuarConMaquina",
@@ -5113,6 +5141,14 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Tutorial_Text4"));
+		},
+		() => 120,
+		() => 0.5,
+		() => 60,
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "barriles_pasiva_armas"));
 		},
 		() => "fenix",
@@ -5207,9 +5243,13 @@ self.C3_ExpressionFuncs = [
 		() => "Asignar Entidad a Casilla",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("0");
+			return () => n0.ExpObject("8");
 		},
 		() => "ocupada",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("0");
+		},
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("6");
@@ -5238,10 +5278,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("10");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("8");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -5288,6 +5324,11 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Tutorial_Text1"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
 			const n2 = p._GetNode(2);
 			const n3 = p._GetNode(3);
 			return () => n0.ExpObject(((((v1.GetValue() + n2.ExpObject()) + "_") + n3.ExpInstVar_Family()) + "_quest1"));
@@ -5300,7 +5341,8 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(((((v1.GetValue() + n2.ExpObject()) + "_") + n3.ExpInstVar_Family()) + "_saludo"));
 		},
 		() => "Entidad - Rechaza objeto",
-		() => "Abrir portoncito"
+		() => "Abrir portoncito",
+		() => "TutoStart"
 ];
 
 
