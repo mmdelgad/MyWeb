@@ -4502,10 +4502,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetY,
-		C3.Plugins.Sprite.Acts.SetPos,
-		C3.Plugins.System.Acts.SetGroupActive,
+		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Exps.dt,
 		C3.Behaviors.Sin.Acts.UpdateInitialState,
+		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Cnds.CompareX,
@@ -4556,7 +4556,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Physics.Acts.ApplyForceToward,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Dictionary.Exps.Get,
-		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Text.Cnds.IsRunningTypewriterText,
 		C3.Plugins.Text.Acts.TypewriterFinish,
 		C3.Behaviors.Timer.Cnds.OnTimer,
@@ -4638,7 +4637,7 @@ self.C3_JsPropNameTable = [
 	{Castillo: 0},
 	{Puente: 0},
 	{Muelle: 0},
-	{Arbusto: 0},
+	{Glaciar: 0},
 	{Arboles: 0},
 	{Casa: 0},
 	{Castillo_Trasero: 0},
@@ -4646,6 +4645,9 @@ self.C3_JsPropNameTable = [
 	{Random_Y: 0},
 	{ArbolGigante: 0},
 	{Muelle_trasero: 0},
+	{Pasto_1: 0},
+	{Pasto_2: 0},
+	{Jardin: 0},
 	{Textos: 0},
 	{Txt_VidaEntidad: 0},
 	{MapAndTextPlaceholder: 0},
@@ -4670,6 +4672,7 @@ self.C3_JsPropNameTable = [
 	{Camara: 0},
 	{Flash: 0},
 	{FlechaTutorial: 0},
+	{TXT_TutorialFijo: 0},
 	{Sine2: 0},
 	{Personajes: 0},
 	{Fondos_Escenario: 0},
@@ -4684,6 +4687,14 @@ self.C3_JsPropNameTable = [
 	{Personajes_VelEntrada: 0},
 	{PuntoReferenciaMapa_X: 0},
 	{PuntoReferenciaMapa_Y: 0},
+	{CantidadDeArboles: 0},
+	{CantidadDePuentes: 0},
+	{CantidadDeGlaciares: 0},
+	{CantidadDeJardines: 0},
+	{CantidadDeCasas: 0},
+	{CantidadDeOtrasCasas: 0},
+	{CantidadDePastos: 0},
+	{RandomPasto: 0},
 	{Ubicacion: 0},
 	{TipoPersonaje: 0},
 	{CantidadMuertos: 0},
@@ -4850,6 +4861,10 @@ self.C3_ExpressionFuncs = [
 		() => "viajando",
 		() => "pasiva",
 		() => "saliendoConEscenario",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 150);
+		},
 		() => 2,
 		() => "montania",
 		() => "shop",
@@ -4902,8 +4917,8 @@ self.C3_ExpressionFuncs = [
 			return () => (v0.GetValue() + 85);
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 16);
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(0, 2));
 		},
 		() => "Inicio Escenario",
 		p => {
@@ -4960,10 +4975,6 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpInstVar_Family()).toString();
 		},
-		() => "Tocar botones",
-		() => "on",
-		() => "off",
-		() => "botonMadera",
 		() => "Ganar y perder vida",
 		() => 10,
 		p => {
@@ -5217,10 +5228,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(f0(0, 4));
 		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.floor(f0(0, 2));
-		},
 		() => "Ojo",
 		() => "Cerebro",
 		() => 1000,
@@ -5319,6 +5326,15 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			const v3 = p._GetNode(3).GetVar();
+			const n4 = p._GetNode(4);
+			const v5 = p._GetNode(5).GetVar();
+			return () => and(and(and(and(and(and(n0.ExpObject((v1.GetValue() + "TutorialFijo_1")), "\n"), "\n"), n2.ExpObject((v3.GetValue() + "TutorialFijo_2"))), "\n"), "\n"), n4.ExpObject((v5.GetValue() + "TutorialFijo_3")));
 		},
 		() => "Entidad - Saludo",
 		p => {

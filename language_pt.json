@@ -50,6 +50,9 @@
 	"Tutorial_Text2": "Drag the HAND into the OPEN DRAWER",
 	"Tutorial_Text3": "Close the drawer by pushing it to its original position",
 	"Tutorial_Text4": "Now you have a new WEAPON. Pick a square from the board next or down to your position to start the journey",
+	"TutorialFijo_1": "- Put ITEMS inside the DRAWER to interact with the ENTITIES",
+	"TutorialFijo_2": "- CLICK on the map to move to another LOCATION",
+	"TutorialFijo_3": "- It looks like the SHOPKEEPER has a JOB for you!",
 	
     "puntos_de_vida": "Life points: "
   },
