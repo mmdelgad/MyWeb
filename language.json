@@ -71,6 +71,10 @@
         "ComicBoubbleBomb45_2": "Could you help me?",
 		"ComicBossFinal_1": "Systems fully damaged",
 		"ComicBossFinal_2": "Starting emergency sequence",
+		"Reset_Game_text": "RESET GAME",
+		"Reset_Game_question": "Are you sure?",
+		"Reset_Game_YES": "YES",
+		"Reset_Game_NO": "NO",
 		"MusicSwitch_NO": "Music: NO",
 		"MusicSwitch_SI": "Music: YES"
         
@@ -147,6 +151,10 @@
         "ComicBoubbleBomb45_2": "¿Puedes ayudarme?",
 		"ComicBossFinal_1": "Sistemas dañados",
 		"ComicBossFinal_2": "Empezando secuencia de emergencia",
+		"Reset_Game_text": "REINICIAR JUEGO",
+		"Reset_Game_question": "¿Estás seguro?",
+		"Reset_Game_YES": "SI",
+		"Reset_Game_NO": "NO",
 		"MusicSwitch_NO": "Música: NO",
 		"MusicSwitch_SI": "Música: SI"
     }

@@ -4524,18 +4524,18 @@ CurrentType(){return this._JSONTypeOf(this._currentValue)}}};
 }
 
 {
-'use strict';{const C3=self.C3;C3.Behaviors.Fade=class FadeBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Fade.Type=class FadeType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
-{const C3=self.C3;const C3X=self.C3X;const IBehaviorInstance=self.IBehaviorInstance;const FADE_IN_TIME=0;const WAIT_TIME=1;const FADE_OUT_TIME=2;const DESTROY=3;const ACTIVE_AT_START=4;C3.Behaviors.Fade.Instance=class FadeInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._fadeInTime=0;this._waitTime=0;this._fadeOutTime=0;this._destroy=true;this._activeAtStart=true;this._setMaxOpacity=false;this._stage=0;this._stageTime=C3.New(C3.KahanSum);this._maxOpacity=
-this._inst.GetWorldInfo().GetOpacity()||1;if(properties){this._fadeInTime=properties[FADE_IN_TIME];this._waitTime=properties[WAIT_TIME];this._fadeOutTime=properties[FADE_OUT_TIME];this._destroy=!!properties[DESTROY];this._activeAtStart=!!properties[ACTIVE_AT_START];this._stage=this._activeAtStart?0:3}if(this._activeAtStart)if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"fit":this._fadeInTime,
-"wt":this._waitTime,"fot":this._fadeOutTime,"d":this._destroy,"s":this._stage,"st":this._stageTime.Get(),"mo":this._maxOpacity}}LoadFromJson(o){this._fadeInTime=o["fit"];this._waitTime=o["wt"];this._fadeOutTime=o["fot"];this._destroy=o["d"];this._stage=o["s"];this._stageTime.Set(o["st"]);this._maxOpacity=o["mo"];if(this._stage===3)this._StopTicking();else this._StartTicking()}Tick(){const dt=this._runtime.GetDt(this._inst);this._stageTime.Add(dt);const wi=this._inst.GetWorldInfo();if(this._stage===
-0){wi.SetOpacity(this._stageTime.Get()/this._fadeInTime*this._maxOpacity);this._runtime.UpdateRender();if(wi.GetOpacity()>=this._maxOpacity){wi.SetOpacity(this._maxOpacity);this._stage=1;this._stageTime.Reset();this.DispatchScriptEvent("fadeinend");this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeInEnd)}}if(this._stage===1)if(this._stageTime.Get()>=this._waitTime){this._stage=2;this._stageTime.Reset();this.DispatchScriptEvent("waitend");this.Trigger(C3.Behaviors.Fade.Cnds.OnWaitEnd)}if(this._stage===2)if(this._fadeOutTime!==
-0){wi.SetOpacity(this._maxOpacity-this._stageTime.Get()/this._fadeOutTime*this._maxOpacity);this._runtime.UpdateRender();if(wi.GetOpacity()<=0){this._stage=3;this._stageTime.Reset();this.DispatchScriptEvent("fadeoutend");this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeOutEnd);if(this._destroy)this._runtime.DestroyInstance(this._inst)}}else{this._stage=3;this._stageTime.Reset()}if(this._stage===3)this._StopTicking()}_StartFade(){if(!this._activeAtStart&&!this._setMaxOpacity){this._maxOpacity=this._inst.GetWorldInfo().GetOpacity()||
-1;this._setMaxOpacity=true}if(this._stage===3)this.Start()}_RestartFade(){this.Start()}Start(){this._stage=0;this._stageTime.Reset();if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}this._StartTicking()}_SetFadeInTime(t){this._fadeInTime=Math.max(t,0)}_GetFadeInTime(){return this._fadeInTime}_SetWaitTime(t){this._waitTime=Math.max(t,0)}_GetWaitTime(){return this._waitTime}_SetFadeOutTime(t){this._fadeOutTime=
-Math.max(t,0)}_GetFadeOutTime(){return this._fadeOutTime}GetPropertyValueByIndex(index){switch(index){case FADE_IN_TIME:return this._GetFadeInTime();case WAIT_TIME:return this._GetWaitTime();case FADE_OUT_TIME:return this._GetFadeOutTime();case DESTROY:return this._destroy}}SetPropertyValueByIndex(index,value){switch(index){case FADE_IN_TIME:this._SetFadeInTime(value);break;case WAIT_TIME:this._SetWaitTime(value);break;case FADE_OUT_TIME:this._SetFadeOutTime(value);break;case DESTROY:this._destroy=
-!!value;break}}GetDebuggerProperties(){const prefix="behaviors.fade";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.fade-in-time.name",value:this._GetFadeInTime(),onedit:v=>this._SetFadeInTime(v)},{name:prefix+".properties.wait-time.name",value:this._GetWaitTime(),onedit:v=>this._SetWaitTime(v)},{name:prefix+".properties.fade-out-time.name",value:this._GetFadeOutTime(),onedit:v=>this._SetFadeOutTime(v)},{name:prefix+".debugger.stage",value:[prefix+".debugger."+
-["fade-in","wait","fade-out","done"][this._stage]]}]}]}GetScriptInterfaceClass(){return self.IFadeBehaviorInstance}};const map=new WeakMap;self.IFadeBehaviorInstance=class IFadeBehaviorInstance extends IBehaviorInstance{constructor(){super();map.set(this,IBehaviorInstance._GetInitInst().GetSdkInstance())}startFade(){map.get(this)._StartFade()}restartFade(){map.get(this)._RestartFade()}set fadeInTime(t){C3X.RequireFiniteNumber(t);map.get(this)._SetFadeInTime(t)}get fadeInTime(){return map.get(this)._GetFadeInTime()}set waitTime(t){C3X.RequireFiniteNumber(t);
-map.get(this)._SetWaitTime(t)}get waitTime(){return map.get(this)._GetWaitTime()}set fadeOutTime(t){C3X.RequireFiniteNumber(t);map.get(this)._SetFadeOutTime(t)}get fadeOutTime(){return map.get(this)._GetFadeOutTime()}}}{const C3=self.C3;C3.Behaviors.Fade.Cnds={OnFadeOutEnd(){return true},OnFadeInEnd(){return true},OnWaitEnd(){return true}}}
-{const C3=self.C3;C3.Behaviors.Fade.Acts={StartFade(){this._StartFade()},RestartFade(){this._RestartFade()},SetFadeInTime(t){this._SetFadeInTime(t)},SetWaitTime(t){this._SetWaitTime(t)},SetFadeOutTime(t){this._SetFadeOutTime(t)}}}{const C3=self.C3;C3.Behaviors.Fade.Exps={FadeInTime(){return this._GetFadeInTime()},WaitTime(){return this._GetWaitTime()},FadeOutTime(){return this._GetFadeOutTime()}}};
+'use strict';{const C3=self.C3;C3.Plugins.PlatformInfo=class PlatformInfoPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.PlatformInfo.Type=class PlatformInfoType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const DOM_COMPONENT_ID="platform-info";C3.Plugins.PlatformInfo.Instance=class PlatformInfoInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._screenWidth=0;this._screenHeight=0;this._windowOuterWidth=0;this._windowOuterHeight=0;this._safeAreaInset=[0,0,0,0];this._supportsWakeLock=false;this._isWakeLockActive=false;this._isNwjs=false;this.AddDOMMessageHandlers([["window-resize",e=>this._OnWindowResize(e)],["wake-lock-acquired",e=>this._OnWakeLockAcquired(e)],
+["wake-lock-error",e=>this._OnWakeLockError(e)],["wake-lock-released",e=>this._OnWakeLockReleased(e)]]);if(navigator.connection)navigator.connection.addEventListener("change",()=>this._OnNetworkChange());this._runtime.AddLoadPromise(this.PostToDOMAsync("get-initial-state").then(data=>{this._screenWidth=data["screenWidth"];this._screenHeight=data["screenHeight"];this._windowOuterWidth=data["windowOuterWidth"];this._windowOuterHeight=data["windowOuterHeight"];this._safeAreaInset=data["safeAreaInset"];
+this._supportsWakeLock=data["supportsWakeLock"];this._isNwjs=data["isNwjs"]}))}Release(){super.Release()}_OnWindowResize(e){this._windowOuterWidth=e["windowOuterWidth"];this._windowOuterHeight=e["windowOuterHeight"];this._safeAreaInset=e["safeAreaInset"]}async _OnNetworkChange(){await this.TriggerAsync(C3.Plugins.PlatformInfo.Cnds.OnNetworkChange)}async _OnWakeLockAcquired(){this._isWakeLockActive=true;await this.TriggerAsync(C3.Plugins.PlatformInfo.Cnds.OnWakeLockAcquired)}async _OnWakeLockError(){this._isWakeLockActive=
+false;await this.TriggerAsync(C3.Plugins.PlatformInfo.Cnds.OnWakeLockError)}async _OnWakeLockReleased(){this._isWakeLockActive=false;await this.TriggerAsync(C3.Plugins.PlatformInfo.Cnds.OnWakeLockReleased)}}}
+{const C3=self.C3;C3.Plugins.PlatformInfo.Cnds={IsOnMobile(){return C3.Platform.IsMobile},IsOnWindows(){return C3.Platform.OS==="Windows"},IsOnMacOS(){return C3.Platform.OS==="macOS"},IsOnLinux(){return C3.Platform.OS==="Linux"},IsOnChromeOS(){return C3.Platform.OS==="Chrome OS"},IsOnAndroid(){return C3.Platform.OS==="Android"},IsOniOS(){return C3.Platform.OS==="iOS"},IsWebExport(){const exportType=this._runtime.GetExportType();return exportType==="html5"||exportType==="scirra-arcade"||exportType===
+"preview"||exportType==="instant-games"},IsCordovaExport(){return this._runtime.IsCordova()},IsNWjsExport(){return this._runtime.GetExportType()==="nwjs"||this._isNwjs},IsWindowsUWPExport(){return this._runtime.GetExportType()==="windows-uwp"},IsWindowsWebView2Export(){return this._runtime.IsWindowsWebView2()},IsMacOSWKWebView2Export(){return this._runtime.GetExportType()==="macos-wkwebview"},OnNetworkChange(){return true},OnWakeLockAcquired(){return true},OnWakeLockError(){return true},OnWakeLockReleased(){return true},
+IsWakeLockActive(){return this._isWakeLockActive},IsWakeLockSupported(){return this._supportsWakeLock}}}{const C3=self.C3;C3.Plugins.PlatformInfo.Acts={RequestWakeLock(){if(!this._supportsWakeLock)return;this._PostToDOMMaybeSync("request-wake-lock")},ReleaseWakeLock(){if(!this._supportsWakeLock)return;this._isWakeLockActive=false;this.PostToDOM("release-wake-lock")}}}
+{const C3=self.C3;C3.Plugins.PlatformInfo.Exps={Renderer(){let ret="";if(this._runtime.GetWebGPURenderer())ret="webgpu";else ret="webgl"+this._runtime.GetWebGLRenderer().GetWebGLVersionNumber();if(this._runtime.GetRenderer().HasMajorPerformanceCaveat())ret+="-software";return ret},RendererDetail(){if(this._runtime.GetWebGPURenderer())return this._runtime.GetWebGPURenderer().GetAdapterInfoString();else return this._runtime.GetWebGLRenderer().GetUnmaskedRenderer()},DevicePixelRatio(){return self.devicePixelRatio},
+ScreenWidth(){return this._screenWidth},ScreenHeight(){return this._screenHeight},WindowInnerWidth(){return this._runtime.GetCanvasManager().GetLastWidth()},WindowInnerHeight(){return this._runtime.GetCanvasManager().GetLastHeight()},WindowOuterWidth(){return this._windowOuterWidth},WindowOuterHeight(){return this._windowOuterHeight},CanvasCssWidth(){return this._runtime.GetCanvasManager().GetCssWidth()},CanvasCssHeight(){return this._runtime.GetCanvasManager().GetCssHeight()},CanvasDeviceWidth(){return this._runtime.GetCanvasManager().GetDeviceWidth()},
+CanvasDeviceHeight(){return this._runtime.GetCanvasManager().GetDeviceHeight()},Downlink(){if(navigator.connection)return navigator.connection["downlink"]||0;else return 0},DownlinkMax(){if(navigator.connection)return navigator.connection["downlinkMax"]||0;else return 0},ConnectionType(){if(navigator.connection)return navigator.connection["type"]||"unknown";else return"unknown"},ConnectionEffectiveType(){if(navigator.connection)return navigator.connection["effectiveType"]||"unknown";else return"unknown"},
+ConnectionRTT(){if(navigator.connection)return navigator.connection["rtt"]||0;else return 0},HardwareConcurrency(){return navigator.hardwareConcurrency||0},DeviceMemory(){return navigator.deviceMemory||0},SafeAreaInsetTop(){return this._safeAreaInset[0]},SafeAreaInsetRight(){return this._safeAreaInset[1]},SafeAreaInsetBottom(){return this._safeAreaInset[2]},SafeAreaInsetLeft(){return this._safeAreaInset[3]}}};
 
 }
 
@@ -4561,6 +4561,22 @@ const i=VALID_MOVEMENTS.indexOf(m);if(i===-1)throw new Error("invalid movement")
 {const C3=self.C3;C3.Behaviors.Sin.Cnds={IsEnabled(){return this._IsEnabled()},CompareMovement(m){return this._GetMovement()===m},ComparePeriod(cmp,v){return C3.compare(this._GetPeriod(),cmp,v)},CompareMagnitude(cmp,v){return C3.compare(this._GetMagnitude_ConvertAngle(),cmp,v)},CompareWave(w){return this._GetWave()===w}}}
 {const C3=self.C3;C3.Behaviors.Sin.Acts={SetEnabled(e){this._SetEnabled(e!==0)},SetPeriod(x){this._SetPeriod(x)},SetMagnitude(x){this._SetMagnitude_ConvertAngle(x)},SetMovement(m){this._SetMovement(m)},SetWave(w){this._wave=w},SetPhase(x){const _2pi=Math.PI*2;this._SetPhase(x*_2pi%_2pi)},UpdateInitialState(){this.Init()}}}
 {const C3=self.C3;C3.Behaviors.Sin.Exps={CyclePosition(){return this._GetPhase()/(2*Math.PI)},Period(){return this._GetPeriod()},Magnitude(){return this._GetMagnitude_ConvertAngle()},Value(){return this.WaveFunc(this._GetPhase())*this._GetMagnitude_ConvertAngle()}}};
+
+}
+
+{
+'use strict';{const C3=self.C3;C3.Behaviors.Fade=class FadeBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Fade.Type=class FadeType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const C3X=self.C3X;const IBehaviorInstance=self.IBehaviorInstance;const FADE_IN_TIME=0;const WAIT_TIME=1;const FADE_OUT_TIME=2;const DESTROY=3;const ACTIVE_AT_START=4;C3.Behaviors.Fade.Instance=class FadeInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._fadeInTime=0;this._waitTime=0;this._fadeOutTime=0;this._destroy=true;this._activeAtStart=true;this._setMaxOpacity=false;this._stage=0;this._stageTime=C3.New(C3.KahanSum);this._maxOpacity=
+this._inst.GetWorldInfo().GetOpacity()||1;if(properties){this._fadeInTime=properties[FADE_IN_TIME];this._waitTime=properties[WAIT_TIME];this._fadeOutTime=properties[FADE_OUT_TIME];this._destroy=!!properties[DESTROY];this._activeAtStart=!!properties[ACTIVE_AT_START];this._stage=this._activeAtStart?0:3}if(this._activeAtStart)if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"fit":this._fadeInTime,
+"wt":this._waitTime,"fot":this._fadeOutTime,"d":this._destroy,"s":this._stage,"st":this._stageTime.Get(),"mo":this._maxOpacity}}LoadFromJson(o){this._fadeInTime=o["fit"];this._waitTime=o["wt"];this._fadeOutTime=o["fot"];this._destroy=o["d"];this._stage=o["s"];this._stageTime.Set(o["st"]);this._maxOpacity=o["mo"];if(this._stage===3)this._StopTicking();else this._StartTicking()}Tick(){const dt=this._runtime.GetDt(this._inst);this._stageTime.Add(dt);const wi=this._inst.GetWorldInfo();if(this._stage===
+0){wi.SetOpacity(this._stageTime.Get()/this._fadeInTime*this._maxOpacity);this._runtime.UpdateRender();if(wi.GetOpacity()>=this._maxOpacity){wi.SetOpacity(this._maxOpacity);this._stage=1;this._stageTime.Reset();this.DispatchScriptEvent("fadeinend");this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeInEnd)}}if(this._stage===1)if(this._stageTime.Get()>=this._waitTime){this._stage=2;this._stageTime.Reset();this.DispatchScriptEvent("waitend");this.Trigger(C3.Behaviors.Fade.Cnds.OnWaitEnd)}if(this._stage===2)if(this._fadeOutTime!==
+0){wi.SetOpacity(this._maxOpacity-this._stageTime.Get()/this._fadeOutTime*this._maxOpacity);this._runtime.UpdateRender();if(wi.GetOpacity()<=0){this._stage=3;this._stageTime.Reset();this.DispatchScriptEvent("fadeoutend");this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeOutEnd);if(this._destroy)this._runtime.DestroyInstance(this._inst)}}else{this._stage=3;this._stageTime.Reset()}if(this._stage===3)this._StopTicking()}_StartFade(){if(!this._activeAtStart&&!this._setMaxOpacity){this._maxOpacity=this._inst.GetWorldInfo().GetOpacity()||
+1;this._setMaxOpacity=true}if(this._stage===3)this.Start()}_RestartFade(){this.Start()}Start(){this._stage=0;this._stageTime.Reset();if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}this._StartTicking()}_SetFadeInTime(t){this._fadeInTime=Math.max(t,0)}_GetFadeInTime(){return this._fadeInTime}_SetWaitTime(t){this._waitTime=Math.max(t,0)}_GetWaitTime(){return this._waitTime}_SetFadeOutTime(t){this._fadeOutTime=
+Math.max(t,0)}_GetFadeOutTime(){return this._fadeOutTime}GetPropertyValueByIndex(index){switch(index){case FADE_IN_TIME:return this._GetFadeInTime();case WAIT_TIME:return this._GetWaitTime();case FADE_OUT_TIME:return this._GetFadeOutTime();case DESTROY:return this._destroy}}SetPropertyValueByIndex(index,value){switch(index){case FADE_IN_TIME:this._SetFadeInTime(value);break;case WAIT_TIME:this._SetWaitTime(value);break;case FADE_OUT_TIME:this._SetFadeOutTime(value);break;case DESTROY:this._destroy=
+!!value;break}}GetDebuggerProperties(){const prefix="behaviors.fade";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.fade-in-time.name",value:this._GetFadeInTime(),onedit:v=>this._SetFadeInTime(v)},{name:prefix+".properties.wait-time.name",value:this._GetWaitTime(),onedit:v=>this._SetWaitTime(v)},{name:prefix+".properties.fade-out-time.name",value:this._GetFadeOutTime(),onedit:v=>this._SetFadeOutTime(v)},{name:prefix+".debugger.stage",value:[prefix+".debugger."+
+["fade-in","wait","fade-out","done"][this._stage]]}]}]}GetScriptInterfaceClass(){return self.IFadeBehaviorInstance}};const map=new WeakMap;self.IFadeBehaviorInstance=class IFadeBehaviorInstance extends IBehaviorInstance{constructor(){super();map.set(this,IBehaviorInstance._GetInitInst().GetSdkInstance())}startFade(){map.get(this)._StartFade()}restartFade(){map.get(this)._RestartFade()}set fadeInTime(t){C3X.RequireFiniteNumber(t);map.get(this)._SetFadeInTime(t)}get fadeInTime(){return map.get(this)._GetFadeInTime()}set waitTime(t){C3X.RequireFiniteNumber(t);
+map.get(this)._SetWaitTime(t)}get waitTime(){return map.get(this)._GetWaitTime()}set fadeOutTime(t){C3X.RequireFiniteNumber(t);map.get(this)._SetFadeOutTime(t)}get fadeOutTime(){return map.get(this)._GetFadeOutTime()}}}{const C3=self.C3;C3.Behaviors.Fade.Cnds={OnFadeOutEnd(){return true},OnFadeInEnd(){return true},OnWaitEnd(){return true}}}
+{const C3=self.C3;C3.Behaviors.Fade.Acts={StartFade(){this._StartFade()},RestartFade(){this._RestartFade()},SetFadeInTime(t){this._SetFadeInTime(t)},SetWaitTime(t){this._SetWaitTime(t)},SetFadeOutTime(t){this._SetFadeOutTime(t)}}}{const C3=self.C3;C3.Behaviors.Fade.Exps={FadeInTime(){return this._GetFadeInTime()},WaitTime(){return this._GetWaitTime()},FadeOutTime(){return this._GetFadeOutTime()}}};
 
 }
 
@@ -4833,8 +4849,8 @@ self.C3_GetObjectRefTable = function () {
 	return [
 		C3.Plugins.Sprite,
 		C3.Plugins.TiledBg,
-		C3.Behaviors.Fade,
 		C3.Behaviors.Sin,
+		C3.Behaviors.Fade,
 		C3.Behaviors.Timer,
 		C3.Plugins.Text,
 		C3.Behaviors.Bullet,
@@ -4854,6 +4870,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch,
 		C3.Plugins.AJAX,
 		C3.Plugins.Json,
+		C3.Plugins.PlatformInfo,
 		C3.Behaviors.scrollto,
 		C3.Behaviors.wrap,
 		C3.Plugins.System.Cnds.OnLayoutStart,
@@ -4863,19 +4880,23 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
-		C3.Behaviors.Fade.Cnds.OnFadeOutEnd,
 		C3.Plugins.System.Acts.GoToLayout,
+		C3.Behaviors.Fade.Cnds.OnFadeOutEnd,
 		C3.Plugins.Function.Cnds.OnFunction,
 		C3.Plugins.Dictionary.Acts.AddKey,
+		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
 		C3.Plugins.Audio.Acts.StopAll,
 		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
-		C3.Plugins.Sprite.Acts.SetScale,
 		C3.Plugins.Text.Cnds.CompareInstanceVar,
-		C3.Plugins.System.Acts.Wait,
-		C3.Plugins.Browser.Acts.Close,
+		C3.Plugins.Touch.Cnds.OnTouchObject,
+		C3.Plugins.Sprite.Cnds.IsVisible,
+		C3.Plugins.Browser.Acts.RequestFullScreen,
+		C3.Plugins.PlatformInfo.Cnds.IsOnMobile,
+		C3.Plugins.Browser.Cnds.IsFullscreen,
 		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Json.Exps.Get,
@@ -4883,15 +4904,18 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetVAlign,
 		C3.Plugins.Text.Acts.SetSize,
 		C3.Plugins.Audio.Cnds.IsSilent,
-		C3.Plugins.System.Cnds.Else,
-		C3.Plugins.Touch.Cnds.OnTouchObject,
-		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
+		C3.Plugins.Text.Cnds.IsVisible,
 		C3.Plugins.Text.Cnds.CompareText,
 		C3.Plugins.Audio.Acts.SetSilent,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.RestartLayout,
+		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.System.Cnds.TriggerOnce,
+		C3.Plugins.Text.Acts.SetVisible,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
+		C3.Plugins.System.Acts.Wait,
+		C3.Plugins.Sprite.Acts.SetScale,
 		C3.Plugins.Dictionary.Cnds.CompareValue,
 		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.Sprite.Acts.Destroy,
@@ -4899,7 +4923,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.Count,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.System.Exps.int,
-		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Acts.CreateObject,
@@ -4934,7 +4957,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
 		C3.Plugins.Sprite.Exps.ImagePointX,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Behaviors.Fade.Acts.StartFade,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.Flash.Acts.Flash,
@@ -4988,8 +5010,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.OnCreated,
 		C3.Plugins.Sprite.Cnds.PickByUID,
 		C3.Behaviors.Flash.Cnds.IsFlashing,
-		C3.Behaviors.Anchor.Acts.SetEnabled,
-		C3.Plugins.Sprite.Cnds.IsVisible,
 		C3.Plugins.Text.Acts.SetInstanceVar,
 		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Text.Exps.TextHeight,
@@ -5041,33 +5061,21 @@ self.C3_GetObjectRefTable = function () {
 	];
 };
 self.C3_JsPropNameTable = [
-	{CartelSalir: 0},
-	{BotonSi: 0},
-	{BotonNo: 0},
-	{touched: 0},
-	{BotonMusica: 0},
-	{BotonResetGame: 0},
-	{AreYouSure: 0},
-	{BotonYes: 0},
-	{BotonNoOptions: 0},
 	{Guion: 0},
 	{EEUU_flag: 0},
 	{Spain_flag: 0},
-	{Nube: 0},
-	{TBGFondoMenu: 0},
-	{TBGFondoCiudadAzul: 0},
-	{FondoMontaniasMenu: 0},
-	{TorreAlta: 0},
-	{TorresJuntas: 0},
-	{EdificioGrande: 0},
-	{Hongos: 0},
-	{Estrella: 0},
-	{Cupula: 0},
-	{Bomba: 0},
+	{MostrarReseteo: 0},
+	{ContenedorOpciones: 0},
+	{ContenedorBanderas: 0},
+	{BotonCerrar: 0},
 	{Credits: 0},
-	{GeneralesMenu: 0},
-	{Sparkcity: 0},
 	{TBGAgua: 0},
+	{FondoMenu: 0},
+	{CartelColgante: 0},
+	{Jungla: 0},
+	{Sine: 0},
+	{SCLogo: 0},
+	{FullScreenButton: 0},
 	{Fade: 0},
 	{Intro: 0},
 	{BotonBack: 0},
@@ -5090,7 +5098,6 @@ self.C3_JsPropNameTable = [
 	{MapaM4: 0},
 	{MapaPrincipal: 0},
 	{Type: 0},
-	{Sine: 0},
 	{Btn_MapaPrincipal: 0},
 	{DialogBaloon: 0},
 	{DialogNumber: 0},
@@ -5509,7 +5516,6 @@ self.C3_JsPropNameTable = [
 	{ArrSecuencia: 0},
 	{SecuenciasPorNivel: 0},
 	{AvanceJuego: 0},
-	{TileBGTutoriales: 0},
 	{Funciones: 0},
 	{Audio: 0},
 	{Browser: 0},
@@ -5518,6 +5524,7 @@ self.C3_JsPropNameTable = [
 	{Touch: 0},
 	{AJAX: 0},
 	{JSON: 0},
+	{PlatformInfo: 0},
 	{action: 0},
 	{TopLeft_Txt_Game: 0},
 	{Action: 0},
@@ -5531,7 +5538,6 @@ self.C3_JsPropNameTable = [
 	{sombraBossPiso: 0},
 	{Sprite3: 0},
 	{Sprite2: 0},
-	{Botones: 0},
 	{Wrap: 0},
 	{Nubes: 0},
 	{MoveTo2: 0},
@@ -5589,32 +5595,19 @@ self.C3_JsPropNameTable = [
 ];
 
 self.InstanceType = {
-	CartelSalir: class extends self.ISpriteInstance {},
-	BotonSi: class extends self.ISpriteInstance {},
-	BotonNo: class extends self.ISpriteInstance {},
-	BotonMusica: class extends self.ISpriteInstance {},
-	BotonResetGame: class extends self.ISpriteInstance {},
-	AreYouSure: class extends self.ISpriteInstance {},
-	BotonYes: class extends self.ISpriteInstance {},
-	BotonNoOptions: class extends self.ISpriteInstance {},
 	Guion: class extends self.ISpriteInstance {},
 	EEUU_flag: class extends self.ISpriteInstance {},
 	Spain_flag: class extends self.ISpriteInstance {},
-	Nube: class extends self.ISpriteInstance {},
-	TBGFondoMenu: class extends self.ITiledBackgroundInstance {},
-	TBGFondoCiudadAzul: class extends self.ITiledBackgroundInstance {},
-	FondoMontaniasMenu: class extends self.ISpriteInstance {},
-	TorreAlta: class extends self.ISpriteInstance {},
-	TorresJuntas: class extends self.ISpriteInstance {},
-	EdificioGrande: class extends self.ISpriteInstance {},
-	Hongos: class extends self.ISpriteInstance {},
-	Estrella: class extends self.ISpriteInstance {},
-	Cupula: class extends self.ISpriteInstance {},
-	Bomba: class extends self.ISpriteInstance {},
+	ContenedorOpciones: class extends self.ISpriteInstance {},
+	ContenedorBanderas: class extends self.ISpriteInstance {},
+	BotonCerrar: class extends self.ISpriteInstance {},
 	Credits: class extends self.ISpriteInstance {},
-	GeneralesMenu: class extends self.ISpriteInstance {},
-	Sparkcity: class extends self.ISpriteInstance {},
 	TBGAgua: class extends self.ITiledBackgroundInstance {},
+	FondoMenu: class extends self.ISpriteInstance {},
+	CartelColgante: class extends self.ISpriteInstance {},
+	Jungla: class extends self.ISpriteInstance {},
+	SCLogo: class extends self.ISpriteInstance {},
+	FullScreenButton: class extends self.ISpriteInstance {},
 	Intro: class extends self.ISpriteInstance {},
 	BotonBack: class extends self.ISpriteInstance {},
 	BotonAvatar: class extends self.ISpriteInstance {},
@@ -5965,7 +5958,6 @@ self.InstanceType = {
 	ArrSecuencia: class extends self.IArrayInstance {},
 	SecuenciasPorNivel: class extends self.IDictionaryInstance {},
 	AvanceJuego: class extends self.IDictionaryInstance {},
-	TileBGTutoriales: class extends self.ITiledBackgroundInstance {},
 	Funciones: class extends self.IInstance {},
 	Audio: class extends self.IInstance {},
 	Browser: class extends self.IInstance {},
@@ -5974,6 +5966,7 @@ self.InstanceType = {
 	Touch: class extends self.IInstance {},
 	AJAX: class extends self.IInstance {},
 	JSON: class extends self.IJSONInstance {},
+	PlatformInfo: class extends self.IInstance {},
 	TopLeft_Txt_Game: class extends self.ITextInstance {},
 	Centered_Txt_Game: class extends self.ITextInstance {},
 	LigStopPoint: class extends self.ISpriteInstance {},
@@ -5983,7 +5976,6 @@ self.InstanceType = {
 	sombraBossPiso: class extends self.ISpriteInstance {},
 	Sprite3: class extends self.ISpriteInstance {},
 	Sprite2: class extends self.ISpriteInstance {},
-	Botones: class extends self.ISpriteInstance {},
 	Nubes: class extends self.ISpriteInstance {},
 	Mosaicos: class extends self.ISpriteInstance {},
 	Troncos: class extends self.ISpriteInstance {},
@@ -6155,12 +6147,12 @@ self.C3_ExpressionFuncs = [
 		() => "410",
 		() => "Final",
 		() => 2,
-		() => "reiniciarJuego",
+		() => "ReiniciarJuego",
 		() => "mostrarIntro",
 		() => "SI",
 		() => "mostrarMascaraMapaMundo",
-		() => "mostrarTodosLosNiveles",
 		() => "NO",
+		() => "mostrarTodosLosNiveles",
 		() => "mostrarTutorialM1",
 		() => "mostrarTutorialM2",
 		() => "mostrarTutorialM3",
@@ -6294,18 +6286,17 @@ self.C3_ExpressionFuncs = [
 		() => "39_2",
 		() => "355",
 		() => "39_3",
+		() => "Menu Start",
 		() => "menu",
 		() => 0,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
-		},
-		() => "boton",
+		() => "Botones del Menu",
 		() => "PlayButton",
 		() => "ChangeScreen",
 		() => "MapaPrincipal",
 		() => "OptionsButton",
 		() => "Opciones",
+		() => "Fullscreen",
+		() => "Opciones Start",
 		() => "OptionsTitle",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6314,6 +6305,29 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 250,
 		() => 100,
+		() => "ResetGame",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Reset_Game_text"));
+		},
+		() => "AreSure",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Reset_Game_question"));
+		},
+		() => "YES",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Reset_Game_YES"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject((v1.GetValue() + "Reset_Game_NO"));
+		},
 		() => "MusicSwitch",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6325,12 +6339,23 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject((v1.GetValue() + "MusicSwitch_NO"));
 		},
+		() => "Boton Cerrar",
 		() => "Menu",
+		() => "Botones OPCIONES",
+		() => "RestartGame",
+		() => "Banderas",
 		() => "en.",
 		() => "es.",
+		() => "Comportamiento Botones (Visible-Invisible)",
+		() => "Funcion Reiniciar Juego",
 		() => "stone",
 		() => 1,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => v0.GetValue();
+		},
 		() => "MapaMundo1",
+		() => "boton",
 		() => "forest",
 		() => "MapaMundo2",
 		() => "cave",
