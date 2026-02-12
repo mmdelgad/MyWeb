@@ -1,10 +1,10 @@
 {
-	"name": "3 minutes City Builder",
-	"short_name": "3 minutes City Builder",
-	"description": "",
+	"name": "Proyecto_Emociones",
+	"short_name": "Proyecto_Emociones",
+	"description": "Proyecto sobre emociones para niños del primer septenio",
 	"start_url": "index.html",
 	"display": "fullscreen",
-	"orientation": "landscape",
+	"orientation": "portrait",
 	"background_color": "#ffffff",
 	"icons": [
 		{
