@@ -1392,38 +1392,19 @@ self.C3_ExpressionFuncs = [
 		() => "Jugar",
 		() => "Ir a Fullscreen",
 		() => "Escena 2 - Start",
-		() => "Navegación de pantalla",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => (f0() - v1.GetValue());
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => (n0.ExpObject() + (f1(0) / 2));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => (n0.ExpObject() - (f1(0) / 2));
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			const v2 = p._GetNode(2).GetVar();
-			return () => C3.clamp(v0.GetValue(), v1.GetValue(), v2.GetValue());
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => C3.lerp(f0(), v1.GetValue(), 0.2);
-		},
 		() => "Escena 2 - Cambiar elemento al tocarlo",
 		() => "imaginacion",
 		() => "escuela",
+		() => 4,
 		() => 3,
-		() => "Ir al menu",
+		() => "Mover al elemento siguiente",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const n1 = p._GetNode(1);
+			return () => C3.lerp(f0(), n1.ExpObject(), 0.05);
+		},
+		() => "aparecer",
+		() => 100,
 		() => "Escena 3 - Start",
 		p => {
 			const n0 = p._GetNode(0);
@@ -1433,49 +1414,36 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("Despawn");
 		},
-		() => "Escena 3 - Limitar Rudolph dentro de la imagen",
+		() => 0.77,
+		() => "caminarArriba",
+		() => "crecerX",
+		() => "caminarY",
+		() => "caminarAbajo",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject() + (n1.ExpObject() / 2));
+			return () => n0.ExpObject(n1.ExpInstVar_Family());
+		},
+		() => "Rudolph_Escena3",
+		() => "Escena 3 - Mover a Rudolph",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => C3.clamp(n0.ExpInstVar(), 1, 3);
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject() - (n1.ExpObject() / 2));
+			return () => n0.ExpObject(and("Ruta", n1.ExpInstVar()));
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const n2 = p._GetNode(2);
-			return () => C3.clamp(n0.ExpObject(), n1.ExpInstVar(), n2.ExpInstVar());
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => C3.lerp(f0(), v1.GetValue(), 0.08);
-		},
-		() => "Niños caminando - Escena 3",
+		() => "Escena 3 - Desaparecer niños",
 		() => "desapareciendo",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => (f0() * v1.GetValue());
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			const n2 = p._GetNode(2);
-			return () => C3.lerp(v0.GetValue(), v1.GetValue(), n2.ExpInstVar_Family());
-		},
+		() => "Detener Senio - Fin de Escena 3",
 		p => {
 			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const n2 = p._GetNode(2);
-			return () => C3.lerp(n0.ExpInstVar_Family(), n1.ExpInstVar_Family(), n2.ExpInstVar_Family());
+			return () => n0.ExpObject("DetenerSenio");
 		},
-		() => 4,
-		() => 5
+		() => "Detener Personas - Escena 3",
+		() => "nenes"
 ];
 
 
