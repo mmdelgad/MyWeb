@@ -7,15 +7,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Sin,
 		C3.Behaviors.DragnDrop,
 		C3.Plugins.Text,
+		C3.Plugins.TiledBg,
 		C3.Behaviors.Tween,
+		C3.Behaviors.Timer,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Exps.Y,
 		C3.Plugins.System.Acts.ResetGlobals,
-		C3.Plugins.Touch.Cnds.OnNthTouchStart,
 		C3.Plugins.System.Cnds.CompareVar,
+		C3.Plugins.Touch.Cnds.OnNthTouchStart,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Touch.Exps.XAt,
@@ -33,7 +35,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetLayerScale,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetY,
-		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Browser.Cnds.IsFullscreen,
@@ -55,10 +56,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetOpacity,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Behaviors.Tween.Acts.TweenOneProperty,
+		C3.Plugins.System.Cnds.Every,
+		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.Sprite.Exps.UID,
 		C3.Plugins.System.Acts.ScrollToObject,
 		C3.Plugins.Sprite.Exps.ImagePointY,
 		C3.Plugins.System.Acts.SetLayoutScale,
-		C3.Plugins.Sprite.Exps.UID,
 		C3.Behaviors.Tween.Cnds.OnTweensFinished,
 		C3.Plugins.Sprite.Cnds.PickByUID,
 		C3.Behaviors.Tween.Acts.StopTweens,
@@ -76,7 +79,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Tween.Acts.StopAllTweens,
 		C3.Behaviors.Tween.Acts.PauseAllTweens,
 		C3.Behaviors.Tween.Acts.ResumeAllTweens,
-		C3.Plugins.Sprite.Cnds.IsOverlapping
+		C3.Plugins.Sprite.Cnds.IsOverlapping,
+		C3.Behaviors.Tween.Cnds.IsAnyPlaying,
+		C3.Plugins.System.Exps.layoutname,
+		C3.Plugins.TiledBg.Acts.SetOpacity,
+		C3.Plugins.TiledBg.Exps.Opacity,
+		C3.Plugins.System.Exps.dt,
+		C3.Plugins.TiledBg.Cnds.CompareOpacity,
+		C3.Plugins.System.Acts.GoToLayout,
+		C3.Behaviors.Timer.Acts.StartTimer,
+		C3.Behaviors.Timer.Cnds.OnTimer,
+		C3.Behaviors.Timer.Acts.StopAllTimers
 	];
 };
 self.C3_JsPropNameTable = [
@@ -118,9 +131,14 @@ self.C3_JsPropNameTable = [
 	{FondoMenu: 0},
 	{RudolphMenu: 0},
 	{SF_Juego: 0},
+	{FadeObject_Back: 0},
+	{FadeObject_White: 0},
+	{Tutorial_Zoom: 0},
 	{Tween: 0},
 	{Elementos_Escena2: 0},
 	{PersonasEscena3: 0},
+	{Timer: 0},
+	{Tutoriales: 0},
 	{zoomProgress: 0},
 	{isPinching: 0},
 	{pinchStartDistance: 0},
@@ -132,6 +150,7 @@ self.C3_JsPropNameTable = [
 	{delta: 0},
 	{currentDistance: 0},
 	{sceneProgress: 0},
+	{GameState: 0},
 	{isDragging: 0},
 	{dragStartX: 0},
 	{dragStartY: 0},
@@ -147,7 +166,10 @@ self.C3_JsPropNameTable = [
 	{Scale_TopeDeLaLoma: 0},
 	{Tiempo_HastaLoma: 0},
 	{Tiempo_HastaFinal: 0},
-	{PersonaUID: 0}
+	{PersonaUID: 0},
+	{FadeSpeed: 0},
+	{proximaAccion: 0},
+	{tiempoDeTutorial: 0}
 ];
 
 self.InstanceType = {
@@ -173,6 +195,10 @@ self.InstanceType = {
 	FondoMenu: class extends self.ISpriteInstance {},
 	RudolphMenu: class extends self.ISpriteInstance {},
 	SF_Juego: class extends self.ITextInstance {},
+	FadeObject_Back: class extends self.ITiledBackgroundInstance {},
+	FadeObject_White: class extends self.ITiledBackgroundInstance {},
+	Tutorial_Zoom: class extends self.ISpriteInstance {},
 	Elementos_Escena2: class extends self.ISpriteInstance {},
-	PersonasEscena3: class extends self.ISpriteInstance {}
+	PersonasEscena3: class extends self.ISpriteInstance {},
+	Tutoriales: class extends self.ISpriteInstance {}
 }
