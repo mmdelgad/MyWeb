@@ -3,6 +3,7 @@ self.C3_GetObjectRefTable = function () {
 	return [
 		C3.Plugins.Touch,
 		C3.Plugins.Browser,
+		C3.Plugins.Audio,
 		C3.Plugins.Sprite,
 		C3.Behaviors.Sin,
 		C3.Behaviors.DragnDrop,
@@ -24,6 +25,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Touch.Exps.XAt,
 		C3.Plugins.Touch.Exps.YAt,
+		C3.Plugins.Browser.Acts.Vibrate,
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.Touch.Cnds.HasNthTouch,
 		C3.Plugins.System.Exps.max,
@@ -38,16 +40,19 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetOpacity,
 		C3.Behaviors.Tween.Cnds.OnTweensFinished,
 		C3.Plugins.Sprite.Acts.StopAnim,
+		C3.Plugins.Text.Cnds.CompareInstanceVar,
+		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.System.Exps.projectversion,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Browser.Cnds.IsFullscreen,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.System.Acts.ScrollX,
 		C3.Plugins.System.Acts.ScrollY,
+		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
 		C3.Plugins.System.Acts.Wait,
-		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Sprite.Exps.Count,
@@ -57,7 +62,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsVisible,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.System.Cnds.Every,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Sprite.Exps.UID,
 		C3.Plugins.System.Acts.ScrollToObject,
 		C3.Plugins.Sprite.Exps.ImagePointY,
@@ -89,12 +93,18 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Behaviors.Timer.Acts.StartTimer,
 		C3.Behaviors.Timer.Cnds.OnTimer,
-		C3.Behaviors.Timer.Acts.StopAllTimers
+		C3.Behaviors.Timer.Acts.StopAllTimers,
+		C3.Plugins.Audio.Cnds.IsTagPlaying,
+		C3.Plugins.Audio.Acts.Play,
+		C3.Plugins.Audio.Acts.FadeVolume,
+		C3.Plugins.System.Exps.random,
+		C3.Plugins.Audio.Cnds.OnEnded
 	];
 };
 self.C3_JsPropNameTable = [
 	{Touch: 0},
 	{Browser: 0},
+	{Audio: 0},
 	{FondoEscena1: 0},
 	{initialY: 0},
 	{walkPhase: 0},
@@ -176,12 +186,15 @@ self.C3_JsPropNameTable = [
 	{PersonaUID: 0},
 	{FadeSpeed: 0},
 	{proximaAccion: 0},
-	{tiempoDeTutorial: 0}
+	{tiempoDeTutorial: 0},
+	{musicFading: 0},
+	{randomMusic: 0}
 ];
 
 self.InstanceType = {
 	Touch: class extends self.IInstance {},
 	Browser: class extends self.IInstance {},
+	Audio: class extends self.IInstance {},
 	FondoEscena1: class extends self.ISpriteInstance {},
 	Rudolph_Escena1: class extends self.ISpriteInstance {},
 	GenteCaminando_Escena1: class extends self.ISpriteInstance {},
