@@ -4,6 +4,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch,
 		C3.Plugins.Browser,
 		C3.Plugins.Audio,
+		C3.Plugins.video,
 		C3.Plugins.Sprite,
 		C3.Behaviors.Sin,
 		C3.Behaviors.DragnDrop,
@@ -100,13 +101,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Acts.FadeVolume,
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Audio.Cnds.OnEnded,
-		C3.Plugins.Audio.Acts.Stop
+		C3.Plugins.Audio.Acts.Stop,
+		C3.Plugins.video.Cnds.HasEnded,
+		C3.Plugins.System.Cnds.TriggerOnce,
+		C3.Plugins.video.Acts.SetVisible
 	];
 };
 self.C3_JsPropNameTable = [
 	{Touch: 0},
 	{Browser: 0},
 	{Audio: 0},
+	{Video: 0},
 	{FondoEscena1: 0},
 	{initialY: 0},
 	{walkPhase: 0},
@@ -148,6 +153,11 @@ self.C3_JsPropNameTable = [
 	{Tween: 0},
 	{Fondo2_Escena3: 0},
 	{CieloEscena3: 0},
+	{Senio_Escena4: 0},
+	{Amigos_Escena5: 0},
+	{tipo: 0},
+	{descubierto: 0},
+	{Figurita: 0},
 	{TestingText: 0},
 	{FondoMenu: 0},
 	{RudolphMenu: 0},
@@ -155,6 +165,7 @@ self.C3_JsPropNameTable = [
 	{FadeObject_Back: 0},
 	{FadeObject_White: 0},
 	{Tutorial_Zoom: 0},
+	{PilgrimsLogo: 0},
 	{Elementos_Escena2: 0},
 	{PersonasEscena3: 0},
 	{Timer: 0},
@@ -192,13 +203,20 @@ self.C3_JsPropNameTable = [
 	{proximaAccion: 0},
 	{tiempoDeTutorial: 0},
 	{musicFading: 0},
-	{randomMusic: 0}
+	{randomMusic: 0},
+	{primeraFiguritaUID: 0},
+	{segundaFiguritaUID: 0},
+	{estadoJuegoMemoria: 0},
+	{tempTipo: 0},
+	{tempTipo2: 0},
+	{win: 0}
 ];
 
 self.InstanceType = {
 	Touch: class extends self.IInstance {},
 	Browser: class extends self.IInstance {},
 	Audio: class extends self.IInstance {},
+	Video: class extends self.IWorldInstance {},
 	FondoEscena1: class extends self.ISpriteInstance {},
 	Rudolph_Escena1: class extends self.ISpriteInstance {},
 	GenteCaminando_Escena1: class extends self.ISpriteInstance {},
@@ -218,6 +236,9 @@ self.InstanceType = {
 	Senio_Escena3: class extends self.ISpriteInstance {},
 	Fondo2_Escena3: class extends self.ISpriteInstance {},
 	CieloEscena3: class extends self.ISpriteInstance {},
+	Senio_Escena4: class extends self.ISpriteInstance {},
+	Amigos_Escena5: class extends self.ISpriteInstance {},
+	Figurita: class extends self.ISpriteInstance {},
 	TestingText: class extends self.ITextInstance {},
 	FondoMenu: class extends self.ISpriteInstance {},
 	RudolphMenu: class extends self.ISpriteInstance {},
@@ -225,6 +246,7 @@ self.InstanceType = {
 	FadeObject_Back: class extends self.ITiledBackgroundInstance {},
 	FadeObject_White: class extends self.ITiledBackgroundInstance {},
 	Tutorial_Zoom: class extends self.ISpriteInstance {},
+	PilgrimsLogo: class extends self.ISpriteInstance {},
 	Elementos_Escena2: class extends self.ISpriteInstance {},
 	PersonasEscena3: class extends self.ISpriteInstance {},
 	Tutoriales: class extends self.ISpriteInstance {},
