@@ -1254,11 +1254,6 @@ const C3=self.C3,GESTURE_HOLD_THRESHOLD=15,GESTURE_HOLD_TIMEOUT=500,GESTURE_TAP_
 {const e=self.C3;e.Behaviors.Sin=class extends e.SDKBehaviorBase{constructor(e){super(e)}Release(){super.Release()}}}{const e=self.C3;e.Behaviors.Sin.Type=class extends e.SDKBehaviorTypeBase{constructor(e){super(e)}Release(){super.Release()}OnCreate(){}}}{const e=self.C3,t=self.C3X,i=self.IBehaviorInstance,s=0,a=1,n=2,h=3,_=4,r=5,o=6,l=7,u=8,d=0,m=1,g=2,v=3,c=4,p=5,G=6,b=7,S=8,V=9,w=0,P=1,M=2,I=3,f=4,k=2*Math.PI,W=Math.PI/2,R=3*Math.PI/2,E=[0,1,8,3,4,2,5,6,9,7];e.Behaviors.Sin.Instance=class extends e.SDKBehaviorInstanceBase{constructor(t,i){super(t),this._i=0,this._movement=0,this._wave=0,this._period=0,this._mag=0,this._isEnabled=!0,this._basePeriod=0,this._basePeriodOffset=0,this._baseMag=0,this._periodRandom=0,this._periodOffsetRandom=0,this._magnitudeRandom=0,this._initialValue=0,this._initialValue2=0,this._lastKnownValue=0,this._lastKnownValue2=0,this._ratio=0,i&&(this._movement=E[i[s]],this._wave=i[a],this._periodRandom=this._runtime.Random()*i[h],this._basePeriod=i[n],this._period=i[n],this._period+=this._periodRandom,this._basePeriodOffset=i[_],0!==this._period&&(this._periodOffsetRandom=this._runtime.Random()*i[r],this._i=i[_]/this._period*k,this._i+=this._periodOffsetRandom/this._period*k),this._magnitudeRandom=this._runtime.Random()*i[l],this._baseMag=i[o],this._mag=i[o],this._mag+=this._magnitudeRandom,this._isEnabled=!!i[u]),this._movement===p&&(this._mag=e.toRadians(this._mag)),this.Init(),this._isEnabled&&this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"i":this._i,"e":this._isEnabled,"mv":this._movement,"w":this._wave,"p":this._period,"mag":this._mag,"iv":this._initialValue,"iv2":this._initialValue2,"r":this._ratio,"lkv":this._lastKnownValue,"lkv2":this._lastKnownValue2}}LoadFromJson(e){this._i=e["i"],this._SetEnabled(e["e"]),this._movement=e["mv"],this._wave=e["w"],this._period=e["p"],this._mag=e["mag"],this._initialValue=e["iv"],this._initialValue2=e["iv2"],this._ratio=e["r"],this._lastKnownValue=e["lkv"],this._lastKnownValue2=e["lkv2"]}Init(){const e=this._inst.GetWorldInfo();switch(this._movement){case d:this._initialValue=e.GetX();break;case m:this._initialValue=e.GetY();break;case g:this._initialValue=e.GetWidth(),this._ratio=e.GetHeight()/e.GetWidth();break;case v:this._initialValue=e.GetWidth();break;case c:this._initialValue=e.GetHeight();break;case p:this._initialValue=e.GetAngle();break;case G:this._initialValue=e.GetOpacity();break;case b:this._initialValue=0;break;case S:this._initialValue=e.GetX(),this._initialValue2=e.GetY();break;case V:this._initialValue=e.GetZ()}this._lastKnownValue=this._initialValue,this._lastKnownValue2=this._initialValue2}WaveFunc(e){switch(e%=k,this._wave){case w:return Math.sin(e);case P:return e<=W?e/W:e<=R?1-2*(e-W)/Math.PI:(e-R)/W-1;case M:return 2*e/k-1;case I:return-2*e/k+1;case f:return e<Math.PI?-1:1}return 0}Tick(){const e=this._runtime.GetDt(this._inst);this._isEnabled&&0!==e&&(0===this._period?this._i=0:this._i=(this._i+e/this._period*k)%k,this._UpdateFromPhase())}_UpdateFromPhase(){const t=this._inst.GetWorldInfo();switch(this._movement){case d:t.GetX()!==this._lastKnownValue&&(this._initialValue+=t.GetX()-this._lastKnownValue),t.SetX(this._initialValue+this.WaveFunc(this._i)*this._mag),this._lastKnownValue=t.GetX();break;case m:t.GetY()!==this._lastKnownValue&&(this._initialValue+=t.GetY()-this._lastKnownValue),t.SetY(this._initialValue+this.WaveFunc(this._i)*this._mag),this._lastKnownValue=t.GetY();break;case g:t.SetWidth(this._initialValue+this.WaveFunc(this._i)*this._mag),t.SetHeight(t.GetWidth()*this._ratio);break;case v:t.SetWidth(this._initialValue+this.WaveFunc(this._i)*this._mag);break;case c:t.SetHeight(this._initialValue+this.WaveFunc(this._i)*this._mag);break;case p:t.GetAngle()!==this._lastKnownValue&&(this._initialValue=e.clampAngle(this._initialValue+(t.GetAngle()-this._lastKnownValue))),t.SetAngle(this._initialValue+this.WaveFunc(this._i)*this._mag),this._lastKnownValue=t.GetAngle();break;case G:t.SetOpacity(this._initialValue+this.WaveFunc(this._i)*this._mag/100);break;case S:t.GetX()!==this._lastKnownValue&&(this._initialValue+=t.GetX()-this._lastKnownValue),t.GetY()!==this._lastKnownValue2&&(this._initialValue2+=t.GetY()-this._lastKnownValue2),t.SetX(this._initialValue+Math.cos(t.GetAngle())*this.WaveFunc(this._i)*this._mag),t.SetY(this._initialValue2+Math.sin(t.GetAngle())*this.WaveFunc(this._i)*this._mag),this._lastKnownValue=t.GetX(),this._lastKnownValue2=t.GetY();break;case V:t.SetZ(this._initialValue+this.WaveFunc(this._i)*this._mag)}t.SetBboxChanged()}_OnSpriteFrameChanged(e,t){}_SetPeriod(e){this._period=e}_GetPeriod(){return this._period}_SetMagnitude(e){this._mag=e}_SetMagnitude_ConvertAngle(t){5===this._movement&&(t=e.toRadians(t)),this._SetMagnitude(t)}_GetMagnitude(){return this._mag}_GetMagnitude_ConvertAngle(){let t=this._GetMagnitude();return 5===this._movement&&(t=e.toDegrees(t)),t}_SetMovement(t){5===this._movement&&5!==t&&(this._mag=e.toDegrees(this._mag)),this._movement=t,this.Init()}_GetMovement(){return this._movement}_SetWave(e){this._wave=e}_GetWave(){return this._wave}_SetPhase(t){this._i=e.clamp(t,0,2*Math.PI),this._UpdateFromPhase()}_GetPhase(){return this._i}_SetEnabled(e){this._isEnabled=!!e,this._isEnabled?this._StartTicking():this._StopTicking()}_IsEnabled(){return this._isEnabled}GetPropertyValueByIndex(e){switch(e){case s:return this._movement;case a:return this._wave;case n:return this._basePeriod;case o:return this._baseMag;case u:return this._isEnabled}}SetPropertyValueByIndex(t,i){switch(t){case s:this._movement=E[i],this.Init();break;case a:this._wave=i;break;case n:this._basePeriod=i,this._period=this._basePeriod+this._periodRandom,this._isEnabled||(0!==this._period?(this._i=this._basePeriodOffset/this._period*k,this._i+=this._periodOffsetRandom/this._period*k):this._i=0);break;case o:this._baseMag=i,this._mag=this._baseMag+this._magnitudeRandom,this._movement===p&&(this._mag=e.toRadians(this._mag));break;case u:this._isEnabled=!!i}}GetDebuggerProperties(){const e="behaviors.sin";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:e+".properties.enabled.name",value:this._IsEnabled(),onedit:e=>this._SetEnabled(e)},{name:e+".properties.period.name",value:this._GetPeriod(),onedit:e=>this._SetPeriod(e)},{name:e+".properties.magnitude.name",value:this._GetMagnitude_ConvertAngle(),onedit:e=>this._SetMagnitude_ConvertAngle(e)},{name:e+".debugger.value",value:this.WaveFunc(this._GetPhase())*this._GetMagnitude_ConvertAngle()}]}]}GetScriptInterfaceClass(){return self.ISineBehaviorInstance}};const C=new WeakMap,K=["horizontal","vertical","size","width","height","angle","opacity","value-only","forwards-backwards","z-elevation"],F=["sine","triangle","sawtooth","reverse-sawtooth","square"];self.ISineBehaviorInstance=class extends i{constructor(){super(),C.set(this,i._GetInitInst().GetSdkInstance())}set period(e){t.RequireFiniteNumber(e),C.get(this)._SetPeriod(e)}get period(){return C.get(this)._GetPeriod()}set magnitude(e){t.RequireFiniteNumber(e),C.get(this)._SetMagnitude(e)}get magnitude(){return C.get(this)._GetMagnitude()}set phase(e){C.get(this)._SetPhase(e)}get phase(){return C.get(this)._GetPhase()}set movement(e){t.RequireString(e);const i=K.indexOf(e);if(-1===i)throw new Error("invalid movement");C.get(this)._SetMovement(i)}get movement(){return K[C.get(this)._GetMovement()]}set wave(e){t.RequireString(e);const i=F.indexOf(e);if(-1===i)throw new Error("invalid wave");C.get(this)._SetWave(i)}get wave(){return F[C.get(this)._GetWave()]}get value(){const e=C.get(this);return e.WaveFunc(e._GetPhase())*e._GetMagnitude()}updateInitialState(){C.get(this).Init()}set isEnabled(e){C.get(this)._SetEnabled(!!e)}get isEnabled(){return C.get(this)._IsEnabled()}}}{const e=self.C3;e.Behaviors.Sin.Cnds={IsEnabled(){return this._IsEnabled()},CompareMovement(e){return this._GetMovement()===e},ComparePeriod(t,i){return e.compare(this._GetPeriod(),t,i)},CompareMagnitude(t,i){return e.compare(this._GetMagnitude_ConvertAngle(),t,i)},CompareWave(e){return this._GetWave()===e}}}self.C3.Behaviors.Sin.Acts={SetEnabled(e){this._SetEnabled(0!==e)},SetPeriod(e){this._SetPeriod(e)},SetMagnitude(e){this._SetMagnitude_ConvertAngle(e)},SetMovement(e){this._SetMovement(e)},SetWave(e){this._wave=e},SetPhase(e){const t=2*Math.PI;this._SetPhase(e*t%t)},UpdateInitialState(){this.Init()}};self.C3.Behaviors.Sin.Exps={CyclePosition(){return this._GetPhase()/(2*Math.PI)},Period(){return this._GetPeriod()},Magnitude(){return this._GetMagnitude_ConvertAngle()},Value(){return this.WaveFunc(this._GetPhase())*this._GetMagnitude_ConvertAngle()}};
 }
 
-// scripts/behaviors/DragnDrop/c3runtime/runtime.js
-{
-{const e=self.C3;e.Behaviors.DragnDrop=class extends e.SDKBehaviorBase{constructor(t){super(t);const s=this._runtime.Dispatcher();this._disposables=new e.CompositeDisposable(e.Disposable.From(s,"pointerdown",e=>this._OnPointerDown(e.data)),e.Disposable.From(s,"pointermove",e=>this._OnPointerMove(e.data)),e.Disposable.From(s,"pointerup",e=>this._OnPointerUp(e.data,!1)),e.Disposable.From(s,"pointercancel",e=>this._OnPointerUp(e.data,!0)))}Release(){this._disposables.Release(),this._disposables=null,super.Release()}_OnPointerDown(e){"mouse"===e["pointerType"]&&0!==e["button"]||this._OnInputDown(e["pointerId"].toString(),e["pageX"]-this._runtime.GetCanvasClientX(),e["pageY"]-this._runtime.GetCanvasClientY())}_OnPointerMove(e){1&e["lastButtons"]&&!(1&e["buttons"])?this._OnInputUp(e["pointerId"].toString()):this._OnInputMove(e["pointerId"].toString(),e["pageX"]-this._runtime.GetCanvasClientX(),e["pageY"]-this._runtime.GetCanvasClientY())}_OnPointerUp(e,t){"mouse"===e["pointerType"]&&0!==e["button"]||this._OnInputUp(e["pointerId"].toString())}async _OnInputDown(t,s,n){const a=this.GetInstances();let r=null,i=null,o=0,h=0;for(const t of a){const a=t.GetBehaviorSdkInstanceFromCtor(e.Behaviors.DragnDrop);if(!a.IsEnabled()||a.IsDragging()||t.IsDestroyed())continue;const g=t.GetWorldInfo(),p=g.GetLayer(),[l,d]=p.CanvasCssToLayer(s,n,g.GetTotalZ());if(!p.IsSelfAndParentsInteractive()||!g.ContainsPoint(l,d))continue;if(!r){r=t,i=a,o=l,h=d;continue}const c=r.GetWorldInfo();(p.GetIndex()>c.GetLayer().GetIndex()||p.GetIndex()===c.GetLayer().GetIndex()&&g.GetZIndex()>c.GetZIndex())&&(r=t,i=a,o=l,h=d)}r&&await i._OnDown(t,o,h)}_OnInputMove(t,s,n){const a=this.GetInstances();for(const r of a){const a=r.GetBehaviorSdkInstanceFromCtor(e.Behaviors.DragnDrop);if(!a.IsEnabled()||!a.IsDragging()||a.IsDragging()&&a.GetDragSource()!==t)continue;const i=r.GetWorldInfo(),o=i.GetLayer(),[h,g]=o.CanvasCssToLayer(s,n,i.GetTotalZ());a._OnMove(h,g)}}async _OnInputUp(t){const s=this.GetInstances();for(const n of s){const s=n.GetBehaviorSdkInstanceFromCtor(e.Behaviors.DragnDrop);s.IsDragging()&&s.GetDragSource()===t&&await s._OnUp()}}}}{const e=self.C3;e.Behaviors.DragnDrop.Type=class extends e.SDKBehaviorTypeBase{constructor(e){super(e)}Release(){super.Release()}OnCreate(){}}}{const e=self.C3,t=(self.C3X,self.IBehaviorInstance),s=0,n=1;e.Behaviors.DragnDrop.Instance=class extends e.SDKBehaviorInstanceBase{constructor(e,t){super(e),this._isDragging=!1,this._dx=0,this._dy=0,this._dragSource="<none>",this._axes=0,this._isEnabled=!0,t&&(this._axes=t[s],this._isEnabled=t[n])}Release(){super.Release()}SaveToJson(){return{"a":this._axes,"e":this._isEnabled}}LoadFromJson(e){this._axes=e["a"],this._isEnabled=e["e"],this._isDragging=!1}_SetEnabled(e){this._isEnabled=!!e,this._isEnabled||(this._isDragging=!1)}IsEnabled(){return this._isEnabled}_SetAxes(e){this._axes=e}_GetAxes(){return this._axes}_Drop(){this._isDragging&&this._OnUp()}IsDragging(){return this._isDragging}GetDragSource(){return this._dragSource}async _OnDown(t,s,n){const a=this.GetWorldInfo();this._dx=s-a.GetX(),this._dy=n-a.GetY(),this._isDragging=!0,this._dragSource=t,this.DispatchScriptEvent("dragstart"),await this.TriggerAsync(e.Behaviors.DragnDrop.Cnds.OnDragStart)}_OnMove(e,t){const s=this.GetWorldInfo(),n=e-this._dx,a=t-this._dy;0===this._axes?s.GetX()===n&&s.GetY()===a||(s.SetXY(n,a),s.SetBboxChanged()):1===this._axes?s.GetX()!==n&&(s.SetX(n),s.SetBboxChanged()):2===this._axes&&s.GetY()!==a&&(s.SetY(a),s.SetBboxChanged())}async _OnUp(){this._isDragging=!1,this.DispatchScriptEvent("drop"),await this.TriggerAsync(e.Behaviors.DragnDrop.Cnds.OnDrop)}GetPropertyValueByIndex(e){switch(e){case s:return this._GetAxes();case n:return this.IsEnabled()}}SetPropertyValueByIndex(e,t){switch(e){case s:this._SetAxes(t);break;case n:this._SetEnabled(!!t)}}GetDebuggerProperties(){const e="behaviors.dragndrop",t=e+".properties.axes";let s="";return 0===this._axes?s=t+".items.both":1===this._axes?s=t+".items.horizontal-only":2===this._axes&&(s=t+".items.vertical-only"),[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:e+".debugger.is-dragging",value:this.IsDragging()},{name:t+".name",value:[s]},{name:e+".properties.enabled.name",value:this.IsEnabled(),onedit:e=>this._SetEnabled(e)}]}]}GetScriptInterfaceClass(){return self.IDragDropBehaviorInstance}};const a=new WeakMap,r=["both","horizontal","vertical"];self.IDragDropBehaviorInstance=class extends t{constructor(){super(),a.set(this,t._GetInitInst().GetSdkInstance())}set axes(e){const t=r.indexOf(e);if(-1===t)throw new Error("invalid axes");a.get(this)._SetAxes(t)}get axes(){return r[a.get(this)._GetAxes()]}drop(){a.get(this)._Drop()}get isDragging(){return a.get(this).IsDragging()}get isEnabled(){return a.get(this).IsEnabled()}set isEnabled(e){a.get(this)._SetEnabled(e)}}}self.C3.Behaviors.DragnDrop.Cnds={IsDragging(){return this.IsDragging()},OnDragStart:()=>!0,OnDrop:()=>!0,IsEnabled(){return this.IsEnabled()}};self.C3.Behaviors.DragnDrop.Acts={SetEnabled(e){this._SetEnabled(!!e)},SetAxes(e){this._SetAxes(e)},Drop(){this._Drop()}};self.C3.Behaviors.DragnDrop.Exps={};
-}
-
 // scripts/behaviors/Tween/c3runtime/runtime.js
 {
 {const e=self.C3;e.Behaviors.Tween=class extends e.SDKBehaviorBase{constructor(e){super(e)}Release(){super.Release()}}}{const e=self.C3;e.Behaviors.Tween.Type=class extends e.SDKBehaviorTypeBase{constructor(e){super(e)}Release(){super.Release()}OnCreate(){}}}{const e=self.C3,s=e.Behaviors.Tween,t=0;s.Instance=class extends e.SDKBehaviorInstanceBase{constructor(e,s){super(e),this._allowMultiple=!1,this._enabled=!0,s&&(this._allowMultiple=!1,this._enabled=!!s[t]),this._activeTweens=new Map,this._disabledTweens=[],this._waitingForReleaseTweens=new Map,this._finishingTween=null,this._activeTweensJson=null,this._disabledTweensJson=null,this._waitingForReleaseTweensJson=null,this._finishingTweenName="",this._triggerTweens=[],this._afterLoad=e=>this._OnAfterLoad(),this.GetRuntime().Dispatcher().addEventListener("afterload",this._afterLoad)}Release(){this.GetRuntime().Dispatcher().removeEventListener("afterload",this._afterLoad),this._afterLoad=null,this._finishingTween&&(this.ReleaseAndCompleteTween(this._finishingTween),this._finishingTween=null),this.ReleaseAndCompleteTweens(),this._tweens=null,this.ClearDisabledList(),this._disabledTweens=null,this._ReleaseWaitingTweens(),this._waitingForReleaseTweens=null,this._triggerTweens=null,super.Release()}PushTriggerTween(e){this._triggerTweens.push(e)}PopTriggerTween(){this._triggerTweens.pop()}GetTriggerTween(){return this._triggerTweens[this._triggerTweens.length-1]}SetEnabled(e){this._enabled=!!e,e?this._waitingForReleaseTweens&&this._waitingForReleaseTweens.size&&this._StartTicking2():this._StopTicking2();for(const s of this.AllTweens())e?this.IsInDisabledList(s)&&s.Resume():((s.IsPlaying()||s.IsScheduled())&&this.AddToDisabledList(s),s.Stop());e&&this.ClearDisabledList()}IsEnabled(){return this._enabled}AddToDisabledList(e){this._disabledTweens.push(e)}IsInDisabledList(e){return this._disabledTweens.includes(e)}ClearDisabledList(){e.clearArray(this._disabledTweens)}GetFinishingTween(){return this._finishingTween}IsInstanceValid(){const e=this.GetObjectInstance();return!!e&&!e.IsDestroyed()}GetTween(e,s,t=!1){const n=s?this.PropertyTweens(s,t):this.AllTweens(t);if(n&&n.length)for(const s of n)if(s.HasTags(e))return s}CheckTweensWithTags(e,s){for(const t of this._activeTweens.values())for(const n of t)if(!n.IsReleased()&&n.HasTags(e)&&s(n))return!0;for(const t of this._waitingForReleaseTweens.values())for(const n of t)if(!n.IsReleased()&&n.HasTags(e)&&s(n))return!0;return!1}CheckTweens(e){for(const s of this._activeTweens.values())for(const t of s)if(!t.IsReleased()&&e(t))return!0;for(const s of this._waitingForReleaseTweens.values())for(const t of s)if(!t.IsReleased()&&e(t))return!0;return!1}GetTweenIncludingWaitingForRelease(e,s){return this.GetTween(e,s,!0)}*GetTweens(e,s,t=!1){const n=s?this.PropertyTweens(s,t):this.AllTweens(t);if(n&&n.length)for(const s of n)s.HasTags(e)&&(yield s)}*GetTweensIncludingWaitingForRelease(e,s){yield*this.GetTweens(e,s,!0)}PropertyTweens(e,s){if(s){let s=this._activeTweens.get(e),t=this._waitingForReleaseTweens.get(e);return s||(s=[]),t||(t=[]),s.concat(t).filter(e=>e).filter(e=>!e.IsReleased())}{let s=this._activeTweens.get(e);return s||(s=[]),s.filter(e=>e).filter(e=>!e.IsReleased())}}AllTweens(e){if(e){const e=[...this._activeTweens.values()].flat(),s=[...this._waitingForReleaseTweens.values()].flat();return e.concat(s).filter(e=>e).filter(e=>!e.IsReleased())}return[...this._activeTweens.values()].flat().filter(e=>e).filter(e=>!e.IsReleased())}AllTweensIncludingWaitingForRelease(){return this.AllTweens(!0)}SaveToJson(e="full"){return{"s":!1,"e":!!this._enabled,"at":this._SaveActiveTweensToJson(),"dt":this._SaveDisabledTweensToJson(),"wt":this._SaveWaitingForReleaseTweensToJson(),"ft":this._SaveFinishingTweenToJson()}}LoadFromJson(e,s="full"){e&&(this._activeTweensJson=e["at"],this._disabledTweensJson=e["dt"],this._waitingForReleaseTweensJson=e["wt"],this._finishingTweenName=e["ft"],this._allowMultiple=!1,this._enabled=!!e["e"],"state"===s&&this._OnAfterLoad())}_OnAfterLoad(){const s=this.GetRuntime().GetTimelineManager();if(this._PopulateTweenMap(this._activeTweensJson,this._activeTweens,s),this._disabledTweensJson){e.clearArray(this._disabledTweens);for(const e of this._disabledTweensJson)this._PopulateTweenArray(this._disabledTweens,e,s)}this._PopulateTweenMap(this._waitingForReleaseTweensJson,this._waitingForReleaseTweens,s),this._finishingTween=this._GetTween(this._finishingTweenName,s),this._enabled?this._waitingForReleaseTweens&&this._waitingForReleaseTweens.size&&this._StartTicking2():this._StopTicking2()}_PopulateTweenMap(s,t,n){if(s)for(const i in s){let a=t.get(i);a?e.clearArray(a):a=[];const r=s[i];for(const s of r){if(this._PopulateTweenArray(a,s["name"],n))this._LoadTweenFromJson(s["name"],s,n);else{const t=e.TweenState.Build({runtime:this.GetRuntime(),json:s});e.TweenState.SetInstanceUID(t,this.GetObjectInstance().GetUID()),t.AddCompletedCallback(e=>this._FinishTriggers(e)),t.SetBehaviorInstance(this),n.AddScheduledTimeline(t),this._PopulateTweenArray(a,t,n)}}t.set(i,a)}}_GetTween(e,s){return s.GetScheduledOrPlayingTimelineByName(e)}_PopulateTweenArray(e,s,t){if("string"!=typeof s)return!!e.push(s);{const n=this._GetTween(s,t);if(n)return!!e.push(n)}return!1}_LoadTweenFromJson(s,t,n){if("string"==typeof s){const i=this._GetTween(s,n);i&&(i._LoadFromJson(t),e.TweenState.SetInstanceUID(i,this.GetObjectInstance().GetUID()),e.TweenState.SetBehaviorInstance(i,this))}else s._LoadFromJson(t),e.TweenState.SetInstanceUID(s,this.GetObjectInstance().GetUID()),e.TweenState.SetBehaviorInstance(s,this)}_SaveActiveTweensToJson(){const e={};for(const[s,t]of this._activeTweens)e[s]=t.filter(e=>!e.IsReleased()).map(e=>e._SaveToJson());return e}_SaveDisabledTweensToJson(){return this._disabledTweens.filter(e=>!e.IsReleased()).map(e=>e.GetName())}_SaveWaitingForReleaseTweensToJson(){const e={};for(const[s,t]of this._waitingForReleaseTweens)e[s]=t.map(e=>e._SaveToJson());return e}_SaveFinishingTweenToJson(){return this._finishingTween?this._finishingTween.GetName():""}Tick2(){this._ReleaseWaitingTweens()}CreateTween(t){const n=s.Config.GetPropertyTracksConfig(t.property,t.startValue,t.endValue,t.ease,t.resultMode,this.GetObjectInstance()),i=s.Maps.GetPropertyFromIndex(t.property);s.Maps.IsValueId(i)||this.ReleaseTweens(t.property);const a=e.TweenState.Build({runtime:this.GetRuntime(),id:i,tags:t.tags,time:t.time,instance:this.GetObjectInstance(),releaseOnComplete:!!t.releaseOnComplete,loop:!!t.loop,pingPong:!!t.pingPong,repeatCount:t.repeatCount,initialValueMode:t.initialValueMode,propertyTracksConfig:n});return a.AddCompletedCallback(e=>this._FinishTriggers(e)),a.SetBehaviorInstance(this),this._AddTween(a,t.property),a}_MaybeRemoveFromActiveTweenMap(e){const s=e.GetId();if(this._activeTweens.has(s)){const t=this._activeTweens.get(s);if(t){const s=t.indexOf(e);-1!==s&&t.splice(s,1)}}}ReleaseTween(e,s=!1){this._MaybeRemoveFromActiveTweenMap(e),e.IsReleased()||this._IsInWaitingList(e)||(e.Stop(s),this._AddToWaitingList(e))}ReleaseTweens(t,n=!1){if(e.IsFiniteNumber(t)){const i=s.Maps.GetPropertyFromIndex(t);if(!this._activeTweens.has(i))return;const a=this._activeTweens.get(i),r=this.GetFinishingTween();for(const e of a)e!==r&&(e.IsReleased()||this._IsInWaitingList(e)||(e.Stop(n),e.Release()));e.clearArray(a)}else{const s=this.GetFinishingTween();for(const e of this.AllTweens())e!==s&&(e.IsReleased()||this._IsInWaitingList(e)||(e.Stop(n),e.Release()));for(const s of this._activeTweens.keys())e.clearArray(this._activeTweens.get(s)),this._activeTweens.delete(s);this._activeTweens.clear()}}ReleaseAndCompleteTween(e){this.ReleaseTween(e,!0)}ReleaseAndCompleteTweens(){this.ReleaseTweens(NaN,!0)}GetPropertyValueByIndex(e){if(e===t)return this._enabled}SetPropertyValueByIndex(e,s){if(e===t)this._enabled=!!s}_GetBehaviorType(e){const s=e.GetInstance().GetBehaviorInstances();for(const e of s){const s=e.GetBehaviorType();if(s.GetInstanceSdkCtor()===this.constructor)return s}}Trigger(e,s,t,n){return this._runtime?super.Trigger(e):s.Trigger(e,t,n)}_FinishTriggers(e){let t,n;if(this._finishingTween=e,s.Cnds.SetFinishingTween(e),this.GetRuntime())t=this._inst,n=this._runtime,this.Trigger(s.Cnds.OnTweensFinished),this.Trigger(s.Cnds.OnAnyTweensFinished),this.ReleaseTween(e);else{if(t=e.GetInstance(),!t)return;if(t&&t.IsDestroyed())return;n=t.GetRuntime();const i=this._GetBehaviorType(e);this.Trigger(s.Cnds.OnTweensFinished,n,t,i),this.Trigger(s.Cnds.OnAnyTweensFinished,n,t,i),e.Stop()}this._finishingTween=null,s.Cnds.SetFinishingTween(null),e.GetDestroyInstanceOnComplete()&&n.DestroyInstance(t)}_AddTween(e,t){const n=s.Maps.GetPropertyFromIndex(t);this._activeTweens.has(n)||this._activeTweens.set(n,[]);this._activeTweens.get(n).push(e)}_AddToWaitingList(e){const s=e.GetId();this._waitingForReleaseTweens.has(s)||this._waitingForReleaseTweens.set(s,[]),this._waitingForReleaseTweens.get(s).push(e),this.IsTicking2()||this._StartTicking2()}_IsInWaitingList(e){const s=e.GetId();return!!this._waitingForReleaseTweens.has(s)&&this._waitingForReleaseTweens.get(s).includes(e)}_ReleaseWaitingTweens(){if(this._waitingForReleaseTweens.size){for(const s of this._waitingForReleaseTweens.values()){for(const e of s)e.IsReleased()||e.Release();e.clearArray(s)}this._waitingForReleaseTweens.clear(),this.IsTicking2()&&this._StopTicking2()}}GetDebuggerProperties(){return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:"behaviors.tween.properties.enabled.name",value:this.IsEnabled(),onedit:e=>this.SetEnabled(e)}]}]}GetScriptInterfaceClass(){return self.ITweenBehaviorInstance}}}{const e=self.C3;let s=null;e.Behaviors.Tween.Cnds={OnAnyTweenLoop:()=>!0,OnTweensLoop(e){const s=this.GetTriggerTween();return!!s&&s.HasTags(e)},OnAnyTweenPingPong(e){const s=this.GetTriggerTween();return!!s&&(s.GetPingPongState()===e||2===e)},OnTweensPingPong(e,s){const t=this.GetTriggerTween();return!!t&&((t.GetPingPongState()===s||2===s)&&t.HasTags(e))},OnTweensReleased(e){return this.GetTriggerTween().HasTags(e)},OnAnyTweensReleased:()=>!0,SetFinishingTween(e){s=e},OnTweensFinished:e=>s.HasTags(e),OnAnyTweensFinished:()=>!0,IsPlaying(s){return this.CheckTweensWithTags(s,e.TweenState.IsPlaying)},IsAnyPlaying(){return this.CheckTweens(e.TweenState.IsPlaying)},IsPaused(s){return this.CheckTweensWithTags(s,e.TweenState.IsPaused)},IsAnyPaused(){return this.CheckTweens(e.TweenState.IsPaused)},IsPingPong(s,t){return 0===t?this.CheckTweensWithTags(s,e.TweenState.IsPing):1===t&&this.CheckTweensWithTags(s,e.TweenState.IsPong)},IsAnyPingPong(s){return 0===s?this.CheckTweens(e.TweenState.IsPing):1===s&&this.CheckTweens(e.TweenState.IsPong)}}}{const e=self.C3,s=self.Ease,t=e.Behaviors.Tween;t.Acts={SetEnabled(e){this.SetEnabled(!!e)},async TweenOneProperty(...e){if(!this.IsEnabled()||!this.IsInstanceValid())return;const s=this.CreateTween(t.TweenArguments.OneProperty(this,...e));s.Play()&&await s.GetPlayPromise()},async TweenTwoProperties(...e){if(!this.IsEnabled()||!this.IsInstanceValid())return;const s=this.CreateTween(t.TweenArguments.TwoProperties(this,...e));s.Play()&&await s.GetPlayPromise()},async TweenThreeProperties(...e){if(!this.IsEnabled()||!this.IsInstanceValid())return;const s=this.CreateTween(t.TweenArguments.ThreeProperties(this,...e));s.Play()&&await s.GetPlayPromise()},async TweenValue(...e){if(!this.IsEnabled()||!this.IsInstanceValid())return;const s=this.CreateTween(t.TweenArguments.ValueProperty(this,...e));s.Play()&&await s.GetPlayPromise()},PauseTweens(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.GetTweens(e))s.Stop()},PauseAllTweens(){if(this.IsEnabled()&&this.IsInstanceValid())for(const e of this.AllTweens())e.Stop()},ResumeTweens(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.GetTweens(e))s.Resume()},ResumeAllTweens(){if(this.IsEnabled()&&this.IsInstanceValid())for(const e of this.AllTweens())e.Resume()},StopTweens(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.GetTweens(e))this.ReleaseTween(s)},StopAllTweens(){if(this.IsEnabled()&&this.IsInstanceValid())for(const e of this.AllTweens())this.ReleaseTween(e)},SetOnePropertyTweensEndValue(s,t,n){if(!this.IsEnabled()||!this.IsInstanceValid())return;const i=e.Behaviors.Tween.Maps.GetSinglePropertyFromIndex(t);for(const e of this.GetTweens(s))e.BeforeSetEndValues([i]),e.SetEndValue(n,i)},SetTwoPropertiesTweensEndValue(s,t,n,i){if(!this.IsEnabled()||!this.IsInstanceValid())return;const a=e.Behaviors.Tween.Maps.GetRealProperties(t);for(const e of this.GetTweens(s))e.BeforeSetEndValues(a),e.SetEndValue(n,a[0]),e.SetEndValue(i,a[1])},SetThreePropertiesTweensEndValue(s,t,n,i,a){if(!this.IsEnabled()||!this.IsInstanceValid())return;const r=e.Behaviors.Tween.Maps.GetRealProperties(t);for(const e of this.GetTweens(s))e.BeforeSetEndValues(r),e.SetEndValue(n,r[0]),e.SetEndValue(i,r[1]),e.SetEndValue(a,r[2])},SetValuePropertyTweensStartValue(e,s){if(this.IsEnabled()&&this.IsInstanceValid())for(const t of this.GetTweens(e,"value"))t.SetStartValue(s,"value")},SetValuePropertyTweensEndValue(e,s){if(this.IsEnabled()&&this.IsInstanceValid())for(const t of this.GetTweens(e,"value"))t.BeforeSetEndValues(["value"]),t.SetEndValue(s,"value")},SetTweensEase(e,t){if(!this.IsEnabled()||!this.IsInstanceValid())return;const n=s.GetEaseFromIndex(t);for(const s of this.GetTweens(e))s.SetEase(n)},SetAllTweensEase(e){if(!this.IsEnabled()||!this.IsInstanceValid())return;const t=s.GetEaseFromIndex(e);for(const e of this.AllTweens())e.SetEase(t)},SetTweensTime(e,s){if(this.IsEnabled()&&this.IsInstanceValid())for(const t of this.GetTweens(e))t.SetTime(s)},SetAllTweensTime(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.AllTweens())s.SetTime(e)},SetTweensPlaybackRate(e,s){if(this.IsEnabled()&&this.IsInstanceValid())for(const t of this.GetTweens(e))t.SetPlaybackRate(s)},SetAllTweensPlaybackRate(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.AllTweens())s.SetPlaybackRate(e)},SetTweensDestroyOnComplete(e,s){if(this.IsEnabled()&&this.IsInstanceValid())for(const t of this.GetTweens(e))t.SetDestroyInstanceOnComplete(!!s)},SetAllTweensDestroyOnComplete(e){if(this.IsEnabled()&&this.IsInstanceValid())for(const s of this.AllTweens())s.SetDestroyInstanceOnComplete(!!e)}}}self.C3.Behaviors.Tween.Exps={Time(e){const s=this.GetTweenIncludingWaitingForRelease(e);return s?s.GetTime():0},Progress(e){const s=this.GetTweenIncludingWaitingForRelease(e);return s?s.GetTime()/s.GetTotalTime():0},PlaybackRate(e){const s=this.GetTweenIncludingWaitingForRelease(e);return s?s.GetPlaybackRate():0},Value(e){const s=this.GetTweenIncludingWaitingForRelease(e,"value");return s?s.GetPropertyTrack("value").GetSourceAdapterValue():0},Tags(){let e=this.GetFinishingTween();return e?e.GetStringTags():(e=this.GetTriggerTween(),e?e.GetStringTags():"")}};
@@ -1451,6 +1446,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => C3.clamp((v0.GetValue() + v1.GetValue()), 0, 1);
 		},
+		() => "success",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
@@ -1471,7 +1467,8 @@ self.C3_ExpressionFuncs = [
 			return () => C3.lerp(100, 0, v0.GetValue());
 		},
 		() => "Condición de ganar la escena",
-		() => "irAEscena2",
+		() => "finEscena1",
+		() => "irAIntro2",
 		() => "Gente Caminando",
 		() => "",
 		() => "Empezar Menu Principal",
@@ -1482,19 +1479,24 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Jugar",
 		() => "FadeEnds",
-		() => "irAEscena1",
+		() => "irAIntro1",
 		() => "Ir a Fullscreen",
 		() => "Escena 2 - Start",
 		() => "Escena 2 - Cambiar elemento al tocarlo",
-		() => "imaginacion",
 		() => "300",
+		() => "grow",
+		() => 1.1,
+		() => 0.1,
+		() => "imaginacion",
+		() => "arrugado",
 		() => "confundido",
 		() => "escuela",
 		() => "decepcionado",
 		() => 4,
 		() => "contento",
 		() => 3,
-		() => "irAEscena3",
+		() => "irAIntro3",
+		() => "volver",
 		() => "Mover al elemento siguiente",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -1503,20 +1505,18 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "aparecer",
 		() => 100,
+		() => "Play Decepción Random",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(0, 3));
+		},
+		() => "decepcion",
 		() => "Testing Text",
 		() => 0.2,
 		() => "Escena 3 - Start",
 		() => "caminarArriba",
 		() => "crecerX",
 		() => "caminarY",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("Spawn");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("Despawn");
-		},
 		() => 0.77,
 		() => "paredEscena3",
 		p => {
@@ -1528,13 +1528,8 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => (v0.GetValue() + v1.GetValue());
 		},
-		() => "caminarAbajo",
-		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			return () => n0.ExpObject(n1.ExpInstVar_Family());
-		},
 		() => "Rudolph_Escena3",
+		() => "caminarAbajo",
 		() => "Escena 3 - Mover a Rudolph",
 		p => {
 			const n0 = p._GetNode(0);
@@ -1547,14 +1542,26 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Escena 3 - Desaparecer niños",
 		() => "desapareciendo",
+		() => "disponible",
 		() => "Detener Senio - Fin de Escena 3",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("DetenerSenio");
+			return () => (n0.ExpObject() - 300);
 		},
+		() => "risa",
 		() => "irAEscena4",
 		() => "Detener Personas - Escena 3",
+		() => 5,
+		() => 8,
 		() => "nenes",
+		() => "500",
+		() => "Spawn Obstáculos Escena 3",
+		() => -1,
+		() => "reservado",
+		() => "activo",
+		() => 55,
+		() => 56,
+		() => 57,
 		() => "Funciones del Fade",
 		() => "fadingOut",
 		() => "fadingIn",
@@ -1570,6 +1577,9 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => C3.clamp(n0.ExpObject(), 0, 100);
 		},
+		() => "irAEscena1",
+		() => "irAEscena2",
+		() => "irAEscena3",
 		() => "irAEscena5",
 		() => "irAEscena6",
 		() => "irAMenu",
@@ -1588,13 +1598,12 @@ self.C3_ExpressionFuncs = [
 		() => "Ocultar Tutorial",
 		() => "Audio - Menu Principal - Start",
 		() => "Menu",
+		() => "carrera",
+		() => "Escena_4",
+		() => "MusicaEscena4",
 		() => "Funciones Audio",
 		() => "musica",
 		() => -100,
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.floor(f0(0, 3));
-		},
 		() => "Reproducir musica aleatoriamente",
 		() => "Escena 2 - Tap en objetos",
 		() => "tapObjects",
@@ -1606,19 +1615,41 @@ self.C3_ExpressionFuncs = [
 		() => "Ir al menu Principal",
 		() => "desaparecer",
 		() => "Start - Escena 4",
-		() => 5,
 		() => "Start Escena 5",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => C3.lerp(f0(), v1.GetValue(), v2.GetValue());
+		},
+		() => "Fondo",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => C3.lerp(f0("Fondo"), v1.GetValue(), v2.GetValue());
+		},
+		() => "Amigos",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => C3.lerp(f0("Amigos"), v1.GetValue(), v2.GetValue());
+		},
 		() => "Escena 6 Start",
 		() => "carta",
 		() => "Lógica del juego",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			const v2 = p._GetNode(2).GetVar();
-			const v3 = p._GetNode(3).GetVar();
-			const v4 = p._GetNode(4).GetVar();
-			return () => and(((and((((((((((and("Estado del juego: ", v0.GetValue()) + "\n") + "Tipo temporal 1: ") + v1.GetValue()) + "\n") + "\n") + "Tipo temporal 2: ") + v2.GetValue()) + "\n") + "UID primera carta: "), v3.GetValue()) + "\n") + "UID segunda carta: "), v4.GetValue());
-		}
+		() => "ui",
+		() => 1.2,
+		() => "achicarse",
+		() => 0.3,
+		() => "bien",
+		() => "500,100,500",
+		() => "win",
+		() => "Saludo2",
+		() => "Saludo1",
+		() => "hello",
+		() => "ok"
 ];
 
 
